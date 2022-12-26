@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .submenuIcon {
+    @apply text-gray-500 text-[19px];
+  }
+  .submenuTitle{
+    @apply text-gray-600 hover:text-purple-700
+  }
+  .submenuText{
+    @apply text-gray-600 hover:text-purple-700 text-start px-10
+  }
+}
