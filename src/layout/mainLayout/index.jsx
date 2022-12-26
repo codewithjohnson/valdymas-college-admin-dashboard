@@ -14,7 +14,7 @@ const MainLayout = ({ children }) => {
           <Aside />
         </aside>
 
-        <main className="bg-[#E3F2FD] p-3 border rounded-2xl h-full w-full overflow-scroll">
+        <main className="bg-[#E3F2FD] p-3 border rounded-2xl h-full w-full overflow-scroll scrollbar-thin ">
           {children}
         </main>
       </section>

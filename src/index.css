@@ -10,6 +10,8 @@
     @apply text-gray-600 hover:text-purple-700
   }
   .submenuText{
-    @apply text-gray-600 hover:text-purple-700 text-start px-10
+    @apply text-gray-600 hover:text-purple-700 text-start 
   }
 }
+
+/* px-10 */
