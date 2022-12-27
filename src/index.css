@@ -6,10 +6,13 @@
   .submenuIcon {
     @apply text-gray-500 text-[19px];
   }
-  .submenuTitle{
-    @apply text-gray-600 hover:text-purple-700
+  .submenuTitle {
+    @apply text-gray-600 hover:text-purple-700;
   }
-  .submenuText{
-    @apply text-gray-600 hover:text-purple-700 text-start px-10
+  .submenuText {
+    @apply px-10 text-gray-600 hover:text-purple-700 text-start;
+  }
+  .submenuIcon {
+    @apply text-[18px] text-gray-500;
   }
 }

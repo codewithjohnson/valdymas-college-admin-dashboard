@@ -1,6 +1,5 @@
 import React from "react";
 import { Navbar, Aside } from "../../components";
-import { useProSidebar } from "react-pro-sidebar";
 
 const MainLayout = ({ children }) => {
   return (
@@ -10,11 +9,11 @@ const MainLayout = ({ children }) => {
       </header>
 
       <section className="p-2 sm:p-0 fixed right-0 top-[90px] w-full h-full flex">
-        <aside className="hidden md:block bg-white ">
+        <aside className="hidden border-0 md:block">
           <Aside />
         </aside>
 
-        <main className="bg-[#E3F2FD] p-3 border rounded-2xl h-full w-full overflow-scroll scrollbar-thin ">
+        <main className="bg-[#E3F2FD] p-5 rounded-2xl h-full w-full overflow-scroll scrollbar-none ">
           {children}
         </main>
       </section>
