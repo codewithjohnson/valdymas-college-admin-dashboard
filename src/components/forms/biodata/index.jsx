@@ -44,7 +44,7 @@ const BiodataForm = () => {
       </h3>
       <form
         onSubmit={handleSubmit(onBiodataFormSubmit)}
-        className="grid w-full h-full grid-cols-1 mt-5 gap-x-6 gap-y-7 g md:grid-cols-2 lg:grid-cols-3"
+        className="grid w-full h-full grid-cols-1 mt-5 gap-x-6 gap-y-7 lg:grid-cols-3"
       >
         {/* FIRST NAME */}
         <div className="firstname">
