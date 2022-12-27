@@ -1,14 +1,9 @@
 import { lazy } from "react";
 import Loadable from "../../components/loadable/";
+import { studentRoute } from "../studentRoute";
 
 const App = Loadable(lazy(() => import("../../App")));
 const Dashboard = Loadable(lazy(() => import("../../pages/views/dashboard")));
-const Students = Loadable(lazy(() => import("../../pages/views/students")));
-const NewStudent = Loadable(lazy(() => import("../../pages/views/newStudent")));
-const AllStudents = Loadable(
-  lazy(() => import("../../pages/views/allStudents"))
-);
-
 export const mainRoute = {
   path: "/",
   element: <App />,
@@ -21,19 +16,6 @@ export const mainRoute = {
       path: "dashboard",
       element: <Dashboard />,
     },
-    {
-      path: "students",
-      element: <Students />,
-      children: [
-        {
-          path: "/students",
-          element: <AllStudents />,
-        },
-        {
-          path: "add-student",
-          element: <NewStudent />,
-        },
-      ],
-    },
+    studentRoute,
   ],
 };

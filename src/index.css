@@ -15,4 +15,8 @@
   .submenuIcon {
     @apply text-[18px] text-gray-500;
   }
+  
+  .studentInputClass{
+    @apply block w-full p-3 mt-2 text-sm border rounded-lg shadow-sm bg-slate-100 placeholder-slate-300 border-slate-400 focus:outline-none focus:ring focus:ring-indigo-100 hover:border-indigo-800
+  }
 }

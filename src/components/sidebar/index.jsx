@@ -1,7 +1,6 @@
 import React from "react";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
-import { ProSidebarProvider, useProSidebar } from "react-pro-sidebar";
-import { NavLink, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { sideBarMenuItems } from "../../utilities/menuItems";
 
 export const Aside = () => {
@@ -25,13 +24,15 @@ export const Aside = () => {
                   label={item.label}
                   key={index}
                 >
-                  {item.subMenus.map((subMenu) => {
+                  {item.subMenus.map((subMenu, index) => {
                     return (
-                      <NavLink to={`${subMenu.link}`}>
-                        <MenuItem className="submenuText">
-                          {subMenu.label}
-                        </MenuItem>
-                      </NavLink>
+                      <MenuItem
+                        className="submenuText"
+                        key={index}
+                        routerLink={<Link to={`${subMenu.link}`} />}
+                      >
+                        {subMenu.label}
+                      </MenuItem>
                     );
                   })}
                   <hr className="mx-6 my-3" />

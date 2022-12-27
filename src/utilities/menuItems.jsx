@@ -18,7 +18,7 @@ export const sideBarMenuItems = [
     icon: <span className="material-symbols-outlined submenuIcon">group</span>,
     subMenus: [
       { label: "all students", link: "/students" },
-      { label: "add student", link: "students/add-student" },
+      { label: "add student", link: "students/add-student/biodata" },
       { label: "results", link: "students/results" },
     ],
   },

@@ -13,7 +13,7 @@ const MainLayout = ({ children }) => {
           <Aside />
         </aside>
 
-        <main className="bg-[#E3F2FD] p-5 rounded-2xl h-full w-full overflow-scroll scrollbar-none ">
+        <main className="bg-[#E3F2FD] p-5 pb-[100px] rounded-2xl h-full w-full overflow-scroll scrollbar-none ">
           {children}
         </main>
       </section>
