@@ -1,40 +1,42 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { object, string, number, boolean } from "yup";
+import { useNavigate } from "react-router-dom";
 import { nigeriaStates, nigeriaLgas } from "../../../utilities/nigeria";
+import {
+  biodataSchema,
+  SetFormValues,
+} from "../../../schemas/biodataValidation";
+import { useSelector, useDispatch } from "react-redux";
 
 const BiodataForm = () => {
-  const schema = object({
-    firstname: string().required("First name is required"),
-    lastname: string().required("Last name is required"),
-    middlename: string().required("Middle name is required"),
-    email: string().email().required("Email is required"),
-    phoneNumber: string().required("Phone number is required"),
-    nationality: string().required("Nationality is required"),
-    gender: string().required("Gender is required"),
-    stateOfOrigin: string().required("State is required"),
-    contactAddress: string().required("Address is required"),
-    religion: string().required("Religion is required"),
-    maritalstatus: string().required("Marital status is required"),
-    lga: string().required("LGA is required"),
-  });
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const DATA = useSelector((state) => state.biodata);
+  const SCHEMA = biodataSchema;
 
   const {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(SCHEMA),
   });
 
-  // watch the state value to determine LGA value for the particular state
-  const watchState = watch("stateOfOrigin");
-  const stateLgas = nigeriaLgas[watchState];
+  useEffect(() => {
+    SetFormValues(setValue, DATA);
+  }, [DATA]);
 
+  const watchState = watch("stateOfOrigin");
+  var stateLgas = nigeriaLgas[watchState];
+
+  // Handle form submit
   const onBiodataFormSubmit = (data) => {
-    console.log(data);
+    dispatch({ type: "BIODATA/ADDED", payload: data });
+    const NEXTROUTE = "/students/add-student/olevels";
+    navigate(NEXTROUTE);
   };
 
   return (
@@ -44,7 +46,7 @@ const BiodataForm = () => {
       </h3>
       <form
         onSubmit={handleSubmit(onBiodataFormSubmit)}
-        className="grid w-full h-full grid-cols-1 mt-5 gap-x-6 gap-y-7 lg:grid-cols-3"
+        className="grid w-full h-full grid-cols-1 mt-5 gap-x-6 gap-y-7 sm:grid-cols-2 lg:grid-cols-3"
       >
         {/* FIRST NAME */}
         <div className="firstname">
@@ -56,7 +58,6 @@ const BiodataForm = () => {
           </label>
           <input
             type="text"
-            required
             placeholder="First Name "
             name="firstname"
             id="firstname"
@@ -64,9 +65,9 @@ const BiodataForm = () => {
             className="studentInputClass"
           />
           {errors?.firstname && (
-            <span className="text-[11px] text-red-900">
-              {errors?.firstname}
-            </span>
+            <p role="alert" className="errorMessage">
+              {errors?.firstname.message}
+            </p>
           )}
         </div>
 
@@ -80,7 +81,6 @@ const BiodataForm = () => {
           </label>
           <input
             type="text"
-            required
             placeholder="Last Name "
             name="lastname"
             {...register("lastname")}
@@ -88,7 +88,9 @@ const BiodataForm = () => {
             className="studentInputClass"
           />
           {errors?.lastname && (
-            <span className="text-[11px] text-red-900">{errors?.lastname}</span>
+            <p role="alert" className="errorMessage">
+              {errors?.lastname.message}
+            </p>
           )}
         </div>
 
@@ -109,9 +111,9 @@ const BiodataForm = () => {
             className="studentInputClass"
           />
           {errors?.middlename && (
-            <span className="text-[11px] text-red-900">
-              {errors?.middlename}
-            </span>
+            <p role="alert" className="errorMessage">
+              {errors?.middlename.message}
+            </p>
           )}
         </div>
 
@@ -125,7 +127,6 @@ const BiodataForm = () => {
           </label>
           <input
             type="email"
-            required
             placeholder="example@gmail.com"
             name="email"
             {...register("email")}
@@ -133,7 +134,9 @@ const BiodataForm = () => {
             className="studentInputClass"
           />
           {errors?.email && (
-            <span className="text-[11px] text-red-900">{errors?.email}</span>
+            <p role="alert" className="errorMessage">
+              {errors?.email.message}
+            </p>
           )}
         </div>
 
@@ -146,7 +149,7 @@ const BiodataForm = () => {
             contact number
           </label>
           <input
-            type="number"
+            type="text"
             placeholder="+234 000 000 00"
             name="phoneNumber"
             id="phoneNumber"
@@ -154,9 +157,9 @@ const BiodataForm = () => {
             className="studentInputClass"
           />
           {errors?.phonenumber && (
-            <span className="text-[11px] text-red-900">
-              {errors?.phonenumber}
-            </span>
+            <p role="alert" className="errorMessage">
+              {errors?.phonenumber.message}
+            </p>
           )}
         </div>
 
@@ -184,6 +187,31 @@ const BiodataForm = () => {
               male
             </option>
           </select>
+          {errors?.gender && (
+            <p role="alert" className="errorMessage">
+              {errors?.gender.message}
+            </p>
+          )}
+        </div>
+
+        {/* DATE OF BIRTH */}
+        <div className="date-of-birth">
+          <label
+            htmlFor="gender"
+            className="text-gray-600 text-[15px] capitalize"
+          >
+            date of birth
+          </label>
+          <input
+            type="date"
+            name="dateOfBirth"
+            {...register("dateOfBirth")}
+            id="dateOfBirth"
+            className="studentInputClass"
+          />
+          {errors?.dateOfBirth && (
+            <span className="errorMessage">{errors?.dateOfBirth.message}</span>
+          )}
         </div>
 
         {/* CONTACT ADDRESS */}
@@ -203,8 +231,8 @@ const BiodataForm = () => {
             className="studentInputClass"
           />
           {errors?.contactAddress && (
-            <span className="text-[11px] text-red-900">
-              {errors?.contactAddress}
+            <span className="errorMessage">
+              {errors?.contactAddress.message}
             </span>
           )}
         </div>
@@ -236,6 +264,11 @@ const BiodataForm = () => {
               others
             </option>
           </select>
+          {errors?.religion && (
+            <p role="alert" className="errorMessage">
+              {errors?.religion.message}
+            </p>
+          )}
         </div>
 
         {/* NATIONALITY SELECT ELEMENT */}
@@ -262,6 +295,11 @@ const BiodataForm = () => {
               others
             </option>
           </select>
+          {errors?.nationality && (
+            <p role="alert" className="errorMessage">
+              {errors?.nationality.message}
+            </p>
+          )}
         </div>
 
         {/* MARITAL STATUS SELECT ELEMENT */}
@@ -275,6 +313,7 @@ const BiodataForm = () => {
           <select
             name="maritalStatus"
             id="maritalStatus"
+            {...register("maritalStatus")}
             className="cursor-pointer studentInputClass"
           >
             <option value="" className="font-poppins">
@@ -287,6 +326,11 @@ const BiodataForm = () => {
               married
             </option>
           </select>
+          {errors?.maritalStatus && (
+            <p role="alert" className="errorMessage">
+              {errors?.maritalStatus.message}
+            </p>
+          )}
         </div>
 
         {/* STATE OF ORIGIN SELECT ELEMENT */}
@@ -303,6 +347,9 @@ const BiodataForm = () => {
             className="cursor-pointer studentInputClass"
             {...register("stateOfOrigin")}
           >
+            <option value="select" className="font-poppins">
+              select
+            </option>
             {nigeriaStates?.map((state, index) => {
               return (
                 <option key={index} value={state} className="font-poppins">
@@ -311,6 +358,11 @@ const BiodataForm = () => {
               );
             })}
           </select>
+          {errors?.stateOfOrigin && (
+            <p role="alert" className="errorMessage">
+              {errors?.stateOfOrigin.message}
+            </p>
+          )}
         </div>
 
         {/* LGA OF ORIGIN SELECT */}
@@ -333,13 +385,20 @@ const BiodataForm = () => {
                 );
               })}
           </select>
+          {errors?.lga && (
+            <p role="alert" className="errorMessage">
+              {errors?.lga.message}
+            </p>
+          )}
         </div>
-        <button
-          type="submit"
-          className="bg-[#1E88E5] px-4 py-3 capitalize rounded-md text-white col-start-4  col-end-3 row-end-7  place-self-end cursor-pointer shadow-lg "
-        >
-          next page
-        </button>
+        <div className="btns col-start-4  col-end-3 row-end-7 place-self-end flex gap-x-4">
+          <button
+            type="submit"
+            className="bg-purple-700 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out "
+          >
+            next page
+          </button>
+        </div>
       </form>
     </div>
   );

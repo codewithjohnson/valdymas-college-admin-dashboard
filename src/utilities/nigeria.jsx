@@ -1,5 +1,4 @@
 export const nigeriaStates = [
-  "select",
   "Abia",
   "Adamawa",
   "Akwa Ibom",
