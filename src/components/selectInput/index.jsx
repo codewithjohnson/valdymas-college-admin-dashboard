@@ -7,13 +7,14 @@ const SelectInput = ({ register, inputName, arrayToLoop, classname }) => {
       id={inputName}
       className={classname}
       {...register(inputName)}
+      key={inputName}
     >
       <option value="select" className="font-poppins ">
         select
       </option>
       {arrayToLoop?.map((state, index) => {
         return (
-          <option key={index} value={state} className="font-poppins ">
+          <option key={index} value={state} className="font-poppins">
             {state}
           </option>
         );

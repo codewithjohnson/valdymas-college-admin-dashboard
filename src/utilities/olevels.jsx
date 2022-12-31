@@ -111,5 +111,6 @@ export const olevelGrades = [
 
 export const examTypes = ["waec", "neco", "gce", "nabteb"];
 
-// create an array from 2000 to 2022
 export const examYears = [...Array(23).keys()].map((i) => 2000 + i);
+
+export const exams = ["private canditate results", "public canditate results"];
