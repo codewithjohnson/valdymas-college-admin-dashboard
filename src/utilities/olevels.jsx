@@ -107,10 +107,15 @@ export const olevelGrades = [
   "D7",
   "E8",
   "F9",
+  "AR",
 ];
 
-export const examTypes = ["waec", "neco", "gce", "nabteb"];
+export const examTypes = ["waec", "neco", "gce", "nabteb", "AR"];
 
-export const examYears = [...Array(23).keys()].map((i) => 2000 + i);
+export const examYears = [...Array(24).keys()].map((i) => 2000 + i);
 
-export const exams = ["private canditate results", "public canditate results"];
+export const exams = [
+  "private canditate results",
+  "public canditate results",
+  "AR",
+];

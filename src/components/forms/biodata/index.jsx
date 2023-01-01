@@ -6,7 +6,7 @@ import { nigeriaStates, nigeriaLgas } from "../../../utilities/nigeria";
 import {
   biodataSchema,
   SetFormValues,
-} from "../../../schemas/biodataValidation";
+} from "../../../schemas/biodata";
 import { useSelector, useDispatch } from "react-redux";
 
 const BiodataForm = () => {
@@ -347,7 +347,7 @@ const BiodataForm = () => {
             className="cursor-pointer studentInputClass"
             {...register("stateOfOrigin")}
           >
-            <option value="select" className="font-poppins">
+            <option value="" className="font-poppins">
               select
             </option>
             {nigeriaStates?.map((state, index) => {
