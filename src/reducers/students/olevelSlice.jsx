@@ -31,6 +31,7 @@ export const OlevelsReducer = (state = olevels, action) => {
       return {
         ...state,
         sittingOne: {
+          GlobalsittingNumber: action.payload.sittingNumber,
           firstSittingexamType: action.payload.firstSittingexamType,
           firstSittingexamYear: action.payload.firstSittingexamYear,
           firstSittingexamNumber: action.payload.firstSittingexamNumber,
@@ -50,6 +51,7 @@ export const OlevelsReducer = (state = olevels, action) => {
       return {
         ...state,
         sittingTwo: {
+          GlobalsittingNumber: action.payload.sittingNumber,
           secondSittingexamType: action.payload.secondSittingexamType,
           secondSittingexamYear: action.payload.secondSittingexamYear,
           secondSittingexamNumber: action.payload.secondSittingexamNumber,

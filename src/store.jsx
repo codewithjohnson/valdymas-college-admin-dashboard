@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { rootReducer } from "./reducers/rootReducer";
 import { nanoid } from "nanoid";
-import { ActionTypes } from "@mui/base";
+
 
 const initialState = {
   biodata: {
@@ -22,6 +22,7 @@ const initialState = {
   programme: {},
   olevels: {
     sittingOne: {
+      GlobalsittingNumber: "",
       firstSittingexamType: "",
       firstSittingexamYear: "",
       firstSittingexamNumber: "",
@@ -37,6 +38,7 @@ const initialState = {
       subjectNine: { id: nanoid(), subject: "", grade: "" },
     },
     sittingTwo: {
+      GlobalsittingNumber: "",
       secondSittingexamType: "",
       secondSittingexamYear: "",
       secondSittingexamNumber: "",

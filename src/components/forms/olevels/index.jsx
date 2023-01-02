@@ -4,10 +4,20 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { firstSittingSchema, secondSittingSchema } from "../../../schemas/olevels";
+
 // Components
 import SelectInput from "../../selectInput";
+
 // utilities
-import { waecSubjectsWithId, olevelGradesWithId, examTypesWithId, examYearsWithId, examsWithId } from "../../../utilities/olevels";
+import {
+  waecSubjectsWithId,
+  olevelGradesWithId,
+  examTypesWithId,
+  examYearsWithId,
+  examsWithId,
+} from "../../../utilities/olevels";
+
+//TODOS: 1. return subject and grade values to their respective container using setValues from react-hook-form
 
 const Olevel = () => {
   const [sittingNumber, setSittingNumber] = useState("1");
@@ -15,25 +25,36 @@ const Olevel = () => {
   const navigate = useNavigate();
 
   // Schema One
-  const { register, handleSubmit } = useForm({
-    resolver: yupResolver(firstSittingSchema),
-  });
+  const { register, handleSubmit } = useForm();
+  // {
+  //   resolver: yupResolver(firstSittingSchema),
+  // }
 
   // Schema Two
-  const { register: register2, handleSubmit: handleSubmit2 } = useForm({
-    resolver: yupResolver(secondSittingSchema),
-  });
+  const { register: register2, handleSubmit: handleSubmit2 } = useForm();
+  // {
+  //   resolver: yupResolver(secondSittingSchema),
+  // }
 
   // Form One
   const onFormOneSubmit = (data) => {
-    console.log(data);
+    const sittingOneData = { sittingNumber: sittingNumber, ...data };
+    console.log(sittingOneData);
     dispatch({ type: "OLEVELS/SITTING_ONE", payload: data });
   };
 
   // Form Two
   const onFormTwoSubmit = (data) => {
-    console.log(data);
+    const sittingTwoData = { sittingNumber: sittingNumber, ...data };
+    console.log(sittingTwoData);
     dispatch({ type: "OLEVELS/SITTING_TWO", payload: data });
+  };
+
+  const goToPreviousPage = (e) => {
+    e.preventDefault();
+  };
+  const goToNextPage = (e) => {
+    e.preventDefault();
   };
 
   return (
@@ -59,7 +80,7 @@ const Olevel = () => {
         </select>
       </form>
 
-      <div className="sittings flex-col lg:flex lg:flex-row justify-between border border-slate-200 p-3 mt-5 gap-x-20 ">
+      <div className="sittings flex-col lg:flex lg:flex-row justify-between border border-slate-200 p-3 mt-5 gap-x-10 ">
         {/* SITTING ONE */}
         {(sittingNumber === "1" || sittingNumber === "2") && (
           <form key={1} onSubmit={handleSubmit(onFormOneSubmit)} className={`w-full bg-green-50`}>
@@ -70,7 +91,9 @@ const Olevel = () => {
                 <div className="examType w-1/2">
                   <label htmlFor="firstSittingexamType" className="capitalize text-gray-500">
                     exam type{" "}
-                    <span className=" text-[11px] capitalize bg-gray-600 text-white rounded-md w-max p-1 ml-3 select-none ">first sitting</span>
+                    <span className=" text-[11px] capitalize bg-gray-600 text-white rounded-md w-max p-1 ml-3 select-none ">
+                      first sitting
+                    </span>
                   </label>
                   <SelectInput
                     register={register}
@@ -327,8 +350,17 @@ const Olevel = () => {
       </div>
 
       {/* -----------NEXT PAGE BUTTON------------- */}
-      <div className="btns py-5 flex justify-end lg:justify-end">
-        <button className="bg-purple-700 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out">
+      <div className="btns py-5 flex justify-center gap-x-5">
+        <button
+          onClick={goToPreviousPage}
+          className="bg-black px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out"
+        >
+          previous page
+        </button>
+        <button
+          onClick={goToNextPage}
+          className="bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out"
+        >
           next page
         </button>
       </div>
