@@ -1,3 +1,5 @@
+import { nanoid } from "nanoid";
+
 export const nigeriaStates = [
   "Abia",
   "Adamawa",
@@ -38,6 +40,10 @@ export const nigeriaStates = [
   "Zamfara",
 ];
 
+// convert the above array to an object with id
+export const nigeriaStatesWithId = nigeriaStates.map((state) => {
+  return { id: nanoid(), state };
+});
 
 export const nigeriaLgas = {
   Abia: [
@@ -160,16 +166,7 @@ export const nigeriaLgas = {
     "Warji",
     "Zaki",
   ],
-  Bayelsa: [
-    "Brass",
-    "Ekeremor",
-    "Kolokuma/Opokuma",
-    "Nembe",
-    "Ogbia",
-    "Sagbama",
-    "Southern Jaw",
-    "Yenegoa",
-  ],
+  Bayelsa: ["Brass", "Ekeremor", "Kolokuma/Opokuma", "Nembe", "Ogbia", "Sagbama", "Southern Jaw", "Yenegoa"],
   Benue: [
     "Ado",
     "Agatu",
@@ -338,14 +335,7 @@ export const nigeriaLgas = {
     "Ise/Orun",
     "Ilejemeje.",
   ],
-  "FCT - Abuja": [
-    "Abaji",
-    "Abuja Municipal",
-    "Bwari",
-    "Gwagwalada",
-    "Kuje",
-    "Kwali",
-  ],
+  "FCT - Abuja": ["Abaji", "Abuja Municipal", "Bwari", "Gwagwalada", "Kuje", "Kwali"],
   Gombe: [
     "Akko",
     "Balanga",
@@ -884,3 +874,5 @@ export const nigeriaLgas = {
     "Zurmi",
   ],
 };
+
+

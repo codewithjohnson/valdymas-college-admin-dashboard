@@ -15,27 +15,27 @@ export const Aside = () => {
       >
         <Menu>
           <Menu className="capitalize text-[14px] -mx-4 pr-1">
-            {sideBarMenuItems.map((item, index) => {
+            {sideBarMenuItems.map((item) => {
               return (
                 <SubMenu
                   icon={item.icon}
                   defaultOpen={item.defaultOpen}
                   className="submenuTitle"
                   label={item.label}
-                  key={index}
+                  key={item.id}
                 >
-                  {item.subMenus.map((subMenu, index) => {
+                  {item.subMenus.map((subMenu) => {
                     return (
                       <MenuItem
                         className="submenuText"
-                        key={index}
+                        key={subMenu.id}
                         routerLink={<Link to={`${subMenu.link}`} />}
                       >
                         {subMenu.label}
                       </MenuItem>
                     );
                   })}
-                  <hr className="mx-6 my-3" />
+                  <hr className="mx-6 my-3" key={item.id} />
                 </SubMenu>
               );
             })}

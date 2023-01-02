@@ -1,4 +1,5 @@
 import React from "react";
+import { nanoid } from "nanoid";
 
 const SelectInput = ({ register, inputName, arrayToLoop, classname }) => {
   return (
@@ -7,15 +8,15 @@ const SelectInput = ({ register, inputName, arrayToLoop, classname }) => {
       id={inputName}
       className={classname}
       {...register(inputName)}
-      key={inputName}
+      
     >
       <option value="" className="font-poppins ">
         select
       </option>
-      {arrayToLoop?.map((state, index) => {
+      {arrayToLoop?.map((state) => {
         return (
-          <option key={index} value={state} className="font-poppins">
-            {state}
+          <option key={state.id} value={state.state} className="font-poppins">
+            {state.state}
           </option>
         );
       })}

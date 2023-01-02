@@ -18,7 +18,12 @@ const initialState = {
     lga: "",
   },
   programme: {},
-  olevels: {},
+  olevels: {
+    sitting_one: [
+      
+    ],
+    sitting_two: [],
+  },
 };
 
 // get stored state from local storage

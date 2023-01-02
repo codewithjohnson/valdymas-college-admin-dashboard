@@ -1,3 +1,5 @@
+import { nanoid } from "nanoid";
+
 export const waecSubjects = [
   "Biology",
   "Chemistry",
@@ -96,7 +98,12 @@ export const waecSubjects = [
   "Wood Work",
   "Yoruba",
 ];
+// convert the array above to array of objects with id
+export const waecSubjectsWithId = waecSubjects.map((state) => {
+  return { id: nanoid(), state };
+});
 
+// ----------------- O LEVEL GRADES -----------------
 export const olevelGrades = [
   "A1",
   "B2",
@@ -109,13 +116,29 @@ export const olevelGrades = [
   "F9",
   "AR",
 ];
+// convert the array above to array of objects with id
+export const olevelGradesWithId = olevelGrades.map((state) => {
+  return { id: nanoid(), state };
+});
 
 export const examTypes = ["waec", "neco", "gce", "nabteb", "AR"];
-
-export const examYears = [...Array(24).keys()].map((i) => 2000 + i);
+// convert the array above to array of objects with id
+export const examTypesWithId = examTypes.map((state) => {
+  return { id: nanoid(), state };
+});
 
 export const exams = [
   "private canditate results",
   "public canditate results",
   "AR",
 ];
+// convert the array above to array of objects with id
+export const examsWithId = exams.map((state) => {
+  return { id: nanoid(), state };
+});
+
+export const examYears = [...Array(24).keys()].map((i) => 2000 + i);
+// convert the array above to array of objects with id
+export const examYearsWithId = examYears.map((state) => {
+  return { id: nanoid(), state };
+});

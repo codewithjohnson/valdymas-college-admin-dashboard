@@ -2,11 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
-import { nigeriaStates, nigeriaLgas } from "../../../utilities/nigeria";
-import {
-  biodataSchema,
-  SetFormValues,
-} from "../../../schemas/biodata";
+import { nigeriaStatesWithId, nigeriaLgas } from "../../../utilities/nigeria";
+import { biodataSchema, SetFormValues } from "../../../schemas/biodata";
 import { useSelector, useDispatch } from "react-redux";
 
 const BiodataForm = () => {
@@ -32,6 +29,7 @@ const BiodataForm = () => {
   const watchState = watch("stateOfOrigin");
   var stateLgas = nigeriaLgas[watchState];
 
+
   // Handle form submit
   const onBiodataFormSubmit = (data) => {
     dispatch({ type: "BIODATA/ADDED", payload: data });
@@ -50,10 +48,7 @@ const BiodataForm = () => {
       >
         {/* FIRST NAME */}
         <div className="firstname">
-          <label
-            htmlFor="firstname"
-            className="text-gray-600 text-[15px] capitalize"
-          >
+          <label htmlFor="firstname" className="text-gray-600 text-[15px] capitalize">
             First Name
           </label>
           <input
@@ -73,10 +68,7 @@ const BiodataForm = () => {
 
         {/* LAST NAME */}
         <div className="lastname">
-          <label
-            htmlFor="lastname"
-            className="text-gray-600 text-[15px] capitalize"
-          >
+          <label htmlFor="lastname" className="text-gray-600 text-[15px] capitalize">
             Last Name
           </label>
           <input
@@ -96,10 +88,7 @@ const BiodataForm = () => {
 
         {/* MIDDLE NAME */}
         <div className="middlename">
-          <label
-            htmlFor="middlename"
-            className="text-gray-600 text-[15px] capitalize"
-          >
+          <label htmlFor="middlename" className="text-gray-600 text-[15px] capitalize">
             Middle Name
           </label>
           <input
@@ -119,10 +108,7 @@ const BiodataForm = () => {
 
         {/* EMAIL  */}
         <div className="email">
-          <label
-            htmlFor="email"
-            className="text-gray-600 text-[15px] capitalize"
-          >
+          <label htmlFor="email" className="text-gray-600 text-[15px] capitalize">
             Email
           </label>
           <input
@@ -142,10 +128,7 @@ const BiodataForm = () => {
 
         {/* PHONE NUMBER */}
         <div className="phoneNumber">
-          <label
-            htmlFor="phoneNumber"
-            className="text-gray-600 text-[15px] capitalize"
-          >
+          <label htmlFor="phoneNumber" className="text-gray-600 text-[15px] capitalize">
             contact number
           </label>
           <input
@@ -165,18 +148,10 @@ const BiodataForm = () => {
 
         {/* GENDER SELECT ELEMENT */}
         <div className="gender">
-          <label
-            htmlFor="gender"
-            className="text-gray-600 text-[15px] capitalize"
-          >
+          <label htmlFor="gender" className="text-gray-600 text-[15px] capitalize">
             gender
           </label>
-          <select
-            name="gender"
-            id="gender"
-            className="cursor-pointer studentInputClass"
-            {...register("gender")}
-          >
+          <select name="gender" id="gender" className="cursor-pointer studentInputClass" {...register("gender")}>
             <option value="" className="font-poppins">
               select
             </option>
@@ -196,10 +171,7 @@ const BiodataForm = () => {
 
         {/* DATE OF BIRTH */}
         <div className="date-of-birth">
-          <label
-            htmlFor="gender"
-            className="text-gray-600 text-[15px] capitalize"
-          >
+          <label htmlFor="gender" className="text-gray-600 text-[15px] capitalize">
             date of birth
           </label>
           <input
@@ -209,17 +181,12 @@ const BiodataForm = () => {
             id="dateOfBirth"
             className="studentInputClass"
           />
-          {errors?.dateOfBirth && (
-            <span className="errorMessage">{errors?.dateOfBirth.message}</span>
-          )}
+          {errors?.dateOfBirth && <span className="errorMessage">{errors?.dateOfBirth.message}</span>}
         </div>
 
         {/* CONTACT ADDRESS */}
         <div className="col-span-2 contactaddress">
-          <label
-            htmlFor="contactAddress"
-            className="text-gray-600 text-[15px] capitalize"
-          >
+          <label htmlFor="contactAddress" className="text-gray-600 text-[15px] capitalize">
             contact address
           </label>
           <input
@@ -230,27 +197,15 @@ const BiodataForm = () => {
             id="contactAddress"
             className="studentInputClass"
           />
-          {errors?.contactAddress && (
-            <span className="errorMessage">
-              {errors?.contactAddress.message}
-            </span>
-          )}
+          {errors?.contactAddress && <span className="errorMessage">{errors?.contactAddress.message}</span>}
         </div>
 
         {/* RELIGION SELECT ELEMENT */}
         <div className="religion">
-          <label
-            htmlFor="religion"
-            className="text-gray-600 text-[15px] capitalize"
-          >
+          <label htmlFor="religion" className="text-gray-600 text-[15px] capitalize">
             religion
           </label>
-          <select
-            name="religion"
-            id="religion"
-            {...register("religion")}
-            className="cursor-pointer studentInputClass"
-          >
+          <select name="religion" id="religion" {...register("religion")} className="cursor-pointer studentInputClass">
             <option value="" className="font-poppins">
               select
             </option>
@@ -273,10 +228,7 @@ const BiodataForm = () => {
 
         {/* NATIONALITY SELECT ELEMENT */}
         <div className="nationality">
-          <label
-            htmlFor="nationality"
-            className="text-gray-600 text-[15px] capitalize"
-          >
+          <label htmlFor="nationality" className="text-gray-600 text-[15px] capitalize">
             nationality
           </label>
           <select
@@ -304,10 +256,7 @@ const BiodataForm = () => {
 
         {/* MARITAL STATUS SELECT ELEMENT */}
         <div className="maritalStatus">
-          <label
-            htmlFor="maritalStatus"
-            className="text-gray-600 text-[15px] capitalize"
-          >
+          <label htmlFor="maritalStatus" className="text-gray-600 text-[15px] capitalize">
             marital status
           </label>
           <select
@@ -335,10 +284,7 @@ const BiodataForm = () => {
 
         {/* STATE OF ORIGIN SELECT ELEMENT */}
         <div className="stateOfOrigin">
-          <label
-            htmlFor="stateOfOrigin"
-            className="text-gray-600 text-[15px] capitalize"
-          >
+          <label htmlFor="stateOfOrigin" className="text-gray-600 text-[15px] capitalize">
             state of origin
           </label>
           <select
@@ -350,10 +296,10 @@ const BiodataForm = () => {
             <option value="" className="font-poppins">
               select
             </option>
-            {nigeriaStates?.map((state, index) => {
+            {nigeriaStatesWithId?.map((state) => {
               return (
-                <option key={index} value={state} className="font-poppins">
-                  {state}
+                <option key={state.id} value={state.state} className="font-poppins">
+                  {state.state}
                 </option>
               );
             })}
@@ -370,12 +316,7 @@ const BiodataForm = () => {
           <label htmlFor="lga" className="text-gray-600 text-[15px]">
             LGA
           </label>
-          <select
-            name="lga"
-            id="lga"
-            className="cursor-pointer studentInputClass"
-            {...register("lga")}
-          >
+          <select name="lga" id="lga" className="cursor-pointer studentInputClass" {...register("lga")}>
             {watchState &&
               stateLgas?.map((lga, index) => {
                 return (
