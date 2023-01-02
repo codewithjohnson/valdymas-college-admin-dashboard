@@ -1,5 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { rootReducer } from "./reducers/rootReducer";
+import { nanoid } from "nanoid";
+import { ActionTypes } from "@mui/base";
 
 const initialState = {
   biodata: {
@@ -19,10 +21,36 @@ const initialState = {
   },
   programme: {},
   olevels: {
-    sitting_one: [
-      
-    ],
-    sitting_two: [],
+    sittingOne: {
+      firstSittingexamType: "",
+      firstSittingexamYear: "",
+      firstSittingexamNumber: "",
+      firstSittingexam: "",
+      subjectOne: { id: nanoid(), subject: "", grade: "" },
+      subjectTwo: { id: nanoid(), subject: "", grade: "" },
+      subjectThree: { id: nanoid(), subject: "", grade: "" },
+      subjectFour: { id: nanoid(), subject: "", grade: "" },
+      subjectFive: { id: nanoid(), subject: "", grade: "" },
+      subjectSix: { id: nanoid(), subject: "", grade: "" },
+      subjectSeven: { id: nanoid(), subject: "", grade: "" },
+      subjectEight: { id: nanoid(), subject: "", grade: "" },
+      subjectNine: { id: nanoid(), subject: "", grade: "" },
+    },
+    sittingTwo: {
+      secondSittingexamType: "",
+      secondSittingexamYear: "",
+      secondSittingexamNumber: "",
+      secondSittingexam: "",
+      subjectOne: { id: nanoid(), subject: "", grade: "" },
+      subjectTwo: { id: nanoid(), subject: "", grade: "" },
+      subjectThree: { id: nanoid(), subject: "", grade: "" },
+      subjectFour: { id: nanoid(), subject: "", grade: "" },
+      subjectFive: { id: nanoid(), subject: "", grade: "" },
+      subjectSix: { id: nanoid(), subject: "", grade: "" },
+      subjectSeven: { id: nanoid(), subject: "", grade: "" },
+      subjectEight: { id: nanoid(), subject: "", grade: "" },
+      subjectNine: { id: nanoid(), subject: "", grade: "" },
+    },
   },
 };
 

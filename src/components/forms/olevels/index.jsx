@@ -4,43 +4,36 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { firstSittingSchema, secondSittingSchema } from "../../../schemas/olevels";
-
 // Components
 import SelectInput from "../../selectInput";
-
 // utilities
-import {
-  waecSubjectsWithId,
-  olevelGradesWithId,
-  examTypesWithId,
-  examYearsWithId,
-  examsWithId,
-} from "../../../utilities/olevels";
+import { waecSubjectsWithId, olevelGradesWithId, examTypesWithId, examYearsWithId, examsWithId } from "../../../utilities/olevels";
 
 const Olevel = () => {
   const [sittingNumber, setSittingNumber] = useState("1");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  // Schema One
   const { register, handleSubmit } = useForm({
     resolver: yupResolver(firstSittingSchema),
   });
 
+  // Schema Two
   const { register: register2, handleSubmit: handleSubmit2 } = useForm({
     resolver: yupResolver(secondSittingSchema),
   });
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
   // Form One
   const onFormOneSubmit = (data) => {
     console.log(data);
-    // dispatch({ type: "OLEVELS/SITTING_ONE", payload: data });
+    dispatch({ type: "OLEVELS/SITTING_ONE", payload: data });
   };
 
   // Form Two
   const onFormTwoSubmit = (data) => {
     console.log(data);
-    // dispatch({ type: "OLEVELS/SITTING_TWO", payload: data });
+    dispatch({ type: "OLEVELS/SITTING_TWO", payload: data });
   };
 
   return (
@@ -77,9 +70,7 @@ const Olevel = () => {
                 <div className="examType w-1/2">
                   <label htmlFor="firstSittingexamType" className="capitalize text-gray-500">
                     exam type{" "}
-                    <span className=" text-[11px] capitalize bg-gray-600 text-white rounded-md w-max p-1 ml-3 select-none ">
-                      first sitting
-                    </span>
+                    <span className=" text-[11px] capitalize bg-gray-600 text-white rounded-md w-max p-1 ml-3 select-none ">first sitting</span>
                   </label>
                   <SelectInput
                     register={register}
