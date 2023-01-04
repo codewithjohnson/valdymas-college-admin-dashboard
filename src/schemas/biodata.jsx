@@ -10,7 +10,7 @@ export const biodataSchema = object({
     .matches(/^(0|\+234)[789][01]\d{8}$/, "Invalid phone number")
     .required("Phone number is required"),
   gender: string().required("Gender is required"),
-  dateOfBirth: date().max(new Date()).required("Date of birth is required"),
+  dateOfBirth: string().required("Date of birth is required"),
   contactAddress: string().required("Address is required"),
   religion: string().required("Religion is required"),
   nationality: string().required("Nationality is required"),

@@ -17,7 +17,7 @@ import {
   examsWithId,
 } from "../../../utilities/olevels";
 
-//TODOS: 1. return subject and grade values to their respective container using setValues from react-hook-form
+// TODOS: 1. return subject and grade values to  containers with data from firebase--Redux
 
 const Olevel = () => {
   const [sittingNumber, setSittingNumber] = useState("1");
@@ -39,15 +39,13 @@ const Olevel = () => {
   // Form One
   const onFormOneSubmit = (data) => {
     const sittingOneData = { sittingNumber: sittingNumber, ...data };
-    console.log(sittingOneData);
-    dispatch({ type: "OLEVELS/SITTING_ONE", payload: data });
+    dispatch({ type: "OLEVELS/SITTING_ONE", payload: sittingOneData });
   };
 
   // Form Two
   const onFormTwoSubmit = (data) => {
     const sittingTwoData = { sittingNumber: sittingNumber, ...data };
-    console.log(sittingTwoData);
-    dispatch({ type: "OLEVELS/SITTING_TWO", payload: data });
+    dispatch({ type: "OLEVELS/SITTING_TWO", payload: sittingTwoData });
   };
 
   const goToPreviousPage = (e) => {
@@ -55,6 +53,8 @@ const Olevel = () => {
   };
   const goToNextPage = (e) => {
     e.preventDefault();
+    const NEXTROUTE = "/students/add-student/programme";
+    navigate(NEXTROUTE);
   };
 
   return (
@@ -105,7 +105,10 @@ const Olevel = () => {
 
                 <div className="examYear w-1/2">
                   <div className="label w-full text-right">
-                    <label htmlFor="firstSittingexamYear" className="text-gray-600 text-[15px] w-full capitalize">
+                    <label
+                      htmlFor="firstSittingexamYear"
+                      className="text-gray-600 text-[15px] w-full capitalize"
+                    >
                       year
                     </label>
                   </div>
@@ -123,7 +126,10 @@ const Olevel = () => {
               <div className="exam--examNumber flex justify-between items-center gap-4 mt-10">
                 {/* FIRST SITTING EXAM */}
                 <div className="firstSittingexam w-1/2">
-                  <label htmlFor="firstSittingexam" className="text-gray-600 text-[15px] capitalize">
+                  <label
+                    htmlFor="firstSittingexam"
+                    className="text-gray-600 text-[15px] capitalize"
+                  >
                     exam
                   </label>
                   <SelectInput
@@ -136,7 +142,10 @@ const Olevel = () => {
 
                 <div className="firstSittingexamNumber w-1/2">
                   <div className="label w-full text-right">
-                    <label htmlFor="firstSittingexamNumber" className="text-gray-600 text-[15px] w-full capitalize">
+                    <label
+                      htmlFor="firstSittingexamNumber"
+                      className="text-gray-600 text-[15px] w-full capitalize"
+                    >
                       registration number
                     </label>
                   </div>
@@ -181,7 +190,10 @@ const Olevel = () => {
                 {/* Grade Container */}
                 <div className="gradeContainer w-1/2">
                   <div className="label w-full text-right">
-                    <label htmlFor="grade_one" className="text-gray-600 text-[15px] w-full capitalize">
+                    <label
+                      htmlFor="grade_one"
+                      className="text-gray-600 text-[15px] w-full capitalize"
+                    >
                       grades
                     </label>
                   </div>
@@ -239,7 +251,10 @@ const Olevel = () => {
 
                 <div className="examYear w-1/2">
                   <div className="label w-full text-right">
-                    <label htmlFor="secondSittingexamYear" className="text-gray-600 text-[15px] w-full capitalize">
+                    <label
+                      htmlFor="secondSittingexamYear"
+                      className="text-gray-600 text-[15px] w-full capitalize"
+                    >
                       year
                     </label>
                   </div>
@@ -256,7 +271,10 @@ const Olevel = () => {
               {/* SELECT EXAM PLACE AND REGISTRATION NUMBER */}
               <div className="exam--examNumber flex justify-between items-center gap-4 mt-10">
                 <div className="exam w-1/2">
-                  <label htmlFor="secondSittingexam" className="text-gray-600 text-[15px] capitalize">
+                  <label
+                    htmlFor="secondSittingexam"
+                    className="text-gray-600 text-[15px] capitalize"
+                  >
                     exam
                   </label>
                   <SelectInput
@@ -269,7 +287,10 @@ const Olevel = () => {
 
                 <div className="secondSittingexamNumber w-1/2">
                   <div className="label w-full text-right">
-                    <label htmlFor="secondSittingexamNumber" className="text-gray-600 text-[15px] w-full capitalize">
+                    <label
+                      htmlFor="secondSittingexamNumber"
+                      className="text-gray-600 text-[15px] w-full capitalize"
+                    >
                       registration number
                     </label>
                   </div>
@@ -313,7 +334,10 @@ const Olevel = () => {
                 {/* Grade Container */}
                 <div className="gradeContainer w-1/2">
                   <div className="label w-full text-right">
-                    <label htmlFor="grade_two" className="text-gray-600 text-[15px] w-full capitalize">
+                    <label
+                      htmlFor="grade_two"
+                      className="text-gray-600 text-[15px] w-full capitalize"
+                    >
                       grades
                     </label>
                   </div>
@@ -349,8 +373,8 @@ const Olevel = () => {
         )}
       </div>
 
-      {/* -----------NEXT PAGE BUTTON------------- */}
-      <div className="btns py-5 flex justify-center gap-x-5">
+      {/* -----------NEXT and prev PAGE BUTTON------------- */}
+      <div className="btns py-5 flex justify-center gap-x-5 mt-5">
         <button
           onClick={goToPreviousPage}
           className="bg-black px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out"

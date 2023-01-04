@@ -1,7 +1,8 @@
+import { useEffect } from "react";
+import { getStudentsCollectionRef } from "./services/firestore/students/students";
 import { configureStore } from "@reduxjs/toolkit";
 import { rootReducer } from "./reducers/rootReducer";
 import { nanoid } from "nanoid";
-
 
 const initialState = {
   biodata: {
@@ -19,7 +20,14 @@ const initialState = {
     stateOfOrigin: "",
     lga: "",
   },
-  programme: {},
+  programme: {
+    modeOfEntry: "",
+    department: "",
+    courseOfStudy: "",
+    subject1: "",
+    subject2: "",
+    subject3: "",
+  },
   olevels: {
     sittingOne: {
       GlobalsittingNumber: "",
@@ -66,6 +74,15 @@ export const getStoredData = () => {
 export const store = configureStore({
   reducer: rootReducer,
   preloadedState: getStoredData(),
+
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ["BIODATA/ADDED"],
+        ignoredActionPaths: ["payload.dateOfBirth"],
+        ignoredPaths: ["biodata.dateOfBirth"],
+      },
+    }),
 });
 
 // store state to local storage

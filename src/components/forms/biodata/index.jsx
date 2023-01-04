@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { nigeriaStatesWithId, nigeriaLgas } from "../../../utilities/nigeria";
 import { biodataSchema, SetFormValues } from "../../../schemas/biodata";
 import { useSelector, useDispatch } from "react-redux";
+import { addBiodataDispatcher } from "../../../dispatches/biodata";
 
 const BiodataForm = () => {
   const dispatch = useDispatch();
@@ -12,15 +13,19 @@ const BiodataForm = () => {
   const DATA = useSelector((state) => state.biodata);
   const SCHEMA = biodataSchema;
 
+  // const currentDate = new Date().toISOString().substring(0, 10);
+  // const a = new Date().toISOString().split("T")[0];
+
   const {
     register,
     handleSubmit,
     watch,
     setValue,
     formState: { errors },
-  } = useForm({
-    resolver: yupResolver(SCHEMA),
-  });
+  } = useForm();
+  // {
+  //   resolver: yupResolver(SCHEMA),
+  // }
 
   useEffect(() => {
     SetFormValues(setValue, DATA);
@@ -29,22 +34,26 @@ const BiodataForm = () => {
   const watchState = watch("stateOfOrigin");
   var stateLgas = nigeriaLgas[watchState];
 
-
   // Handle form submit
   const onBiodataFormSubmit = (data) => {
-    dispatch({ type: "BIODATA/ADDED", payload: data });
+    dispatch(addBiodataDispatcher(data));
     const NEXTROUTE = "/students/add-student/olevels";
     navigate(NEXTROUTE);
   };
 
   return (
     <div className="p-5 pb-8 font-poppins">
-      <h3 className="p-3 pb-5 text-sm text-green-900 capitalize bg-green-100 rounded-md w-max">
-        Biodata(personal information)
-      </h3>
+      <header className="flex justify-between items-center">
+        <h3 className="p-3 pb-5 text-sm text-green-900 capitalize bg-green-100 rounded-md w-max select-none ">
+          Biodata(personal information)
+        </h3>
+        <p className="capitalize text-sm sm:text-base text-green-800 font-semibold">
+          step 1 <span>/</span> <span className="text-red-800">3</span>
+        </p>
+      </header>
       <form
         onSubmit={handleSubmit(onBiodataFormSubmit)}
-        className="grid w-full h-full grid-cols-1 mt-5 gap-x-6 gap-y-7 sm:grid-cols-2 lg:grid-cols-3"
+        className="w-full h-full mt-5 flex flex-col sm:grid sm:grid-cols-2 gap-x-8  gap-y-7"
       >
         {/* FIRST NAME */}
         <div className="firstname">
@@ -151,7 +160,12 @@ const BiodataForm = () => {
           <label htmlFor="gender" className="text-gray-600 text-[15px] capitalize">
             gender
           </label>
-          <select name="gender" id="gender" className="cursor-pointer studentInputClass" {...register("gender")}>
+          <select
+            name="gender"
+            id="gender"
+            className="cursor-pointer studentInputClass"
+            {...register("gender")}
+          >
             <option value="" className="font-poppins">
               select
             </option>
@@ -180,8 +194,11 @@ const BiodataForm = () => {
             {...register("dateOfBirth")}
             id="dateOfBirth"
             className="studentInputClass"
+            max={new Date().toISOString().split("T")[0]}
           />
-          {errors?.dateOfBirth && <span className="errorMessage">{errors?.dateOfBirth.message}</span>}
+          {errors?.dateOfBirth && (
+            <span className="errorMessage">{errors?.dateOfBirth.message}</span>
+          )}
         </div>
 
         {/* CONTACT ADDRESS */}
@@ -197,7 +214,9 @@ const BiodataForm = () => {
             id="contactAddress"
             className="studentInputClass"
           />
-          {errors?.contactAddress && <span className="errorMessage">{errors?.contactAddress.message}</span>}
+          {errors?.contactAddress && (
+            <span className="errorMessage">{errors?.contactAddress.message}</span>
+          )}
         </div>
 
         {/* RELIGION SELECT ELEMENT */}
@@ -205,7 +224,12 @@ const BiodataForm = () => {
           <label htmlFor="religion" className="text-gray-600 text-[15px] capitalize">
             religion
           </label>
-          <select name="religion" id="religion" {...register("religion")} className="cursor-pointer studentInputClass">
+          <select
+            name="religion"
+            id="religion"
+            {...register("religion")}
+            className="cursor-pointer studentInputClass"
+          >
             <option value="" className="font-poppins">
               select
             </option>
@@ -316,7 +340,12 @@ const BiodataForm = () => {
           <label htmlFor="lga" className="text-gray-600 text-[15px]">
             LGA
           </label>
-          <select name="lga" id="lga" className="cursor-pointer studentInputClass" {...register("lga")}>
+          <select
+            name="lga"
+            id="lga"
+            className="cursor-pointer studentInputClass"
+            {...register("lga")}
+          >
             {watchState &&
               stateLgas?.map((lga, index) => {
                 return (
@@ -332,10 +361,12 @@ const BiodataForm = () => {
             </p>
           )}
         </div>
+
+        {/* Buttons */}
         <div className="btns col-start-4  col-end-3 row-end-7 place-self-end flex gap-x-4">
           <button
             type="submit"
-            className="bg-purple-700 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out "
+            className="bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out "
           >
             next page
           </button>
