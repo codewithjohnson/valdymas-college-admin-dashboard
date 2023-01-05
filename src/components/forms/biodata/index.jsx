@@ -22,10 +22,10 @@ const BiodataForm = () => {
     watch,
     setValue,
     formState: { errors },
-  } = useForm();
-  // {
-  //   resolver: yupResolver(SCHEMA),
-  // }
+  } = useForm({
+    resolver: yupResolver(SCHEMA),
+  });
+  
 
   useEffect(() => {
     SetFormValues(setValue, DATA);
