@@ -37,7 +37,7 @@ export const Navbar = () => {
             search
           </span>
           <input
-            className="input w-full border-0 p-1 outline-none text-gray-800 text-[13px] font-firaSans h-full bg-purple-100"
+            className="inputt w-full border-0 p-1 outline-none text-gray-800 text-[13px] font-firaSans h-full bg-purple-100"
             placeholder="search"
           />
         </div>

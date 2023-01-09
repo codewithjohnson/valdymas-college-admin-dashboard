@@ -23,15 +23,15 @@ const Programme = () => {
     dispatch({ type: "PROGRAMME/SET_PROGRAMME", payload: data });
 
     try {
-      const studentname = `${studentData?.biodata?.firstname} ${studentData?.biodata?.lastname};`;
-      await registerStudent(studentname, studentData);
+      const studentFullName = `${studentData?.biodata?.firstname} ${studentData?.biodata?.lastname}`;
+      await registerStudent(studentFullName, studentData);
       // TODO Alert Admin that student has been registered
     } catch (err) {
       console.log(err.message);
     }
 
     const NEXTROUTE = "/students";
-    navigate(NEXTROUTE);
+    // navigate(NEXTROUTE);
   };
 
   const goToPreviousPage = (e) => {

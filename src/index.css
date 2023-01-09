@@ -7,10 +7,10 @@
     @apply text-gray-500 text-[19px];
   }
   .submenuTitle {
-    @apply text-gray-600 hover:text-purple-700;
+    @apply text-gray-700 hover:text-purple-700;
   }
   .submenuText {
-    @apply px-10 text-gray-600 text-start;
+    @apply px-10 text-gray-500 text-start;
   }
   .submenuIcon {
     @apply text-[18px] text-gray-500;
@@ -22,3 +22,4 @@
     @apply text-[11px] text-red-900 mt-2;
   }
 }
+
