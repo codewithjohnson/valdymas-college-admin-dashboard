@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-// import { getStudentsCollectionRef } from "./services/firestore/students/students";
 import { configureStore } from "@reduxjs/toolkit";
 import { rootReducer } from "./reducers/rootReducer";
 import { nanoid } from "nanoid";

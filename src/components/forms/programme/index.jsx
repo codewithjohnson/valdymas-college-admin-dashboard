@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { useState, memo, CSSProperties } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -6,6 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import SelectInput from "../../../components/selectInput";
 import { programmeSchema } from "../../../schemas/programme";
 import { registerStudent } from "../../../services/firestore/students/students";
+import Spinner from "../../../components/spinner";
 
 import {
   subjectCombinationWithId,
@@ -14,24 +15,32 @@ import {
 } from "../../../utilities/programme";
 
 const Programme = () => {
-  const { register, handleSubmit } = useForm();
+  const [isLoading, setIsLoading] = useState(false);
+  const { register, handleSubmit, reset } = useForm();
   const [navigate, dispatch] = [useNavigate(), useDispatch()];
   const studentData = useSelector((state) => state);
 
+  const override = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "black",
+  };
+
   // Handle for submission
   const onFormSubmitAndNextPage = async (data) => {
+    setIsLoading(true);
     dispatch({ type: "PROGRAMME/SET_PROGRAMME", payload: data });
-
     try {
       const studentFullName = `${studentData?.biodata?.firstname} ${studentData?.biodata?.lastname}`;
       await registerStudent(studentFullName, studentData);
-      // TODO Alert Admin that student has been registered
+      reset();
+      const NEXTROUTE = "/students";
+      navigate(NEXTROUTE);
     } catch (err) {
       console.log(err.message);
+      setIsLoading(false);
     }
-
-    const NEXTROUTE = "/students";
-    // navigate(NEXTROUTE);
+    setIsLoading(false);
   };
 
   const goToPreviousPage = (e) => {
@@ -79,7 +88,9 @@ const Programme = () => {
           <input
             type="text"
             id="courseOfStudy"
+            name="courseOfStudy"
             placeholder="proposed course"
+            {...register("courseOfStudy")}
             className="studentInputClass w-full mt-3"
           />
         </div>
@@ -114,7 +125,7 @@ const Programme = () => {
       </div>
 
       {/* -----------NEXT and prev PAGE BUTTON------------- */}
-      <div className="btns py-5 flex justify-between gap-x-5 mt-5">
+      <div className="btns py-5 flex justify-between gap-x-5 mt-5 ">
         <button
           onClick={goToPreviousPage}
           className="bg-black px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out"
@@ -123,9 +134,11 @@ const Programme = () => {
         </button>
         <button
           type="submit"
-          className="bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out"
+          className="bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out flex items-center gap-x-2"
+          disabled={isLoading}
         >
-          next page
+          <Spinner isLoading={isLoading} override={override} size={20} />
+          <span>complete</span>
         </button>
       </div>
     </form>

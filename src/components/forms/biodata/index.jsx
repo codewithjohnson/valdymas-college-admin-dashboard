@@ -20,16 +20,18 @@ const BiodataForm = () => {
     register,
     handleSubmit,
     watch,
+    reset,
     setValue,
     formState: { errors },
-  } = useForm({
-    resolver: yupResolver(SCHEMA),
-  });
-  
+  } = useForm();
 
-  useEffect(() => {
-    SetFormValues(setValue, DATA);
-  }, [DATA]);
+  // {
+  //   resolver: yupResolver(SCHEMA),
+  // }
+
+  // useEffect(() => {
+  //   SetFormValues(setValue, DATA);
+  // }, [DATA]);
 
   const watchState = watch("stateOfOrigin");
   var stateLgas = nigeriaLgas[watchState];
@@ -37,6 +39,7 @@ const BiodataForm = () => {
   // Handle form submit
   const onBiodataFormSubmit = (data) => {
     dispatch(addBiodataDispatcher(data));
+    reset();
     const NEXTROUTE = "/students/add-student/olevels";
     navigate(NEXTROUTE);
   };
@@ -53,7 +56,7 @@ const BiodataForm = () => {
       </header>
       <form
         onSubmit={handleSubmit(onBiodataFormSubmit)}
-        className="w-full h-full mt-5 flex flex-col sm:grid sm:grid-cols-2 gap-x-8  gap-y-7"
+        className="w-full h-full mt-5 flex flex-col sm:grid sm:grid-cols-2 gap-x-10  gap-y-7"
       >
         {/* FIRST NAME */}
         <div className="firstname">

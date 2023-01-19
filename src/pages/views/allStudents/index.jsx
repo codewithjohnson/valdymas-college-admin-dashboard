@@ -1,27 +1,29 @@
-import { getDocs, onSnapshot } from "firebase/firestore";
-import React, { memo, useEffect } from "react";
+import React, { useState, memo, useEffect } from "react";
 import { getAllStudentsInfoDocs } from "../../../services/firestore/students/students";
+import StudentsTable from "../../../components/dataTable/students/StudentsTable";
+
+// material ui
 import Tooltip from "@mui/material/Tooltip";
 
 const Students = () => {
+  const [studentsData, setStudentsData] = useState([]);
+
   useEffect(() => {
     const getAllStudents = async () => {
-      const docs = await getAllStudentsInfoDocs();
-      console.log(docs);
+      const studentsDocs = await getAllStudentsInfoDocs();
+      setStudentsData(studentsDocs);
     };
     getAllStudents();
   }, []);
 
-  // TODO: Data Grid
-  // TODO: first name, last name, email, gender, department, programme, subject combination
-  // TODO: Add copy, delete icon
-
   return (
     <div className="w-full h-full bg-white new rounded-2xl pb-8 font-poppins">
       <h3 className="capitalize text-lg border-b border-b-slate-200 p-5">students</h3>
+
+      {/* STUDENT UTILS */}
       <div className="studentUtils p-5 flex-col sm:flex sm:flex-row justify-between items-center  ">
         {/* search container */}
-        <div className="searchCont py-1 px-3 flex items-center bg-slate-100 w-[250px] border border-slate-300 rounded-xl ">
+        <div className="searchCont  px-3 flex items-center bg-slate-100 w-[250px] border border-slate-300 rounded-xl hover:border hover:border-slate-500">
           <span className="material-symbols-outlined text-[19px] text-purple-400">search</span>
           <input
             type="text"
@@ -49,6 +51,9 @@ const Students = () => {
           </Tooltip>
         </div>
       </div>
+
+      {/* DATA TABLE */}
+      <StudentsTable studentsData={studentsData} />
     </div>
   );
 };

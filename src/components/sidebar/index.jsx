@@ -10,7 +10,7 @@ export const Aside = () => {
         backgroundColor="white"
         transitionDuration={1000}
         width="200px"
-        collapsedWidth="0px"
+        collapsedWidth="40px"
         border="0"
       >
         <Menu>

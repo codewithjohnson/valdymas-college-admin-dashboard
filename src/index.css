@@ -21,5 +21,19 @@
   .errorMessage {
     @apply text-[11px] text-red-900 mt-2;
   }
+  .myDataGridRow {
+    @apply font-poppins  text-slate-600;
+  }
+  .myDataGridCell {
+    @apply text-center;
+  }
+  .cellID {
+    @apply text-black;
+  }
+  .cellGenderMale {
+    @apply text-blue-500;
+  }
+  .cellGenderFemale {
+    @apply text-red-500;
+  }
 }
-

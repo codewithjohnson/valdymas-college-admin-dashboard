@@ -3,13 +3,7 @@ import { nanoid } from "nanoid";
 
 const SelectInput = ({ register, inputName, arrayToLoop, classname }) => {
   return (
-    <select
-      name={inputName}
-      id={inputName}
-      className={classname}
-      {...register(inputName)}
-      
-    >
+    <select name={inputName} id={inputName} className={classname} {...register(inputName)}>
       <option value="" className="font-poppins ">
         select
       </option>

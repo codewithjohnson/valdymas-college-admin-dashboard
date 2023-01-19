@@ -25,7 +25,7 @@ const Olevel = () => {
   const navigate = useNavigate();
 
   // Schema One
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   // {
   //   resolver: yupResolver(firstSittingSchema),
   // }
@@ -51,8 +51,10 @@ const Olevel = () => {
   const goToPreviousPage = (e) => {
     e.preventDefault();
   };
+
   const goToNextPage = (e) => {
     e.preventDefault();
+    reset();
     const NEXTROUTE = "/students/add-student/programme";
     navigate(NEXTROUTE);
   };
@@ -141,7 +143,7 @@ const Olevel = () => {
                 </div>
 
                 <div className="firstSittingexamNumber w-1/2">
-                  <div className="label w-full text-right">
+                  <div className="label w-full text-left">
                     <label
                       htmlFor="firstSittingexamNumber"
                       className="text-gray-600 text-[15px] w-full capitalize"
@@ -230,7 +232,7 @@ const Olevel = () => {
 
         {/* SECOND SITTING FORM */}
         {sittingNumber === "2" && (
-          <form key={2} onSubmit={handleSubmit2(onFormTwoSubmit)} className="w-full bg-rose-50">
+          <form key={2} onSubmit={handleSubmit2(onFormTwoSubmit)} className="w-full bg-green-50">
             <div className={`sitting-two w-full p-3 mt-10 sm:mt-0 `}>
               {/* SELECT EXAM TYPE ND YEAR */}
               <div className="examType--examYear flex justify-between items-center gap-x-4 mt-3">
