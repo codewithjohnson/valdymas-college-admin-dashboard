@@ -1,37 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
 import { nigeriaStatesWithId, nigeriaLgas } from "../../../utilities/nigeria";
-import { biodataSchema, SetFormValues } from "../../../schemas/biodata";
-import { useSelector, useDispatch } from "react-redux";
+import { useBiodataFormHooks } from "../../../schemas/biodata";
 import { addBiodataDispatcher } from "../../../dispatches/biodata";
+import { useStudentContext } from "../../../context/students";
 
 const BiodataForm = () => {
-  const dispatch = useDispatch();
+  const { dispatch } = useStudentContext();
   const navigate = useNavigate();
-  const DATA = useSelector((state) => state.biodata);
-  const SCHEMA = biodataSchema;
 
-  // const currentDate = new Date().toISOString().substring(0, 10);
-  // const a = new Date().toISOString().split("T")[0];
-
-  const {
-    register,
-    handleSubmit,
-    watch,
-    reset,
-    setValue,
-    formState: { errors },
-  } = useForm();
-
-  // {
-  //   resolver: yupResolver(SCHEMA),
-  // }
-
-  // useEffect(() => {
-  //   SetFormValues(setValue, DATA);
-  // }, [DATA]);
+  const { register, watch, reset, trigger, handleSubmit, setValue, errors, isValid } =
+    useBiodataFormHooks();
 
   const watchState = watch("stateOfOrigin");
   var stateLgas = nigeriaLgas[watchState];
@@ -48,7 +27,7 @@ const BiodataForm = () => {
     <div className="p-5 pb-8 font-poppins">
       <header className="flex justify-between items-center">
         <h3 className="p-3 pb-5 text-sm text-green-900 capitalize bg-green-100 rounded-md w-max select-none ">
-          Biodata(personal information)
+          Biodata (personal information)
         </h3>
         <p className="capitalize text-sm sm:text-base text-green-800 font-semibold select-none ">
           step 1 <span>/</span> <span className="text-red-800">3</span>
@@ -206,7 +185,10 @@ const BiodataForm = () => {
 
         {/* CONTACT ADDRESS */}
         <div className="col-span-2 contactaddress">
-          <label htmlFor="contactAddress" className="text-gray-600 text-[15px] capitalize">
+          <label
+            htmlFor="contactAddress"
+            className="text-gray-600 text-[15px] capitalize"
+          >
             contact address
           </label>
           <input

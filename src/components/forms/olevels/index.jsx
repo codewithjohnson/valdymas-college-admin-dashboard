@@ -1,7 +1,7 @@
 import { memo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 import { firstSittingFormHooks, secondSittingFormHooks } from "../../../schemas/olevels";
+import { useStudentContext } from "../../../context/students";
 
 // Components
 import SelectInput from "../../selectInput";
@@ -16,8 +16,8 @@ import {
 } from "../../../utilities/olevels";
 
 const Olevel = () => {
+  const { state, dispatch } = useStudentContext();
   const [sittingNumber, setSittingNumber] = useState("1");
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isSubmitted, setIsubmitted] = useState(false);
 

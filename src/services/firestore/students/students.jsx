@@ -65,6 +65,7 @@ export const getAllStudentsInfoDocs = async () => {
       const studentInfo = studentInfoDocs.docs.map((doc) => {
         return { ...doc.data() };
       });
+      console.log(studentInfo);
       return { studentID, studentInfo };
     })
   );

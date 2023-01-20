@@ -43,7 +43,7 @@ export const Navbar = () => {
         </div>
       </div>
       <div className="right">
-        <div className="user--profile flex items-center gap-2">profile</div>
+        <div className="user--profile flex items-center gap-2">muyiwamighty@gmail.com</div>
       </div>
     </nav>
   );

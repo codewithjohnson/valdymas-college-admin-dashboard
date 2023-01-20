@@ -1,4 +1,6 @@
 import { object, string, number, boolean, date } from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { nigeriaStates } from "../utilities/nigeria";
 
 export const biodataSchema = object({
@@ -20,6 +22,33 @@ export const biodataSchema = object({
     .oneOf(nigeriaStates, "state of origin is required"),
   lga: string().required("LGA is required"),
 });
+
+// biodata form hooks
+export const useBiodataFormHooks = () => {
+  const {
+    register,
+    watch,
+    reset,
+    trigger,
+    handleSubmit,
+    setValue,
+    formState: { errors, isValid },
+  } = useForm();
+  // {
+  //   resolver: yupResolver(biodataSchema),
+  // }
+
+  return {
+    register,
+    watch,
+    reset,
+    trigger,
+    handleSubmit,
+    setValue,
+    errors,
+    isValid,
+  };
+};
 
 // function that returns form values from the store into the form
 export const SetFormValues = (setValue, DATA) => {

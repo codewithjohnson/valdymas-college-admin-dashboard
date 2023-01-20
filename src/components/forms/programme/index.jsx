@@ -1,10 +1,10 @@
 import React, { useState, memo, CSSProperties } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import SelectInput from "../../../components/selectInput";
 import { registerStudent } from "../../../services/firestore/students/students";
 import Spinner from "../../../components/spinner";
 import { useProgrammeFormHooks } from "../../../schemas/programme";
+import { useStudentContext } from "../../../context/students";
 
 import {
   subjectCombinationWithId,
@@ -13,14 +13,15 @@ import {
 } from "../../../utilities/programme";
 
 const Programme = () => {
+  const { dispatch } = useStudentContext();
+  const [isSaved, setIsSaved] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [navigate, dispatch] = [useNavigate(), useDispatch()];
-  const studentData = useSelector((state) => state);
+  const navigate = useNavigate();
 
   const override = {
     display: "block",
     margin: "0 auto",
-    borderColor: "black",
+    borderColor: "white",
   };
 
   const {
@@ -34,22 +35,10 @@ const Programme = () => {
     isValid,
   } = useProgrammeFormHooks();
 
-  // Handle for submission
-  const onFormSubmitAndNextPage = async (data) => {
-    setIsLoading(true);
+  // Handle save information
+  const onFormSubmitAndSave = async (data) => {
     dispatch({ type: "PROGRAMME/SET_PROGRAMME", payload: data });
-    try {
-      const studentFullName = `${studentData?.biodata?.firstname} ${studentData?.biodata?.lastname}`;
-      await registerStudent(studentFullName, studentData);
-      reset();
-      const NEXTROUTE = "/students";
-      navigate(NEXTROUTE);
-    } catch (err) {
-      console.log(err.message);
-      setIsLoading(false);
-    } finally {
-      setIsLoading(false);
-    }
+    setIsSaved(true);
   };
 
   const goToPreviousPage = (e) => {
@@ -58,12 +47,36 @@ const Programme = () => {
     navigate(PREVROUTE);
   };
 
+  // Handle for submission
+  const onFormComplete = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    // try {
+    //   const studentFullName = `${studentData?.biodata?.firstname} ${studentData?.biodata?.lastname}`;
+    //   await registerStudent(studentFullName, studentData);
+    //   console.log(studentData);
+    //   const NEXTROUTE = "/students";
+    // navigate(NEXTROUTE);
+    // } catch (err) {
+    //   console.log(err.message);
+    //   setIsLoading(false);
+    // } finally {
+    //   setIsLoading(false);
+    //   // reset();
+    //   // localStorage.clear();
+    // }
+  };
+
   return (
-    <form onSubmit={handleSubmit(onFormSubmitAndNextPage)} className="mt-7">
+    <form onSubmit={handleSubmit(onFormSubmitAndSave)} className="mt-7">
       <div className="top sm:flex justify-between gap-x-10">
         {/* Mode Of Entry */}
         <div className="modeOfEntry w-full">
-          <label htmlFor="" className="text-gray-800 text-[15px] w-full capitalize">
+          <label
+            htmlFor="modeOfEntry"
+            className="text-gray-800 text-[15px] w-full capitalize"
+          >
             Mode of entry
           </label>
           <SelectInput
@@ -75,7 +88,7 @@ const Programme = () => {
         </div>
 
         {/* Department */}
-        <div className="department w-full items-center ">
+        <div className="department w-full items-center mt-5 sm:mt-0">
           <label
             htmlFor="department"
             className="text-gray-800 text-[15px] w-full capitalize"
@@ -91,7 +104,7 @@ const Programme = () => {
         </div>
       </div>
 
-      <div className="bottom  sm:flex justify-between gap-x-10 mt-10">
+      <div className="bottom  sm:flex justify-between gap-x-10 mt-5 sm:mt-10">
         {/* Proposed Course of Study */}
         <div className="courseOfStudy mt-6 w-full">
           <label
@@ -108,6 +121,11 @@ const Programme = () => {
             {...register("courseOfStudy")}
             className="studentInputClass w-full mt-3"
           />
+          {errors.courseOfStudy && (
+            <p className="text-red-500 text-[12px] mt-1">
+              {errors.courseOfStudy.message}
+            </p>
+          )}
         </div>
 
         {/* Subject Combination */}
@@ -139,23 +157,36 @@ const Programme = () => {
         </div>
       </div>
 
-      {/* -----------NEXT and prev PAGE BUTTON------------- */}
+      {/* -----------SAVE BTN & NEXT and prev PAGE BUTTON------------- */}
       <div className="btns py-5 flex justify-between gap-x-5 mt-5 ">
         <button
           onClick={goToPreviousPage}
+          disabled={isSubmitting || isValidating}
           className="bg-black px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out"
         >
           previous page
         </button>
 
+        {/* SAVE DATA */}
+        {isValid && (
+          <button
+            type="submit"
+            className={`bg-gray-600 px-5 py-4  capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out}`}
+          >
+            save
+          </button>
+        )}
+
         {/* Next Page */}
-        <button
-          type="submit"
-          className={`bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out flex items-center gap-x-2 ${isValid? "": "opacity-50 cursor-not-allowed"}}`}
-        >
-          <Spinner isLoading={isLoading} override={override} size={20} />
-          <span>complete</span>
-        </button>
+        {isSaved && (
+          <button
+            className={`bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out flex items-center gap-x-2 $}`}
+            onClick={onFormComplete}
+          >
+            <Spinner isLoading={isLoading} override={override} size={20} />
+            <span>complete</span>
+          </button>
+        )}
       </div>
     </form>
   );
