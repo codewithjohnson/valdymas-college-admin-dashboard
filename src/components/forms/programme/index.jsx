@@ -1,12 +1,10 @@
 import React, { useState, memo, CSSProperties } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import SelectInput from "../../../components/selectInput";
-import { programmeSchema } from "../../../schemas/programme";
 import { registerStudent } from "../../../services/firestore/students/students";
 import Spinner from "../../../components/spinner";
+import { useProgrammeFormHooks } from "../../../schemas/programme";
 
 import {
   subjectCombinationWithId,
@@ -16,7 +14,6 @@ import {
 
 const Programme = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const { register, handleSubmit, reset } = useForm();
   const [navigate, dispatch] = [useNavigate(), useDispatch()];
   const studentData = useSelector((state) => state);
 
@@ -25,6 +22,17 @@ const Programme = () => {
     margin: "0 auto",
     borderColor: "black",
   };
+
+  const {
+    register,
+    reset,
+    trigger,
+    handleSubmit,
+    errors,
+    isSubmitting,
+    isValidating,
+    isValid,
+  } = useProgrammeFormHooks();
 
   // Handle for submission
   const onFormSubmitAndNextPage = async (data) => {
@@ -39,8 +47,9 @@ const Programme = () => {
     } catch (err) {
       console.log(err.message);
       setIsLoading(false);
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   const goToPreviousPage = (e) => {
@@ -67,7 +76,10 @@ const Programme = () => {
 
         {/* Department */}
         <div className="department w-full items-center ">
-          <label htmlFor="department" className="text-gray-800 text-[15px] w-full capitalize">
+          <label
+            htmlFor="department"
+            className="text-gray-800 text-[15px] w-full capitalize"
+          >
             department
           </label>
           <SelectInput
@@ -82,7 +94,10 @@ const Programme = () => {
       <div className="bottom  sm:flex justify-between gap-x-10 mt-10">
         {/* Proposed Course of Study */}
         <div className="courseOfStudy mt-6 w-full">
-          <label htmlFor="courseOfStudy" className="text-gray-800 text-[15px] w-full capitalize">
+          <label
+            htmlFor="courseOfStudy"
+            className="text-gray-800 text-[15px] w-full capitalize"
+          >
             proposed course of study
           </label>
           <input
@@ -132,10 +147,11 @@ const Programme = () => {
         >
           previous page
         </button>
+
+        {/* Next Page */}
         <button
           type="submit"
-          className="bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out flex items-center gap-x-2"
-          disabled={isLoading}
+          className={`bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out flex items-center gap-x-2 ${isValid? "": "opacity-50 cursor-not-allowed"}}`}
         >
           <Spinner isLoading={isLoading} override={override} size={20} />
           <span>complete</span>

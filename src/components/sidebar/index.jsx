@@ -5,16 +5,17 @@ import { sideBarMenuItems } from "../../utilities/menuItems";
 
 export const Aside = () => {
   return (
-    <div className="w-full h-full overflow-y-scroll bg-white border-0 sidebar--container font-poppins scrollbar-none">
+    <div className={`w-full h-full bg-white border-0 font-poppins scrollbar-none`}>
       <Sidebar
         backgroundColor="white"
         transitionDuration={1000}
-        width="200px"
+        width="250px"
         collapsedWidth="40px"
         border="0"
+        rootStyles={{ overflowY: "hidden" , height: "500px"}}
       >
         <Menu>
-          <Menu className="capitalize text-[14px] -mx-4 pr-1">
+          <Menu className="capitalize text-[14px] -mx-4 pr-5">
             {sideBarMenuItems.map((item) => {
               return (
                 <SubMenu

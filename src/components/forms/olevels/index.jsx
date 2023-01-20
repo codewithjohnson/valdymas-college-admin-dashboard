@@ -1,9 +1,7 @@
-import { memo, useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { memo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { firstSittingSchema, secondSittingSchema } from "../../../schemas/olevels";
+import { firstSittingFormHooks, secondSittingFormHooks } from "../../../schemas/olevels";
 
 // Components
 import SelectInput from "../../selectInput";
@@ -17,46 +15,57 @@ import {
   examsWithId,
 } from "../../../utilities/olevels";
 
-// TODOS: 1. return subject and grade values to  containers with data from firebase--Redux
-
 const Olevel = () => {
   const [sittingNumber, setSittingNumber] = useState("1");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isSubmitted, setIsubmitted] = useState(false);
 
-  // Schema One
-  const { register, handleSubmit, reset } = useForm();
-  // {
-  //   resolver: yupResolver(firstSittingSchema),
-  // }
+  const {
+    firstSittingRegister,
+    firstSittingReset,
+    firstSittingTrigger,
+    firstSittingSetError,
+    firstSittingHandleSubmit,
+    firstSittingIsValid,
+  } = firstSittingFormHooks();
 
-  // Schema Two
-  const { register: register2, handleSubmit: handleSubmit2 } = useForm();
-  // {
-  //   resolver: yupResolver(secondSittingSchema),
-  // }
+  const {
+    secondSittingRegister,
+    secondSittingReset,
+    secondSittingTrigger,
+    secondSittingSetError,
+    secondSittingHandleSubmit,
+    secondSittingIsValid,
+  } = secondSittingFormHooks();
 
   // Form One
   const onFormOneSubmit = (data) => {
     const sittingOneData = { sittingNumber: sittingNumber, ...data };
     dispatch({ type: "OLEVELS/SITTING_ONE", payload: sittingOneData });
+    setIsubmitted(true);
   };
 
   // Form Two
   const onFormTwoSubmit = (data) => {
     const sittingTwoData = { sittingNumber: sittingNumber, ...data };
     dispatch({ type: "OLEVELS/SITTING_TWO", payload: sittingTwoData });
+    setIsubmitted(true);
   };
 
+  // go to previous page
   const goToPreviousPage = (e) => {
     e.preventDefault();
   };
 
+  // go to next page
   const goToNextPage = (e) => {
     e.preventDefault();
-    reset();
     const NEXTROUTE = "/students/add-student/programme";
     navigate(NEXTROUTE);
+    firstSittingReset();
+    secondSittingReset();
+    setIsubmitted(false);
   };
 
   return (
@@ -85,20 +94,27 @@ const Olevel = () => {
       <div className="sittings flex-col lg:flex lg:flex-row justify-between border border-slate-200 p-3 mt-5 gap-x-10 ">
         {/* SITTING ONE */}
         {(sittingNumber === "1" || sittingNumber === "2") && (
-          <form key={1} onSubmit={handleSubmit(onFormOneSubmit)} className={`w-full bg-green-50`}>
+          <form
+            key={1}
+            onSubmit={firstSittingHandleSubmit(onFormOneSubmit)}
+            className={`w-full bg-green-50`}
+          >
             <div className={`sitting-one p-3 w-full`}>
               {/* SELECT EXAM TYPE ND YEAR */}
               <div className="examType--examYear flex gap-4 mt-3">
                 {/* Exam Type */}
                 <div className="examType w-1/2">
-                  <label htmlFor="firstSittingexamType" className="capitalize text-gray-500">
+                  <label
+                    htmlFor="firstSittingexamType"
+                    className="capitalize text-gray-500"
+                  >
                     exam type{" "}
                     <span className=" text-[11px] capitalize bg-gray-600 text-white rounded-md w-max p-1 ml-3 select-none ">
                       first sitting
                     </span>
                   </label>
                   <SelectInput
-                    register={register}
+                    register={firstSittingRegister}
                     inputName={"firstSittingexamType"}
                     arrayToLoop={examTypesWithId}
                     classname={`cursor-pointer studentInputClass w-full mt-3`}
@@ -116,7 +132,7 @@ const Olevel = () => {
                   </div>
 
                   <SelectInput
-                    register={register}
+                    register={firstSittingRegister}
                     inputName={"firstSittingexamYear"}
                     arrayToLoop={examYearsWithId}
                     classname={`cursor-pointer studentInputClass w-full mt-3`}
@@ -135,7 +151,7 @@ const Olevel = () => {
                     exam
                   </label>
                   <SelectInput
-                    register={register}
+                    register={firstSittingRegister}
                     inputName={"firstSittingexam"}
                     arrayToLoop={examsWithId}
                     classname={`cursor-pointer studentInputClass w-full mt-3`}
@@ -158,7 +174,7 @@ const Olevel = () => {
                     name="firstSittingexamNumber"
                     id="firstSittingexamNumber"
                     placeholder="Awaiting ?"
-                    {...register("firstSittingexamNumber")}
+                    {...firstSittingRegister("firstSittingexamNumber")}
                   />
                 </div>
               </div>
@@ -169,7 +185,10 @@ const Olevel = () => {
               <div className="olevels--container mt-6 flex justify-between gap-4 ">
                 {/* Subject Container */}
                 <div className="subjectContainer w-1/2">
-                  <label htmlFor="olevel_one" className="text-gray-600 text-[15px] capitalize">
+                  <label
+                    htmlFor="olevel_one"
+                    className="text-gray-600 text-[15px] capitalize"
+                  >
                     subject
                   </label>
                   {/* display SelectInput 9 times */}
@@ -178,7 +197,7 @@ const Olevel = () => {
                     .map((_, index) => {
                       return (
                         <SelectInput
-                          register={register}
+                          register={firstSittingRegister}
                           inputName={`olevel_one_${index + 1}`}
                           arrayToLoop={waecSubjectsWithId}
                           classname={
@@ -205,7 +224,7 @@ const Olevel = () => {
                     .map((_, index) => {
                       return (
                         <SelectInput
-                          register={register}
+                          register={firstSittingRegister}
                           inputName={`grade_one_${index + 1}`}
                           arrayToLoop={olevelGradesWithId}
                           classname={
@@ -222,7 +241,9 @@ const Olevel = () => {
             <div className={`btns py-5 px-3 flex justify-end lg:justify-start `}>
               <button
                 type="submit"
-                className="bg-gray-600 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out"
+                className={`bg-gray-600 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out  ${
+                  firstSittingIsValid ? "visible" : "invisible"
+                }`}
               >
                 save
               </button>
@@ -232,19 +253,26 @@ const Olevel = () => {
 
         {/* SECOND SITTING FORM */}
         {sittingNumber === "2" && (
-          <form key={2} onSubmit={handleSubmit2(onFormTwoSubmit)} className="w-full bg-green-50">
+          <form
+            key={2}
+            onSubmit={secondSittingHandleSubmit(onFormTwoSubmit)}
+            className="w-full bg-green-50"
+          >
             <div className={`sitting-two w-full p-3 mt-10 sm:mt-0 `}>
               {/* SELECT EXAM TYPE ND YEAR */}
               <div className="examType--examYear flex justify-between items-center gap-x-4 mt-3">
                 <div className="examType w-1/2">
-                  <label htmlFor="secondSittingexamType" className="capitalize text-gray-600">
+                  <label
+                    htmlFor="secondSittingexamType"
+                    className="capitalize text-gray-600"
+                  >
                     exam type{" "}
                     <span className=" text-[9px] sm:text-[11px] capitalize bg-gray-600 text-white rounded-md w-max p-1 ml-3 select-none ">
                       second sitting
                     </span>
                   </label>
                   <SelectInput
-                    register={register2}
+                    register={secondSittingRegister}
                     inputName={"secondSittingexamType"}
                     arrayToLoop={examTypesWithId}
                     classname={`cursor-pointer studentInputClass w-full mt-3`}
@@ -262,7 +290,7 @@ const Olevel = () => {
                   </div>
 
                   <SelectInput
-                    register={register2}
+                    register={secondSittingRegister}
                     inputName={"secondSittingexamYear"}
                     arrayToLoop={examYearsWithId}
                     classname={`cursor-pointer studentInputClass w-full mt-3`}
@@ -280,7 +308,7 @@ const Olevel = () => {
                     exam
                   </label>
                   <SelectInput
-                    register={register2}
+                    register={secondSittingRegister}
                     inputName={"secondSittingexam"}
                     arrayToLoop={examsWithId}
                     classname={`cursor-pointer studentInputClass w-full mt-3`}
@@ -303,7 +331,7 @@ const Olevel = () => {
                     name="secondSittingexamNumber"
                     id="secondSittingexamNumber"
                     placeholder="Awaiting ?"
-                    {...register2("secondSittingexamNumber")}
+                    {...secondSittingRegister("secondSittingexamNumber")}
                   />
                 </div>
               </div>
@@ -313,7 +341,10 @@ const Olevel = () => {
               {/* Subject Container */}
               <div className="olevels--container mt-6 flex justify-between gap-4 ">
                 <div className="subjectContainer w-1/2">
-                  <label htmlFor="olevel_two" className="text-gray-600 text-[15px] capitalize">
+                  <label
+                    htmlFor="olevel_two"
+                    className="text-gray-600 text-[15px] capitalize"
+                  >
                     subject
                   </label>
                   {/* display SelectInput 9 times */}
@@ -322,7 +353,7 @@ const Olevel = () => {
                     .map((_, index) => {
                       return (
                         <SelectInput
-                          register={register2}
+                          register={secondSittingRegister}
                           inputName={`olevel_two_${index + 1}`}
                           arrayToLoop={waecSubjectsWithId}
                           classname={
@@ -349,7 +380,7 @@ const Olevel = () => {
                     .map((_, index) => {
                       return (
                         <SelectInput
-                          register={register2}
+                          register={secondSittingRegister}
                           inputName={`grade_two_${index + 1}`}
                           arrayToLoop={olevelGradesWithId}
                           classname={
@@ -366,7 +397,9 @@ const Olevel = () => {
             <div className="btns py-5 px-3 flex justify-end ">
               <button
                 type="submit"
-                className="bg-gray-600 px-5 py-4  capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out"
+                className={`bg-gray-600 px-5 py-4  capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out ${
+                  secondSittingIsValid ? "visible" : "invisible"
+                }`}
               >
                 save
               </button>
@@ -385,7 +418,9 @@ const Olevel = () => {
         </button>
         <button
           onClick={goToNextPage}
-          className="bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out"
+          className={`bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out ${
+            isSubmitted ? "visible" : "invisible"
+          }`}
         >
           next page
         </button>

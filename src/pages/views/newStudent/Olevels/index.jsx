@@ -9,7 +9,7 @@ const OlevelsPage = () => {
         <h3 className="p-3 pb-5 text-sm text-green-900 capitalize bg-green-100 rounded-md w-max select-none ">
           O'levels grading
         </h3>
-        <p className="capitalize text-sm sm:text-base text-green-800 font-semibold">
+        <p className="capitalize text-sm sm:text-base text-green-800 font-semibold  select-none">
           step 2 <span>/</span> <span className="text-red-800">3</span>
         </p>
       </header>

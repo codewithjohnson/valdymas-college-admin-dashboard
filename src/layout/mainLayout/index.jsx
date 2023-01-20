@@ -9,7 +9,7 @@ const MainLayout = ({ children }) => {
       </header>
 
       <section className="p-2 sm:p-0 fixed right-0 top-[90px] w-full h-full flex">
-        <aside className="hidden border-0 md:block">
+        <aside className="border-0 z-50 hidden sm:block">
           <Aside />
         </aside>
 

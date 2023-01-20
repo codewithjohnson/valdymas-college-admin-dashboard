@@ -1,4 +1,6 @@
 import { object, string, number, boolean, date } from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 // first sitting subjects and grades
 export const firstSittingSubjectsAndGrades = [
@@ -47,7 +49,7 @@ export const secondSittingSubjectsAndGrades = [
 export const firstSittingSchema = object({
   firstSittingexamType: string().required("this is required"),
   firstSittingexamYear: string().required("this is required"),
-  firstSittingexamNumber: string().required("this is required"),
+  firstSittingexamNumber: string().trim().min(5).required("this is required"),
   firstSittingexam: string().required("this is required"),
   olevel_one_1: string().required("this is required"),
   olevel_one_2: string().required("this is required"),
@@ -68,6 +70,37 @@ export const firstSittingSchema = object({
   grade_one_8: string().required("this is required"),
   grade_one_9: string().required("this is required"),
 });
+
+// first sitting form hooks
+export const firstSittingFormHooks = () => {
+  const {
+    register: firstSittingRegister,
+    reset: firstSittingReset,
+    trigger: firstSittingTrigger,
+    setError: firstSittingSetError,
+    handleSubmit: firstSittingHandleSubmit,
+    formState: {
+      errors: firstSittingErrors,
+      isSubmitting: firstSittingIsSubmitting,
+      isValid: firstSittingIsValid,
+      isValidating: firstSittingIsValidating,
+    },
+  } = useForm({
+    resolver: yupResolver(firstSittingSchema),
+  });
+
+  return {
+    firstSittingRegister,
+    firstSittingReset,
+    firstSittingTrigger,
+    firstSittingSetError,
+    firstSittingHandleSubmit,
+    firstSittingErrors,
+    firstSittingIsSubmitting,
+    firstSittingIsValid,
+    firstSittingIsValidating,
+  };
+};
 
 export const secondSittingSchema = object({
   secondSittingexamType: string().required("this is required"),
@@ -93,3 +126,34 @@ export const secondSittingSchema = object({
   grade_two_8: string().required("this is required"),
   grade_two_9: string().required("this is required"),
 });
+
+// second sitting form hooks
+export const secondSittingFormHooks = () => {
+  const {
+    register: secondSittingRegister,
+    reset: secondSittingReset,
+    trigger: secondSittingTrigger,
+    setError: secondSittingSetError,
+    handleSubmit: secondSittingHandleSubmit,
+    formState: {
+      errors: secondSittingErrors,
+      isSubmitting: secondSittingIsSubmitting,
+      isValid: secondSittingIsValid,
+      isValidating: secondSittingIsValidating,
+    },
+  } = useForm({
+    resolver: yupResolver(secondSittingSchema),
+  });
+
+  return {
+    secondSittingRegister,
+    secondSittingReset,
+    secondSittingTrigger,
+    secondSittingSetError,
+    secondSittingHandleSubmit,
+    secondSittingErrors,
+    secondSittingIsSubmitting,
+    secondSittingIsValid,
+    secondSittingIsValidating,
+  };
+};

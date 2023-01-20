@@ -2,11 +2,9 @@ export const sideBarMenuItems = [
   {
     id: 1,
     label: "dashboard",
-    defaultOpen: false,
+    defaultOpen: true,
     icon: (
-      <span className="material-symbols-outlined submenuIcon">
-        dashboard_customize
-      </span>
+      <span className="material-symbols-outlined submenuIcon">dashboard_customize</span>
     ),
     subMenus: [
       { id: 1, label: "default", link: "/dashboard" },
@@ -27,7 +25,7 @@ export const sideBarMenuItems = [
   {
     id: 3,
     label: "departments",
-    defaultOpen: false,
+    defaultOpen: true,
     icon: <span className="material-symbols-outlined submenuIcon">school</span>,
     subMenus: [
       { id: 1, label: "sciences", link: "sciences" },
