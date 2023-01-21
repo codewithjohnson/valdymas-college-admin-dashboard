@@ -13,7 +13,7 @@ import {
 } from "../../../utilities/programme";
 
 const Programme = () => {
-  const { dispatch } = useStudentContext();
+  const { state, dispatch } = useStudentContext();
   const [isSaved, setIsSaved] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -41,6 +41,7 @@ const Programme = () => {
     setIsSaved(true);
   };
 
+  //  Handle for previous page
   const goToPreviousPage = (e) => {
     e.preventDefault();
     const PREVROUTE = "/students/add-student/olevels";
@@ -52,20 +53,22 @@ const Programme = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    // try {
-    //   const studentFullName = `${studentData?.biodata?.firstname} ${studentData?.biodata?.lastname}`;
-    //   await registerStudent(studentFullName, studentData);
-    //   console.log(studentData);
-    //   const NEXTROUTE = "/students";
-    // navigate(NEXTROUTE);
-    // } catch (err) {
-    //   console.log(err.message);
-    //   setIsLoading(false);
-    // } finally {
-    //   setIsLoading(false);
-    //   // reset();
-    //   // localStorage.clear();
-    // }
+    try {
+      const studentData = state;
+      const studentFullName = `${studentData?.biodata?.firstname} ${studentData?.biodata?.lastname}`;
+      await registerStudent(studentFullName, studentData);
+
+      // Navigate to next page
+      const NEXTROUTE = "/students";
+      navigate(NEXTROUTE);
+    } catch (err) {
+      console.log(err.message);
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
+      reset();
+      localStorage.clear();
+    }
   };
 
   return (

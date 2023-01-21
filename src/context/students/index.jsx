@@ -16,10 +16,10 @@ const getStoredStudentData = () => {
 export const StudentContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(studentReducer, getStoredStudentData());
 
-  // store student data in local storage
   useEffect(() => {
     localStorage.setItem("storedStudentData", JSON.stringify(state));
   }, [state]);
+
   return (
     <StudentContext.Provider value={{ state, dispatch }}>
       {children}
