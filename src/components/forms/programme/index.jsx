@@ -1,4 +1,4 @@
-import React, { useState, memo, CSSProperties } from "react";
+import React, { useState, memo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import SelectInput from "../../../components/selectInput";
 import { registerStudent } from "../../../services/firestore/students/students";
@@ -17,6 +17,16 @@ const Programme = () => {
   const [isSaved, setIsSaved] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
+  // Redirect to previous page if first sitting is empty
+  useEffect(() => {
+    const firstSittingexamType = state?.olevels?.sittingOne?.firstSittingexamType;
+    const isFirstSittingEmpty = () => firstSittingexamType === "";
+    if (isFirstSittingEmpty) {
+      const redirectRoute = "/students/add-student/olevels";
+      navigate(redirectRoute);
+    }
+  }, [state]);
 
   const override = {
     display: "block",

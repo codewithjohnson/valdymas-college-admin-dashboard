@@ -85,10 +85,9 @@ export const firstSittingFormHooks = () => {
       isValid: firstSittingIsValid,
       isValidating: firstSittingIsValidating,
     },
-  } = useForm();
-  // {
-  //   resolver: yupResolver(firstSittingSchema),
-  // }
+  } = useForm({
+    resolver: yupResolver(firstSittingSchema),
+  });
 
   return {
     firstSittingRegister,

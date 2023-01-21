@@ -1,16 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { nigeriaStatesWithId, nigeriaLgas } from "../../../utilities/nigeria";
-import { useBiodataFormHooks } from "../../../schemas/biodata";
+import { useBiodataFormHooks, SetFormValues } from "../../../schemas/biodata";
 import { addBiodataDispatcher } from "../../../dispatches/biodata";
 import { useStudentContext } from "../../../context/students";
 
 const BiodataForm = () => {
-  const { dispatch } = useStudentContext();
+  const { state, dispatch } = useStudentContext();
+  const { biodata } = state;
   const navigate = useNavigate();
 
-  const { register, watch, reset, trigger, handleSubmit, setValue, errors, isValid } =
-    useBiodataFormHooks();
+  const {
+    register,
+    watch,
+    reset,
+    trigger,
+    handleSubmit,
+    setValue,
+    errors,
+    bioDataIsValid,
+  } = useBiodataFormHooks();
+
+  useEffect(() => {
+    if (biodata) {
+      SetFormValues(setValue, biodata);
+    }
+  }, [biodata]);
 
   const watchState = watch("stateOfOrigin");
   var stateLgas = nigeriaLgas[watchState];

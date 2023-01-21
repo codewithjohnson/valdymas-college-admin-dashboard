@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { firstSittingFormHooks, secondSittingFormHooks } from "../../../schemas/olevels";
 import { useStudentContext } from "../../../context/students";
@@ -20,6 +20,15 @@ const Olevel = () => {
   const [sittingNumber, setSittingNumber] = useState("1");
   const navigate = useNavigate();
   const [isSubmitted, setIsubmitted] = useState(false);
+
+  // check if previous page has been handled
+  const { biodata } = state;
+  useEffect(() => {
+    if (!biodata.firstname) {
+      const redirectRoute = "/students/add-student/biodata";
+      navigate(redirectRoute);
+    }
+  }, [biodata]);
 
   const {
     firstSittingRegister,

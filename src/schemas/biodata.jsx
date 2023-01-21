@@ -32,11 +32,10 @@ export const useBiodataFormHooks = () => {
     trigger,
     handleSubmit,
     setValue,
-    formState: { errors, isValid },
-  } = useForm();
-  // {
-  //   resolver: yupResolver(biodataSchema),
-  // }
+    formState: { errors, isValid: bioDataIsValid },
+  } = useForm({
+    resolver: yupResolver(biodataSchema),
+  });
 
   return {
     register,
@@ -46,7 +45,7 @@ export const useBiodataFormHooks = () => {
     handleSubmit,
     setValue,
     errors,
-    isValid,
+    bioDataIsValid,
   };
 };
 
@@ -66,3 +65,5 @@ export const SetFormValues = (setValue, DATA) => {
   setValue("stateOfOrigin", DATA.stateOfOrigin);
   setValue("lga", DATA.lga);
 };
+
+
