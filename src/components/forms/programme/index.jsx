@@ -10,6 +10,7 @@ import {
   subjectCombinationWithId,
   departmentWithId,
   entryModeWithId,
+  subjectCombinationSep
 } from "../../../utilities/programme";
 
 const Programme = () => {
@@ -17,16 +18,6 @@ const Programme = () => {
   const [isSaved, setIsSaved] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-
-  // Redirect to previous page if first sitting is empty
-  useEffect(() => {
-    const firstSittingexamType = state?.olevels?.sittingOne?.firstSittingexamType;
-    const isFirstSittingEmpty = () => firstSittingexamType === "";
-    if (isFirstSittingEmpty) {
-      const redirectRoute = "/students/add-student/olevels";
-      navigate(redirectRoute);
-    }
-  }, [state]);
 
   const override = {
     display: "block",
@@ -38,12 +29,18 @@ const Programme = () => {
     register,
     reset,
     trigger,
+    watch,
     handleSubmit,
     errors,
     isSubmitting,
     isValidating,
     isValid,
   } = useProgrammeFormHooks();
+
+  // Conditioning subject selection
+  const watchDept = watch("department");
+  var DeptCat = subjectCombinationSep[watchDept];
+ 
 
   // Handle save information
   const onFormSubmitAndSave = async (data) => {

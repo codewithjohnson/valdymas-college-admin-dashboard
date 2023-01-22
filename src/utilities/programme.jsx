@@ -33,3 +33,27 @@ export const department = ["science", "social sciences", "art"];
 export const departmentWithId = department.map((state) => {
   return { id: nanoid(), state };
 });
+
+
+// Separation of student group
+export const subjectCombinationSep = {
+  "science": ["biology", "chemistry", "mathematics", "physics", "english"],
+  "social sciences": [
+    "geography",
+    "economics",
+    "government",
+    "crs",
+    "english",
+    "mathematics",
+  ],
+  "art": [
+    "business management",
+    "english",
+    "literature",
+    "french",
+    "history",
+    "commerce",
+    "accounting",
+    "mathematics",
+  ],
+};

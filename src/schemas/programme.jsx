@@ -17,6 +17,7 @@ export const useProgrammeFormHooks = () => {
     register,
     reset,
     trigger,
+    watch,
     handleSubmit,
     formState: { errors, isSubmitting, isValidating, isValid },
   } = useForm({
@@ -28,6 +29,7 @@ export const useProgrammeFormHooks = () => {
     reset,
     trigger,
     handleSubmit,
+    watch,
     errors,
     isSubmitting,
     isValidating,

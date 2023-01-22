@@ -25,8 +25,8 @@ export const initialState = {
     subject3: "",
   },
   olevels: {
+    GlobalsittingNumber: "",
     sittingOne: {
-      GlobalsittingNumber: "",
       firstSittingexamType: "",
       firstSittingexamYear: "",
       firstSittingexamNumber: "",
@@ -42,7 +42,6 @@ export const initialState = {
       subjectNine: { id: nanoid(), subject: "", grade: "" },
     },
     sittingTwo: {
-      GlobalsittingNumber: "",
       secondSittingexamType: "",
       secondSittingexamYear: "",
       secondSittingexamNumber: "",

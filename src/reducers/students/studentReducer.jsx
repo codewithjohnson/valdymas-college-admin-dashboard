@@ -1,9 +1,6 @@
 import { nanoid } from "nanoid";
 
 export const studentReducer = (state, action) => {
-
-
-
   switch (action.type) {
     case "BIODATA/ADDED":
       return {
@@ -40,6 +37,15 @@ export const studentReducer = (state, action) => {
         },
       };
 
+    case "OLEVELS/SET_GLOBAL_SITTING_NUMBER":
+      return {
+        ...state,
+        olevels: {
+          ...state.olevels,
+          GlobalsittingNumber: action.payload.GlobalsittingNumber,
+        },
+      };
+
     case "OLEVELS/SITTING_ONE":
       return {
         ...state,
@@ -47,7 +53,6 @@ export const studentReducer = (state, action) => {
           ...state.olevels,
           sittingOne: {
             ...state.olevels.sittingOne,
-            GlobalsittingNumber: action.payload.sittingNumber,
             firstSittingexamType: action.payload.firstSittingexamType,
             firstSittingexamYear: action.payload.firstSittingexamYear,
             firstSittingexamNumber: action.payload.firstSittingexamNumber,
@@ -108,7 +113,6 @@ export const studentReducer = (state, action) => {
           ...state.olevels,
           sittingTwo: {
             ...state.olevels.sittingTwo,
-            GlobalsittingNumber: action.payload.sittingNumber,
             secondSittingexamType: action.payload.secondSittingexamType,
             secondSittingexamYear: action.payload.secondSittingexamYear,
             secondSittingexamNumber: action.payload.secondSittingexamNumber,

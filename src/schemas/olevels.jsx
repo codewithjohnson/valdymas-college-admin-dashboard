@@ -77,6 +77,7 @@ export const firstSittingFormHooks = () => {
     register: firstSittingRegister,
     reset: firstSittingReset,
     trigger: firstSittingTrigger,
+    setValue: firstSittingSetValue,
     setError: firstSittingSetError,
     handleSubmit: firstSittingHandleSubmit,
     formState: {
@@ -93,6 +94,7 @@ export const firstSittingFormHooks = () => {
     firstSittingRegister,
     firstSittingReset,
     firstSittingTrigger,
+    firstSittingSetValue,
     firstSittingSetError,
     firstSittingHandleSubmit,
     firstSittingErrors,
@@ -100,6 +102,32 @@ export const firstSittingFormHooks = () => {
     firstSittingIsValid,
     firstSittingIsValidating,
   };
+};
+
+// set first sitting form values
+export const setFirstSittingFormValues = (setValue, data) => {
+  setValue("firstSittingexamType", data.firstSittingexamType);
+  setValue("firstSittingexamYear", data.firstSittingexamYear);
+  setValue("firstSittingexamNumber", data.firstSittingexamNumber);
+  setValue("firstSittingexam", data.firstSittingexam);
+  setValue("olevel_one_1", data.subjectOne.subject);
+  setValue("olevel_one_2", data.subjectTwo.subject);
+  setValue("olevel_one_3", data.subjectThree.subject);
+  setValue("olevel_one_4", data.subjectFour.subject);
+  setValue("olevel_one_5", data.subjectFive.subject);
+  setValue("olevel_one_6", data.subjectSix.subject);
+  setValue("olevel_one_7", data.subjectSeven.subject);
+  setValue("olevel_one_8", data.subjectEight.subject);
+  setValue("olevel_one_9", data.subjectNine.subject);
+  setValue("grade_one_1", data.subjectOne.grade);
+  setValue("grade_one_2", data.subjectTwo.grade);
+  setValue("grade_one_3", data.subjectThree.grade);
+  setValue("grade_one_4", data.subjectFour.grade);
+  setValue("grade_one_5", data.subjectFive.grade);
+  setValue("grade_one_6", data.subjectSix.grade);
+  setValue("grade_one_7", data.subjectSeven.grade);
+  setValue("grade_one_8", data.subjectEight.grade);
+  setValue("grade_one_9", data.subjectNine.grade);
 };
 
 export const secondSittingSchema = object({
@@ -133,6 +161,7 @@ export const secondSittingFormHooks = () => {
     register: secondSittingRegister,
     reset: secondSittingReset,
     trigger: secondSittingTrigger,
+    setValue: secondSittingSetValue,
     setError: secondSittingSetError,
     handleSubmit: secondSittingHandleSubmit,
     formState: {
@@ -141,16 +170,15 @@ export const secondSittingFormHooks = () => {
       isValid: secondSittingIsValid,
       isValidating: secondSittingIsValidating,
     },
-  } = useForm();
-
-  // {
-  //     resolver: yupResolver(secondSittingSchema),
-  // }
+  } = useForm({
+    resolver: yupResolver(secondSittingSchema),
+  });
 
   return {
     secondSittingRegister,
     secondSittingReset,
     secondSittingTrigger,
+    secondSittingSetValue,
     secondSittingSetError,
     secondSittingHandleSubmit,
     secondSittingErrors,
@@ -158,4 +186,30 @@ export const secondSittingFormHooks = () => {
     secondSittingIsValid,
     secondSittingIsValidating,
   };
+};
+
+// set second sitting form values
+export const setSecondSittingFormValues = (setValue, data) => {
+  setValue("secondSittingexamType", data.secondSittingexamType);
+  setValue("secondSittingexamYear", data.secondSittingexamYear);
+  setValue("secondSittingexamNumber", data.secondSittingexamNumber);
+  setValue("secondSittingexam", data.secondSittingexam);
+  setValue("olevel_two_1", data.subjectOne.subject);
+  setValue("olevel_two_2", data.subjectTwo.subject);
+  setValue("olevel_two_3", data.subjectThree.subject);
+  setValue("olevel_two_4", data.subjectFour.subject);
+  setValue("olevel_two_5", data.subjectFive.subject);
+  setValue("olevel_two_6", data.subjectSix.subject);
+  setValue("olevel_two_7", data.subjectSeven.subject);
+  setValue("olevel_two_8", data.subjectEight.subject);
+  setValue("olevel_two_9", data.subjectNine.subject);
+  setValue("grade_two_1", data.subjectOne.grade);
+  setValue("grade_two_2", data.subjectTwo.grade);
+  setValue("grade_two_3", data.subjectThree.grade);
+  setValue("grade_two_4", data.subjectFour.grade);
+  setValue("grade_two_5", data.subjectFive.grade);
+  setValue("grade_two_6", data.subjectSix.grade);
+  setValue("grade_two_7", data.subjectSeven.grade);
+  setValue("grade_two_8", data.subjectEight.grade);
+  setValue("grade_two_9", data.subjectNine.grade);
 };

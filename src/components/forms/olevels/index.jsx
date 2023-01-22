@@ -1,10 +1,17 @@
 import { memo, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { firstSittingFormHooks, secondSittingFormHooks } from "../../../schemas/olevels";
-import { useStudentContext } from "../../../context/students";
 
 // Components
 import SelectInput from "../../selectInput";
+
+// form hooks
+import {
+  firstSittingFormHooks,
+  secondSittingFormHooks,
+  setFirstSittingFormValues,
+  setSecondSittingFormValues,
+} from "../../../schemas/olevels";
+import { useStudentContext } from "../../../context/students";
 
 // utilities
 import {
@@ -18,22 +25,14 @@ import {
 const Olevel = () => {
   const { state, dispatch } = useStudentContext();
   const [sittingNumber, setSittingNumber] = useState("1");
-  const navigate = useNavigate();
   const [isSubmitted, setIsubmitted] = useState(false);
-
-  // check if previous page has been handled
-  const { biodata } = state;
-  useEffect(() => {
-    if (!biodata.firstname) {
-      const redirectRoute = "/students/add-student/biodata";
-      navigate(redirectRoute);
-    }
-  }, [biodata]);
+  const navigate = useNavigate();
 
   const {
     firstSittingRegister,
     firstSittingReset,
     firstSittingTrigger,
+    firstSittingSetValue,
     firstSittingSetError,
     firstSittingHandleSubmit,
     firstSittingIsValid,
@@ -43,14 +42,39 @@ const Olevel = () => {
     secondSittingRegister,
     secondSittingReset,
     secondSittingTrigger,
+    secondSittingSetValue,
     secondSittingSetError,
     secondSittingHandleSubmit,
     secondSittingIsValid,
   } = secondSittingFormHooks();
 
+  // check if previous page [biodata] has been handled
+  const { biodata } = state;
+  const { sittingOne, sittingTwo } = state.olevels;
+
+  useEffect(() => {
+    if (!biodata.firstname) {
+      const redirectRoute = "/students/add-student/biodata";
+      navigate(redirectRoute);
+    } else {
+      const globalSittingNumber = state?.olevels?.GlobalsittingNumber;
+      if (globalSittingNumber) {
+        setSittingNumber(globalSittingNumber);
+        setFirstSittingFormValues(firstSittingSetValue, sittingOne);
+        if (globalSittingNumber === "2") {
+          setSecondSittingFormValues(secondSittingSetValue, sittingTwo);
+        }
+      }
+    }
+  }, [biodata]);
+
   // Form One
   const onFormOneSubmit = (data) => {
     const sittingOneData = { sittingNumber: sittingNumber, ...data };
+    dispatch({
+      type: "OLEVELS/SET_GLOBAL_SITTING_NUMBER",
+      payload: { GlobalsittingNumber: sittingNumber },
+    });
     dispatch({ type: "OLEVELS/SITTING_ONE", payload: sittingOneData });
     setIsubmitted(true);
   };
@@ -58,6 +82,10 @@ const Olevel = () => {
   // Form Two
   const onFormTwoSubmit = (data) => {
     const sittingTwoData = { sittingNumber: sittingNumber, ...data };
+    dispatch({
+      type: "OLEVELS/SET_GLOBAL_SITTING_NUMBER",
+      payload: { GlobalsittingNumber: sittingNumber },
+    });
     dispatch({ type: "OLEVELS/SITTING_TWO", payload: sittingTwoData });
     setIsubmitted(true);
   };
@@ -104,7 +132,6 @@ const Olevel = () => {
         {/* SITTING ONE */}
         {(sittingNumber === "1" || sittingNumber === "2") && (
           <form
-            key={1}
             onSubmit={firstSittingHandleSubmit(onFormOneSubmit)}
             className={`w-full bg-green-50`}
           >
