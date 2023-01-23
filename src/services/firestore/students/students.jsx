@@ -16,6 +16,11 @@ import {
 
 const { firestore } = getServices();
 
+// return a parent collection called "valdymas"
+export const getValdymasCollectionRef = () => {
+  return collection(firestore, "valdymas");
+};
+
 // return students collection ref
 export const getStudentsCollectionRef = () => {
   return collection(firestore, "students");

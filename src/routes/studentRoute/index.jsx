@@ -5,6 +5,14 @@ import { lazy } from "react";
 const Students = Loadable(lazy(() => import("../../pages/views/students")));
 const AllStudents = Loadable(lazy(() => import("../../pages/views/allStudents")));
 
+// import departments
+const Departments = Loadable(lazy(() => import("../../layout/departments")));
+const Sciences = Loadable(lazy(() => import("../../pages/views/departments/sciences")));
+const Arts = Loadable(lazy(() => import("../../pages/views/departments/arts")));
+const SocialSciences = Loadable(
+  lazy(() => import("../../pages/views/departments/social-sciences"))
+);
+
 // import from new student folder
 const NewStudent = Loadable(lazy(() => import("../../pages/views/newStudent")));
 const Biodata = Loadable(lazy(() => import("../../pages/views/newStudent/biodata")));
@@ -14,11 +22,31 @@ const Olevels = Loadable(lazy(() => import("../../pages/views/newStudent/Olevels
 export const studentRoute = {
   path: "students",
   element: <Students />,
+  outlet: true,
   children: [
     {
       path: "/students",
       element: <AllStudents />,
     },
+    {
+      path: "departments",
+      element: <Departments />,
+      children: [
+        {
+          path: "sciences",
+          element: <Sciences />,
+        },
+        {
+          path: "arts",
+          element: <Arts />,
+        },
+        {
+          path: "social-sciences",
+          element: <SocialSciences />,
+        },
+      ],
+    },
+
     {
       path: "add-student",
       element: <NewStudent />,

@@ -28,9 +28,9 @@ export const sideBarMenuItems = [
     defaultOpen: true,
     icon: <span className="material-symbols-outlined submenuIcon">school</span>,
     subMenus: [
-      { id: 1, label: "sciences", link: "/students" },
-      { id: 2, label: "social sciences", link: "/students" },
-      { id: 3, label: "art", link: "/students" },
+      { id: 1, label: "sciences", link: "/students/departments/sciences" },
+      { id: 2, label: "social sciences", link: "/students/departments/social-sciences" },
+      { id: 3, label: "art", link: "/students/departments/arts" },
     ],
   },
 ];
