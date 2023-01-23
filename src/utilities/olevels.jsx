@@ -104,18 +104,8 @@ export const waecSubjectsWithId = waecSubjects.map((state) => {
 });
 
 // ----------------- O LEVEL GRADES -----------------
-export const olevelGrades = [
-  "A1",
-  "B2",
-  "B3",
-  "C4",
-  "C5",
-  "C6",
-  "D7",
-  "E8",
-  "F9",
-  "AR",
-];
+export const olevelGrades = ["A1", "B2", "B3", "C4", "C5", "C6", "D7", "E8", "F9", "AR"];
+
 // convert the array above to array of objects with id
 export const olevelGradesWithId = olevelGrades.map((state) => {
   return { id: nanoid(), state };
@@ -127,11 +117,8 @@ export const examTypesWithId = examTypes.map((state) => {
   return { id: nanoid(), state };
 });
 
-export const exams = [
-  "private canditate results",
-  "public canditate results",
-  "AR",
-];
+export const exams = ["private canditate results", "public canditate results", "AR"];
+
 // convert the array above to array of objects with id
 export const examsWithId = exams.map((state) => {
   return { id: nanoid(), state };

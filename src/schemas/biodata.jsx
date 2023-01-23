@@ -4,9 +4,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { nigeriaStates } from "../utilities/nigeria";
 
 export const biodataSchema = object({
-  firstname: string().required("First name is required"),
-  lastname: string().required("Last name is required"),
-  middlename: string().required("Middle name is required"),
+  firstname: string().typeError().trim().min(3).required("First name is required"),
+  lastname: string().typeError().trim().min(3).required("Last name is required"),
+  middlename: string().typeError().trim().min(3),
   email: string().email().required("Email is required"),
   phoneNumber: string()
     .matches(/^(0|\+234)[789][01]\d{8}$/, "Invalid phone number")
@@ -28,7 +28,7 @@ export const useBiodataFormHooks = () => {
   const {
     register,
     watch,
-    reset,
+    reset: biodataReset,
     trigger,
     handleSubmit,
     setValue,
@@ -40,7 +40,7 @@ export const useBiodataFormHooks = () => {
   return {
     register,
     watch,
-    reset,
+    biodataReset,
     trigger,
     handleSubmit,
     setValue,
@@ -65,5 +65,3 @@ export const SetFormValues = (setValue, DATA) => {
   setValue("stateOfOrigin", DATA.stateOfOrigin);
   setValue("lga", DATA.lga);
 };
-
-

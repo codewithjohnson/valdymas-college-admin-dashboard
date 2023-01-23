@@ -28,9 +28,12 @@
     @apply text-black;
   }
   .cellGenderMale {
-    @apply text-blue-500;
+    @apply capitalize text-blue-500;
   }
   .cellGenderFemale {
-    @apply text-red-500;
+    @apply capitalize text-red-500;
+  }
+  .cellName {
+    @apply capitalize;
   }
 }

@@ -5,7 +5,7 @@ import { sideBarMenuItems } from "../../utilities/menuItems";
 
 export const Aside = () => {
   return (
-    <div className={`w-full h-full bg-white border-0 font-poppins`}>
+    <div className={`w-full h-full border-0 font-poppins`}>
       <Sidebar
         backgroundColor="white"
         transitionDuration={1000}

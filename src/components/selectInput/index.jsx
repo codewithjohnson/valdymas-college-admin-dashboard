@@ -1,13 +1,17 @@
 import React from "react";
-import { nanoid } from "nanoid";
 
 const SelectInput = ({ register, inputName, arrayToLoop, classname }) => {
   return (
-    <select name={inputName} id={inputName} className={classname} {...register(inputName)}>
+    <select
+      name={inputName}
+      id={inputName}
+      className={classname}
+      {...register(inputName)}
+    >
       <option value="" className="font-poppins ">
         select
       </option>
-      {arrayToLoop?.map((state,index) => {
+      {arrayToLoop?.map((state) => {
         return (
           <option key={state.id} value={state.state} className="font-poppins">
             {state.state}

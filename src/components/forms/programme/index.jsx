@@ -10,7 +10,7 @@ import {
   subjectCombinationWithId,
   departmentWithId,
   entryModeWithId,
-  subjectCombinationSep
+  subjectCombinationSep,
 } from "../../../utilities/programme";
 
 const Programme = () => {
@@ -18,6 +18,8 @@ const Programme = () => {
   const [isSaved, setIsSaved] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { olevels } = state;
+  console.log(olevels);
 
   const override = {
     display: "block",
@@ -37,10 +39,22 @@ const Programme = () => {
     isValid,
   } = useProgrammeFormHooks();
 
+  // check if previous page has been handled
+  const redirectToOlevels = () => {
+    const GlobalsittingNumber = olevels?.GlobalsittingNumber;
+    if (!GlobalsittingNumber) {
+      const PREVROUTE = "/students/add-student/olevels";
+      navigate(PREVROUTE);
+    }
+  };
+
+  useEffect(() => {
+    redirectToOlevels();
+  }, [olevels]);
+
   // Conditioning subject selection
   const watchDept = watch("department");
   var DeptCat = subjectCombinationSep[watchDept];
- 
 
   // Handle save information
   const onFormSubmitAndSave = async (data) => {
@@ -64,7 +78,6 @@ const Programme = () => {
       const studentData = state;
       const studentFullName = `${studentData?.biodata?.firstname} ${studentData?.biodata?.lastname}`;
       await registerStudent(studentFullName, studentData);
-
       // Navigate to next page
       const NEXTROUTE = "/students";
       navigate(NEXTROUTE);
@@ -73,8 +86,8 @@ const Programme = () => {
       setIsLoading(false);
     } finally {
       setIsLoading(false);
-      reset();
       localStorage.clear();
+      reset();
     }
   };
 
@@ -190,7 +203,9 @@ const Programme = () => {
         {/* Next Page */}
         {isSaved && (
           <button
-            className={`bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out flex items-center gap-x-2 $}`}
+            className={`bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out flex items-center gap-x-2 ${
+              isLoading && "opacity-50"
+            }}`}
             onClick={onFormComplete}
           >
             <Spinner isLoading={isLoading} override={override} size={20} />

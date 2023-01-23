@@ -50,22 +50,32 @@ const Olevel = () => {
 
   // check if previous page [biodata] has been handled
   const { biodata } = state;
-  const { sittingOne, sittingTwo } = state.olevels;
+  const { sittingOne, sittingTwo } = state?.olevels;
 
-  useEffect(() => {
+  // redirect to biodata if not filled
+  const redirectToBiodata = () => {
     if (!biodata.firstname) {
       const redirectRoute = "/students/add-student/biodata";
       navigate(redirectRoute);
-    } else {
-      const globalSittingNumber = state?.olevels?.GlobalsittingNumber;
-      if (globalSittingNumber) {
-        setSittingNumber(globalSittingNumber);
-        setFirstSittingFormValues(firstSittingSetValue, sittingOne);
-        if (globalSittingNumber === "2") {
-          setSecondSittingFormValues(secondSittingSetValue, sittingTwo);
-        }
+    }
+  };
+
+  // set form values
+  const setFormValues = () => {
+    const globalSittingNumber = state?.olevels?.GlobalsittingNumber;
+    if (globalSittingNumber) {
+      setSittingNumber(globalSittingNumber);
+      setFirstSittingFormValues(firstSittingSetValue, sittingOne);
+      if (globalSittingNumber === "2") {
+        setSecondSittingFormValues(secondSittingSetValue, sittingTwo);
       }
     }
+  };
+
+  // set form values on mount
+  useEffect(() => {
+    redirectToBiodata();
+    setFormValues();
   }, [biodata]);
 
   // Form One

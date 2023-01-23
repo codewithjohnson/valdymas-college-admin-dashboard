@@ -19,6 +19,10 @@ const allStudentsTable = ({ studentsData }) => {
             ? "cellGenderMale"
             : params.field === "gender" && params.value === "female"
             ? "cellGenderFemale"
+            : params.field === "firstName" ||
+              params.field === "lastName" ||
+              params.field === "fullName"
+            ? "cellName"
             : "";
         }}
         columns={columns}

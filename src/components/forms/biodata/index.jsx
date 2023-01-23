@@ -4,7 +4,6 @@ import { nigeriaStatesWithId, nigeriaLgas } from "../../../utilities/nigeria";
 import { useBiodataFormHooks, SetFormValues } from "../../../schemas/biodata";
 import { addBiodataDispatcher } from "../../../dispatches/biodata";
 import { useStudentContext } from "../../../context/students";
-import PositionedSnackbar from "../Notification";
 
 const BiodataForm = () => {
   const { state, dispatch } = useStudentContext();
@@ -14,7 +13,7 @@ const BiodataForm = () => {
   const {
     register,
     watch,
-    reset,
+    biodataReset,
     trigger,
     handleSubmit,
     setValue,
@@ -23,6 +22,7 @@ const BiodataForm = () => {
   } = useBiodataFormHooks();
 
   useEffect(() => {
+    biodataReset();
     if (biodata) {
       SetFormValues(setValue, biodata);
     }
@@ -34,7 +34,6 @@ const BiodataForm = () => {
   // Handle form submit
   const onBiodataFormSubmit = (data) => {
     dispatch(addBiodataDispatcher(data));
-    reset();
     const NEXTROUTE = "/students/add-student/olevels";
     navigate(NEXTROUTE);
   };
@@ -51,7 +50,7 @@ const BiodataForm = () => {
       </header>
       <form
         onSubmit={handleSubmit(onBiodataFormSubmit)}
-        className="w-full h-full mt-5 flex flex-col sm:grid sm:grid-cols-2 gap-x-10  gap-y-7"
+        className="w-full h-full mt-5 flex flex-col sm:grid sm:grid-cols-2 md:grid-cols-3 gap-x-10  gap-y-7"
       >
         {/* FIRST NAME */}
         <div className="firstname">
