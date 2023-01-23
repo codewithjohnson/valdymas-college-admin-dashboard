@@ -49,7 +49,7 @@ export const secondSittingSubjectsAndGrades = [
 export const firstSittingSchema = object({
   firstSittingexamType: string().required("this is required"),
   firstSittingexamYear: string().required("this is required"),
-  firstSittingexamNumber: string().trim().min(5).required("this is required"),
+  firstSittingexamNumber: string().trim().min(5).max(10).required("this is required"),
   firstSittingexam: string().required("this is required"),
   olevel_one_1: string().required("this is required"),
   olevel_one_2: string().required("this is required"),
@@ -133,7 +133,10 @@ export const setFirstSittingFormValues = (setValue, data) => {
 export const secondSittingSchema = object({
   secondSittingexamType: string().required("this is required"),
   secondSittingexamYear: string().required("this is required"),
-  secondSittingexamNumber: string().required("this is required"),
+  secondSittingexamNumber: string()
+    .min(5)
+    .max(10, "exam number length cannot exceed 10")
+    .required("this is required"),
   secondSittingexam: string().required("this is required"),
   olevel_two_1: string().required("this is required"),
   olevel_two_2: string().required("this is required"),

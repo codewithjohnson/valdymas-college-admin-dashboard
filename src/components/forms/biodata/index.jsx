@@ -4,11 +4,18 @@ import { nigeriaStatesWithId, nigeriaLgas } from "../../../utilities/nigeria";
 import { useBiodataFormHooks, SetFormValues } from "../../../schemas/biodata";
 import { addBiodataDispatcher } from "../../../dispatches/biodata";
 import { useStudentContext } from "../../../context/students";
+import { useLocation, useOutletContext } from "react-router-dom";
 
 const BiodataForm = () => {
+  const [currentPath, setCurrentPath] = useOutletContext();
   const { state, dispatch } = useStudentContext();
   const { biodata } = state;
   const navigate = useNavigate();
+  
+  // get last path
+  const { pathname } = useLocation();
+  const lastPath = pathname.split("/").pop();
+  currentPath !== lastPath && setCurrentPath(lastPath);
 
   const {
     register,

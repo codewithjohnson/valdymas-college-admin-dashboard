@@ -1,5 +1,5 @@
 import { memo, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, useOutletContext } from "react-router-dom";
 
 // Components
 import SelectInput from "../../selectInput";
@@ -23,10 +23,16 @@ import {
 } from "../../../utilities/olevels";
 
 const Olevel = () => {
+  const [currentPath, setCurrentPath] = useOutletContext();
   const { state, dispatch } = useStudentContext();
   const [sittingNumber, setSittingNumber] = useState("1");
   const [isSubmitted, setIsubmitted] = useState(false);
   const navigate = useNavigate();
+
+  // get last path
+  const { pathname } = useLocation();
+  const lastPath = pathname.split("/").pop();
+  currentPath !== lastPath && setCurrentPath(lastPath);
 
   const {
     firstSittingRegister,

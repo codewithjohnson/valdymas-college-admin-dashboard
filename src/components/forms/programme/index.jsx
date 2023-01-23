@@ -1,5 +1,5 @@
 import React, { useState, memo, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, useOutletContext } from "react-router-dom";
 import SelectInput from "../../../components/selectInput";
 import { registerStudent } from "../../../services/firestore/students/students";
 import Spinner from "../../../components/spinner";
@@ -14,12 +14,17 @@ import {
 } from "../../../utilities/programme";
 
 const Programme = () => {
+  const [currentPath, setCurrentPath] = useOutletContext();
   const { state, dispatch } = useStudentContext();
   const [isSaved, setIsSaved] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { olevels } = state;
-  console.log(olevels);
+
+  // get last path
+  const { pathname } = useLocation();
+  const lastPath = pathname.split("/").pop();
+  currentPath !== lastPath && setCurrentPath(lastPath);
 
   const override = {
     display: "block",
@@ -81,6 +86,7 @@ const Programme = () => {
       // Navigate to next page
       const NEXTROUTE = "/students";
       navigate(NEXTROUTE);
+      window.location.reload();
     } catch (err) {
       console.log(err.message);
       setIsLoading(false);
