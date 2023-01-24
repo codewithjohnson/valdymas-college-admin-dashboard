@@ -16,7 +16,9 @@ export const Navbar = () => {
             className="hidden sm:flex gap-2 justify-between items-center select-none"
           >
             <img src={logo} alt="" style={{ width: "30px", height: "30px" }} />
-            <p className="text-xl font-semibold font-firaSans text-gray-700">VCAPS</p>
+            <p className="text-xl font-semibold font-firaSans text-gray-700">
+              VCAPS
+            </p>
           </Link>
 
           {/* toggle button */}
@@ -33,7 +35,8 @@ export const Navbar = () => {
 
       <div className="right flex flex-row justify-between items-center  flex-1">
         <p className="text-slate-700  font-poppins text-xl font-semibold capitalize ml-4 select-none sm:ml-8">
-          good {getCurrentimeOfDay()}, <span className="text-red-900">Johnson</span> 🖐🏼
+          good {getCurrentimeOfDay()},{" "}
+          <span className="text-red-900">Debby</span> 🖐🏼
         </p>
         <p className="hidden sm:block user--profile gap-2 text-red-800 bg-red-50 p-3 font-poppins rounded-lg text-sm select-none">
           muyiwamighty@gmail.com
