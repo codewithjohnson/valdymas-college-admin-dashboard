@@ -1,10 +1,10 @@
-import React from "react";
+import React, { memo } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import { useProSidebar } from "react-pro-sidebar";
 import { getCurrentimeOfDay } from "../../utilities/currentDate";
 
-export const Navbar = () => {
+const Navbar = memo(() => {
   const { collapseSidebar } = useProSidebar();
   return (
     <nav className="navbar flex justify-between w-full px-4 transition duration-200 ease-in-out">
@@ -41,4 +41,6 @@ export const Navbar = () => {
       </div>
     </nav>
   );
-};
+});
+
+export default Navbar;

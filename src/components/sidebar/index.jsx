@@ -1,9 +1,9 @@
-import React from "react";
+import React, { memo } from "react";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { Link } from "react-router-dom";
 import { sideBarMenuItems } from "../../utilities/menuItems";
 
-export const Aside = () => {
+const Aside = memo(() => {
   return (
     <div className={`w-full h-full border-0 font-poppins`}>
       <Sidebar
@@ -45,4 +45,6 @@ export const Aside = () => {
       </Sidebar>
     </div>
   );
-};
+});
+
+export default Aside;

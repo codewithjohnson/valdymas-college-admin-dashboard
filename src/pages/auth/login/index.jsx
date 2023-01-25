@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { object, string } from "yup";
 import { useNavigate } from "react-router-dom";
-import valdymas from "../../../assets/imageValbg.png";
+import valdymas from "../../../assets/valdymas.webp";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { getServices } from "../../../services/firebase";
 import Alert from "@mui/material/Alert";

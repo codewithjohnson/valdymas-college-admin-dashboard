@@ -1,11 +1,14 @@
-import React, { useState, memo, useEffect } from "react";
+import React, { useState, memo, useEffect, lazy } from "react";
 import { getAllStudentsInfoDocs } from "../../../services/firestore/students/students";
-import StudentsTable from "../../../components/dataTable/students/StudentsTable";
+import Loadble from "../../../components/Loadable";
+const StudentsTable = Loadble(
+  lazy(() => import("../../../components/dataTable/students/StudentsTable"))
+);
 
 // material ui
 import Tooltip from "@mui/material/Tooltip";
 
-const Students = () => {
+const AllStudents = memo(() => {
   const [studentsData, setStudentsData] = useState([]);
 
   useEffect(() => {
@@ -43,7 +46,6 @@ const Students = () => {
       <StudentsTable studentsData={studentsData} />
     </div>
   );
-};
+});
 
-const AllStudents = memo(Students);
 export default AllStudents;

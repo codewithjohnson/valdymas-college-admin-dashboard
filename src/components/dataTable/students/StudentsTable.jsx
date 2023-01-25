@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { columns, getRows } from "../../../utilities/studentsTable";
 
-const allStudentsTable = ({ studentsData }) => {
+const StudentsTable = memo(({ studentsData }) => {
   const rows = getRows(studentsData);
 
   return (
@@ -42,7 +42,6 @@ const allStudentsTable = ({ studentsData }) => {
       />
     </div>
   );
-};
+});
 
-const StudentsTable = memo(allStudentsTable);
 export default StudentsTable;
