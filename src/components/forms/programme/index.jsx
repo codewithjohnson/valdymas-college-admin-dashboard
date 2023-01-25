@@ -209,6 +209,7 @@ const Programme = () => {
         {/* Next Page */}
         {isSaved && (
           <button
+            disabled={isLoading}
             className={`bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out flex items-center gap-x-2 ${
               isLoading && "opacity-50"
             }}`}

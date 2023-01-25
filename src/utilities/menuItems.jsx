@@ -19,7 +19,7 @@ export const sideBarMenuItems = [
     subMenus: [
       { id: 1, label: "all students", link: "/students" },
       { id: 2, label: "add student", link: "students/add-student/biodata" },
-      { id: 3, label: "results", link: "students/results" },
+      { id: 3, label: "results", link: "/" },
     ],
   },
   {

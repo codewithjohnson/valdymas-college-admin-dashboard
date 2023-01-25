@@ -1,22 +1,21 @@
 import React, { useState } from "react";
 import { Outlet, Link } from "react-router-dom";
+import PathArrow from "../../../components/ui/pathArrow";
 
 const NewStudent = () => {
   const [currentPath, setCurrentPath] = useState("");
 
   const RelativePath = () => {
     return (
-      <div className="flex items-center justify-between capitalize cursor-pointer font-poppins text-sm">
+      <div className="flex items-center justify-between capitalize cursor-pointer font-poppins text-[11px] sm:text-sm">
         <Link to="/">
-          <span className="material-symbols-outlined text-slate-500 text-xl">home</span>
+          <span className="material-symbols-outlined text-slate-500 text-[18px] sm:text-xl">
+            home
+          </span>
         </Link>
-        <span className="material-symbols-outlined text-[11px] text-slate-500 font-thin flex items-center ml-4 mr-4">
-          arrow_forward_ios
-        </span>
+        <PathArrow />
         <Link to="/students">students</Link>
-        <span className="material-symbols-outlined text-[11px] text-slate-500 font-thin flex items-center ml-4 mr-4">
-          arrow_forward_ios
-        </span>
+        <PathArrow />
         {currentPath}
       </div>
     );
