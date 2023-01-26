@@ -12,8 +12,6 @@ const BiodataForm = () => {
   const { biodata } = state;
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  
- 
 
   const {
     register,

@@ -1,8 +1,8 @@
 import React, { memo } from "react";
 import BiodataForm from "../../../../components/forms/biodata";
 
-const BiodataPage = () => {
+const Biodata = memo(() => {
   return <BiodataForm />;
-};
-const Biodata = memo(BiodataPage);
+});
+
 export default Biodata;

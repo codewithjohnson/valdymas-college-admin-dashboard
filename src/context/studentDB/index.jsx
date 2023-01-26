@@ -11,7 +11,8 @@ export const StudentDBProvider = ({ children }) => {
   useEffect(() => {
     const getStudents = async () => {
       const students = await getAllStudentsInfoDocs();
-      setStudents(students);
+        setStudents(students);
+        console.log(students);
     };
     getStudents();
   }, []);

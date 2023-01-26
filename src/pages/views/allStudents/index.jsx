@@ -13,8 +13,8 @@ const StudentsTable = Loadable(
 
 const AllStudents = memo(() => {
   return (
-    <div className="w-full h-full bg-white new rounded-2xl pb-8 font-poppins">
-      <h3 className="capitalize text-lg border-b border-b-slate-200 p-5 bg-teal-50">
+    <div className="w-full h-full bg-white new rounded-2xl pb-8 font-poppins ">
+      <h3 className="capitalize text-lg border-b border-b-slate-200 p-5 ">
         students list
       </h3>
 

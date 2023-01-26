@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import { Outlet, Link } from "react-router-dom";
 import PathArrow from "../../../components/ui/pathArrow";
 
-const NewStudent = () => {
+const NewStudent = memo(() => {
   const [currentPath, setCurrentPath] = useState("");
 
   const RelativePath = () => {
@@ -37,6 +37,6 @@ const NewStudent = () => {
       </div>
     </div>
   );
-};
+});
 
 export default NewStudent;
