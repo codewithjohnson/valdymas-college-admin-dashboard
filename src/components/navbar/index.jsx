@@ -1,11 +1,18 @@
-import React, { memo } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import { useProSidebar } from "react-pro-sidebar";
 import { getCurrentimeOfDay } from "../../utilities/currentDate";
 
 const Navbar = memo(() => {
+  const [timeOfDay, setTimeOfDay] = useState("");
   const { collapseSidebar } = useProSidebar();
+
+  useEffect(() => {
+    const currentHour = new Date().getHours();
+    setTimeOfDay(getCurrentimeOfDay(currentHour));
+  }, [new Date().getHours()]);
+
   return (
     <nav className="navbar flex justify-between w-full px-4 transition duration-200 ease-in-out">
       <div className="left flex justify-between items-center gap-5">
@@ -33,7 +40,7 @@ const Navbar = memo(() => {
 
       <div className="right flex flex-row justify-between items-center  flex-1">
         <p className="text-slate-700  font-poppins text-xl font-semibold capitalize ml-4 select-none sm:ml-8">
-          good {getCurrentimeOfDay()}, <span className="text-red-900">Johnson</span> 🖐🏼
+          good {timeOfDay}, <span className="text-red-900">Johnson</span> 🖐🏼
         </p>
         <p className="hidden sm:block user--profile gap-2 text-red-800 bg-red-50 p-3 font-poppins rounded-lg text-sm select-none">
           muyiwamighty@gmail.com

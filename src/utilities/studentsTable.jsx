@@ -6,7 +6,6 @@ function getFullName(params) {
 export const getRows = (data) => {
   const rows = data.map((student, index) => {
     const biodata = student?.studentInfo[0];
-    const olevels = student?.studentInfo[1];
     const programme = student?.studentInfo[2];
     return {
       id: index + 1,

@@ -1,9 +1,11 @@
 import React, { memo } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { columns, getRows } from "../../../utilities/studentsTable";
+import { useStudentDB } from "../../../context/studentDB";
 
-const StudentsTable = memo(({ studentsData }) => {
-  const rows = getRows(studentsData);
+const StudentsTable = memo(() => {
+  const { students } = useStudentDB();
+  const rows = getRows(students);
 
   return (
     <div className="studentsDataTable h-[500px] w-full">

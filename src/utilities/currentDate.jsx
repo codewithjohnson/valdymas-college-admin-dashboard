@@ -1,7 +1,5 @@
 // function to determine if we are in the morning, evening, or afternoon
-export const getCurrentimeOfDay = () => {
-  const date = new Date();
-  const hours = date.getHours();
+export const getCurrentimeOfDay = (hours) => {
   if (hours < 12) {
     return "morning";
   } else if (hours >= 12 && hours <= 17) {

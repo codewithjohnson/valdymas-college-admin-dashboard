@@ -1,27 +1,20 @@
-import React, { useState, memo, useEffect, lazy } from "react";
-import { getAllStudentsInfoDocs } from "../../../services/firestore/students/students";
-import Loadble from "../../../components/Loadable";
-const StudentsTable = Loadble(
-  lazy(() => import("../../../components/dataTable/students/StudentsTable"))
-);
+import React, { memo, lazy } from "react";
 
 // material ui
 import Tooltip from "@mui/material/Tooltip";
 
+// components
+import Loadable from "../../../components/Loadable";
+
+// data table
+const StudentsTable = Loadable(
+  lazy(() => import("../../../components/dataTable/students/StudentsTable"))
+);
+
 const AllStudents = memo(() => {
-  const [studentsData, setStudentsData] = useState([]);
-
-  useEffect(() => {
-    const getAllStudents = async () => {
-      const studentsDocs = await getAllStudentsInfoDocs();
-      setStudentsData(studentsDocs);
-    };
-    getAllStudents();
-  }, []);
-
   return (
     <div className="w-full h-full bg-white new rounded-2xl pb-8 font-poppins">
-      <h3 className="capitalize text-lg border-b border-b-slate-200 p-5">
+      <h3 className="capitalize text-lg border-b border-b-slate-200 p-5 bg-teal-50">
         students list
       </h3>
 
@@ -43,7 +36,7 @@ const AllStudents = memo(() => {
       </div>
 
       {/* DATA TABLE */}
-      <StudentsTable studentsData={studentsData} />
+      <StudentsTable />
     </div>
   );
 });

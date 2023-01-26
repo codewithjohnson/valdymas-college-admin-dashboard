@@ -28,11 +28,7 @@ const Olevel = () => {
   const [sittingNumber, setSittingNumber] = useState("1");
   const [isSubmitted, setIsubmitted] = useState(false);
   const navigate = useNavigate();
-
-  // get last path
   const { pathname } = useLocation();
-  const lastPath = pathname.split("/").pop();
-  currentPath !== lastPath && setCurrentPath(lastPath);
 
   const {
     firstSittingRegister,
@@ -63,6 +59,10 @@ const Olevel = () => {
     if (!biodata.firstname) {
       const redirectRoute = "/students/add-student/biodata";
       navigate(redirectRoute);
+    } else {
+      // get last path
+      const lastPath = pathname.split("/").pop();
+      currentPath !== lastPath && setCurrentPath(lastPath);
     }
   };
 

@@ -20,11 +20,7 @@ const Programme = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { olevels } = state;
-
-  // get last path
   const { pathname } = useLocation();
-  const lastPath = pathname.split("/").pop();
-  currentPath !== lastPath && setCurrentPath(lastPath);
 
   const override = {
     display: "block",
@@ -50,6 +46,10 @@ const Programme = () => {
     if (!GlobalsittingNumber) {
       const PREVROUTE = "/students/add-student/olevels";
       navigate(PREVROUTE);
+    } else {
+      // get last path
+      const lastPath = pathname.split("/").pop();
+      currentPath !== lastPath && setCurrentPath(lastPath);
     }
   };
 

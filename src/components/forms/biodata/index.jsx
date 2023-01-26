@@ -11,11 +11,9 @@ const BiodataForm = () => {
   const { state, dispatch } = useStudentContext();
   const { biodata } = state;
   const navigate = useNavigate();
-  
-  // get last path
   const { pathname } = useLocation();
-  const lastPath = pathname.split("/").pop();
-  currentPath !== lastPath && setCurrentPath(lastPath);
+  
+ 
 
   const {
     register,
@@ -33,6 +31,9 @@ const BiodataForm = () => {
     if (biodata) {
       SetFormValues(setValue, biodata);
     }
+    // get last path
+    const lastPath = pathname.split("/").pop();
+    currentPath !== lastPath && setCurrentPath(lastPath);
   }, [biodata]);
 
   const watchState = watch("stateOfOrigin");
