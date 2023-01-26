@@ -50,7 +50,7 @@ const Login = () => {
   };
 
   return (
-    <div className="pt-10 sm:pt-0 sm:flex gap-10 justify-start items-center sm:px-[100px] min-h-screen bg-gradient-to-r from-[#130E25] to-slate-700 ">
+    <div className="pt-10 sm:pt-0 sm:flex gap-10 justify-start items-center sm:px-[100px] min-h-screen ">
       <div className="hidden image lg:block">
         <img src={valdymas} alt="valdymas banner" />
       </div>
@@ -58,10 +58,12 @@ const Login = () => {
       {/* form container */}
       <div className=" w-[90%]  h-[542px] mx-auto bg-gradient-to-b from-slate-300 to-gray-600 ">
         <div className="relative flex items-center justify-between px-5 py-4 text-xl font-thin text-gray-200 bg-gradient-to-r from-slate-600 to-slate-800 ">
-          <p className="p-2 font-semibold text-gray-800 uppercase -skew-y-3 bg-orange-600 -inset-1 ">
+          <p className="p-2 font-semibold text-gray-800 uppercase -skew-y-3 bg-orange-600 -inset-1 hidden image lg:block">
             valdymas
           </p>
-          <p className="font-bold capitalize font-ubuntu">Hi, welcome back🍗</p>
+          <p className="font-bold capitalize font-ubuntu">
+            Hi, welcome back 👋
+          </p>
           <p className="text-[16px]">Login to account</p>
         </div>
         <form className="px-5 py-5" onSubmit={handleSubmit(onSubmitForm)}>
