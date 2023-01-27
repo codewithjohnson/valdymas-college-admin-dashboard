@@ -34,6 +34,7 @@ const BiodataForm = () => {
     currentPath !== lastPath && setCurrentPath(lastPath);
   }, [biodata]);
 
+  // Watch state of origin
   const watchState = watch("stateOfOrigin");
   var stateLgas = nigeriaLgas[watchState];
 

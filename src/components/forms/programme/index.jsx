@@ -1,7 +1,7 @@
 import React, { useState, memo, useEffect } from "react";
 import { useNavigate, useLocation, useOutletContext } from "react-router-dom";
 import SelectInput from "../../../components/selectInput";
-import { registerStudent } from "../../../services/firestore/students/students";
+import { createStudentRegistration } from "../../../services/firestore/students/students";
 import Spinner from "../../../components/spinner";
 import { useProgrammeFormHooks } from "../../../schemas/programme";
 import { useStudentContext } from "../../../context/students";
@@ -80,9 +80,10 @@ const Programme = () => {
     setIsLoading(true);
 
     try {
+      let yearRange = "2021-2022";
       const studentData = state;
       const studentFullName = `${studentData?.biodata?.firstname} ${studentData?.biodata?.lastname}`;
-      await registerStudent(studentFullName, studentData);
+      await createStudentRegistration(yearRange, studentFullName, studentData);
       // Navigate to next page
       const NEXTROUTE = "/students";
       navigate(NEXTROUTE);

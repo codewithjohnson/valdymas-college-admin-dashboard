@@ -1,5 +1,5 @@
 import { useContext, createContext, useState, useEffect } from "react";
-import { getAllStudentsInfoDocs } from "../../services/firestore/students/students";
+import { getStudentsData } from "../../services/firestore/students/students";
 
 // create context
 const studentDbContext = createContext();
@@ -7,12 +7,12 @@ const studentDbContext = createContext();
 // create provider
 export const StudentDBProvider = ({ children }) => {
   const [students, setStudents] = useState([]);
+  let yearRange = "2021-2022";
 
   useEffect(() => {
     const getStudents = async () => {
-      const students = await getAllStudentsInfoDocs();
-        setStudents(students);
-        console.log(students);
+      const students = await getStudentsData(yearRange);
+      setStudents(students);
     };
     getStudents();
   }, []);

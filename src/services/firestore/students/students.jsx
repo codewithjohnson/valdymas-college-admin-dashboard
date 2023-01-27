@@ -1,5 +1,4 @@
 import { getServices } from "../../firebase";
-import { nanoid } from "nanoid";
 import {
   doc,
   setDoc,
@@ -21,14 +20,28 @@ export const getValdymasCollectionRef = () => {
   return collection(firestore, "valdymas");
 };
 
-// return students collection ref
-export const getStudentsCollectionRef = () => {
-  return collection(firestore, "students");
+// set a doc in valdymas with year range as id
+export const setValdymasDoc = async (yearRange) => {
+  const valdymasCollectionRef = getValdymasCollectionRef();
+  const valdymasDocRef = doc(valdymasCollectionRef, yearRange);
+  await setDoc(valdymasDocRef, {
+    yearRange,
+    createdAt: serverTimestamp(),
+  });
+};
+
+// return a collection called "students" inside year range doc
+export const getStudentsCollectionRef = async (yearRange) => {
+  const valdymasCollectionRef = getValdymasCollectionRef();
+  const valdymasDocRef = doc(valdymasCollectionRef, yearRange);
+  const studentsCollectionRef = collection(valdymasDocRef, "students");
+  return studentsCollectionRef;
 };
 
 // create student doc with auto generated id and reference the student name
-export const createStudentDoc = async (studentName) => {
-  const studentDocRef = doc(getStudentsCollectionRef());
+export const createStudentDoc = async (yearRange, studentName) => {
+  const studentsCollectionRef = await getStudentsCollectionRef(yearRange);
+  const studentDocRef = doc(studentsCollectionRef);
   await setDoc(studentDocRef, {
     studentName,
     createdAt: serverTimestamp(),
@@ -38,16 +51,19 @@ export const createStudentDoc = async (studentName) => {
 };
 
 // create info collection for student
-export const createStudentInfoCollection = async (studentID) => {
-  const studentsCollectionRef = getStudentsCollectionRef();
+export const createStudentInfoCollection = async (yearRange, studentID) => {
+  const studentsCollectionRef = await getStudentsCollectionRef(yearRange);
   const studentDocRef = doc(studentsCollectionRef, studentID);
   const studentInfoCollectionRef = collection(studentDocRef, "info");
   return studentInfoCollectionRef;
 };
 
 //  add student biodata, programme and olevels  to info collection
-export const addStudentsData = async (studentID, studentData) => {
-  const studentInfoCollectionRef = await createStudentInfoCollection(studentID);
+export const addStudentsData = async (yearRange, studentID, studentData) => {
+  const studentInfoCollectionRef = await createStudentInfoCollection(
+    yearRange,
+    studentID
+  );
   const { biodata, programme, olevels } = studentData;
   const biodataDocRef = doc(studentInfoCollectionRef, "biodata");
   const programmeDocRef = doc(studentInfoCollectionRef, "programme");
@@ -57,15 +73,18 @@ export const addStudentsData = async (studentID, studentData) => {
   await setDoc(olevelsDocRef, olevels);
 };
 
-// get student biodata, programme and olevels docs from info collection for all students
-export const getAllStudentsInfoDocs = async () => {
-  const studentsCollectionRef = getStudentsCollectionRef();
-  const studentsInfoDocs = await getDocs(studentsCollectionRef);
+// get student biodata, programme and olevels docs from info collection for all students using real time listener
+export const getStudentsData = async (yearRange) => {
+  const studentsCollectionRef = await getStudentsCollectionRef(yearRange);
+  const querySnapshot = await getDocs(studentsCollectionRef);
   // get info for all students in docs
   const studentsInfo = await Promise.all(
-    studentsInfoDocs.docs.map(async (studentDoc) => {
+    querySnapshot.docs.map(async (studentDoc) => {
       const studentID = studentDoc.id;
-      const studentInfoCollectionRef = await createStudentInfoCollection(studentID);
+      const studentInfoCollectionRef = await createStudentInfoCollection(
+        yearRange,
+        studentID
+      );
       const studentInfoDocs = await getDocs(studentInfoCollectionRef);
       const studentInfo = studentInfoDocs.docs.map((doc) => {
         return { ...doc.data() };
@@ -77,8 +96,7 @@ export const getAllStudentsInfoDocs = async () => {
 };
 
 // create final student registration
-export const registerStudent = async (studentName, studentData) => {
-  const studentID = await createStudentDoc(studentName);
-  await createStudentInfoCollection(studentID);
-  await addStudentsData(studentID, studentData);
+export const createStudentRegistration = async (yearRange, studentName, studentData) => {
+  const studentID = await createStudentDoc(yearRange, studentName);
+  await addStudentsData(yearRange, studentID, studentData);
 };

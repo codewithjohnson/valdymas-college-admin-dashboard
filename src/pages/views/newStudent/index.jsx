@@ -23,7 +23,7 @@ const NewStudent = memo(() => {
 
   return (
     <div className="w-full h-full bg-white new rounded-2xl">
-      <div className="flex items-center justify-between p-5 border-b border-b-slate-200 ">
+      <header className="flex items-center justify-between p-5 border-b border-b-slate-200 ">
         <h2 className="text-lg capitalize select-none new--student font-poppins">
           new student
         </h2>
@@ -31,7 +31,7 @@ const NewStudent = memo(() => {
         <div className="pathTrack">
           <RelativePath />
         </div>
-      </div>
+      </header>
       <div className="newStudentForm">
         <Outlet context={[currentPath, setCurrentPath]} />
       </div>

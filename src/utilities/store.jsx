@@ -1,6 +1,7 @@
 import { nanoid } from "nanoid";
 
 export const initialState = {
+  setYearRange:"",
   biodata: {
     firstname: "",
     lastname: "",

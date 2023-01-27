@@ -7,11 +7,17 @@ import { getCurrentimeOfDay } from "../../utilities/currentDate";
 const Navbar = memo(() => {
   const [timeOfDay, setTimeOfDay] = useState("");
   const { collapseSidebar } = useProSidebar();
+  const [yearRange, setYearRange] = useState("");
 
   useEffect(() => {
     const currentHour = new Date().getHours();
     setTimeOfDay(getCurrentimeOfDay(currentHour));
-  }, [new Date().getHours()]);
+    console.log(yearRange);
+  }, [new Date().getHours(), yearRange]);
+
+  const HandleSetYearChange = (e) => {
+    setYearRange(e.target.value);
+  };
 
   return (
     <nav className="navbar flex justify-between w-full px-4 transition duration-200 ease-in-out">
@@ -39,12 +45,32 @@ const Navbar = memo(() => {
       </div>
 
       <div className="right flex flex-row justify-between items-center  flex-1">
-        <p className="text-slate-700  font-poppins text-xl font-semibold capitalize ml-4 select-none sm:ml-8">
+        {/* Time of Day */}
+        <p className="text-slate-700  font-poppins text-[15px] md:text-xl font-semibold capitalize ml-4 select-none sm:ml-8">
           good {timeOfDay}, <span className="text-red-900">Johnson</span> 🖐🏼
         </p>
-        <p className="hidden sm:block user--profile gap-2 text-red-800 bg-red-50 p-3 font-poppins rounded-lg text-sm select-none">
-          muyiwamighty@gmail.com
-        </p>
+
+        <div className="rl flex justify-between gap-5 items-center">
+          {/* Current Set */}
+          <form className="font-poppins">
+            <select
+              name="setYearRange"
+              id="setYearRange"
+              value={yearRange}
+              onChange={HandleSetYearChange}
+              className="border-none focus:outline-none focus:ring focus:ring-green-100 hover:border-green-80 cursor-pointer  text-sm text-green-900 opacity-70  bg-green-100"
+            >
+              <option disabled value="">select Year</option>
+              <option value="2021-2022">2021-2022</option>
+              <option value="2023-2024">2023-2024</option>
+            </select>
+          </form>
+
+          {/* Current Admin Logged in */}
+          <p className="hidden md:block user--profile gap-2 text-red-800 bg-red-50 p-3 font-poppins rounded-lg text-sm select-none">
+            muyiwamighty@gmail.com
+          </p>
+        </div>
       </div>
     </nav>
   );

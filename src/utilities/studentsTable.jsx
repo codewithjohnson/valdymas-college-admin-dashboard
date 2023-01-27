@@ -1,3 +1,5 @@
+import { useMemo } from "react";
+
 function getFullName(params) {
   return `${params.row.firstName || ""} ${params.row.lastName || ""}`;
 }
@@ -80,10 +82,14 @@ export const columns = [
     headerName: "Action",
     headerClassName: "font-poppins",
     width: 100,
+    // console the student ID wihen the edit button is clicked
     renderCell: (params) => {
       return (
         <div className="flex flex-col gap-y-1 justify-between items-center">
-          <span className="material-symbols-outlined select-none p-2 cursor-pointer text-[23px]  hover:rounded-full hover:bg-sky-200 text-sky-900">
+          <span
+            onClick={() => console.log(params.data.studentID)}
+            className="material-symbols-outlined select-none p-2 cursor-pointer text-[23px]  hover:rounded-full hover:bg-sky-200 text-sky-900"
+          >
             edit_note
           </span>
           <span className="material-symbols-outlined select-none p-2 cursor-pointer text-[23px] hover:bg-red-200 hover:rounded-full text-red-900">
