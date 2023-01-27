@@ -33,5 +33,5 @@ export const useYearRangeFormHooks = () => {
 
 // function that returns form values from the store into the form
 export const SetFormValues = (setValue, DATA) => {
-  setValue("yearRange", DATA.setYearRange);
+  setValue("setYearRange", DATA.setYearRange);
 };
