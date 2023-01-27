@@ -1,4 +1,6 @@
-import React, { memo, lazy } from "react";
+import React, { memo, lazy, useState, useEffect } from "react";
+import { getStudentsData } from "../../../services/firestore/students/students";
+import { useStudentContext } from "../../../context/students";
 
 // material ui
 import Tooltip from "@mui/material/Tooltip";
@@ -12,6 +14,18 @@ const StudentsTable = Loadable(
 );
 
 const AllStudents = memo(() => {
+  const [students, setStudents] = useState([]);
+  const { state } = useStudentContext();
+  const { setYearRange } = state;
+
+  useEffect(() => {
+    const getStudents = async () => {
+      const students = await getStudentsData(setYearRange);
+      setStudents(students);
+    };
+    getStudents();
+  }, []);
+
   return (
     <div className="w-full h-full bg-white new rounded-2xl pb-8 font-poppins ">
       <h3 className="capitalize text-lg border-b border-b-slate-200 p-5 ">
@@ -36,7 +50,7 @@ const AllStudents = memo(() => {
       </div>
 
       {/* DATA TABLE */}
-      <StudentsTable />
+      <StudentsTable studentsData={students} />
     </div>
   );
 });

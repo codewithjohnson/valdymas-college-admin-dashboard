@@ -1,4 +1,5 @@
 import { getServices } from "../../firebase";
+
 import {
   doc,
   setDoc,
@@ -97,6 +98,9 @@ export const getStudentsData = async (yearRange) => {
 
 // create final student registration
 export const createStudentRegistration = async (yearRange, studentName, studentData) => {
+  setValdymasDoc(yearRange);
+  getStudentsCollectionRef(yearRange);
   const studentID = await createStudentDoc(yearRange, studentName);
+  createStudentInfoCollection(yearRange, studentID);
   await addStudentsData(yearRange, studentID, studentData);
 };

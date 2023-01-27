@@ -2,6 +2,12 @@ import { nanoid } from "nanoid";
 
 export const studentReducer = (state, action) => {
   switch (action.type) {
+    case "SET_YEAR_RANGE":
+      return {
+        ...state,
+        setYearRange: action.payload,
+      };
+
     case "BIODATA/ADDED":
       return {
         ...state,

@@ -13,7 +13,7 @@ import {
   subjectCombinationSep,
 } from "../../../utilities/programme";
 
-const Programme = () => {
+const Programme = memo(() => {
   const [currentPath, setCurrentPath] = useOutletContext();
   const { state, dispatch } = useStudentContext();
   const [isSaved, setIsSaved] = useState(false);
@@ -21,6 +21,7 @@ const Programme = () => {
   const navigate = useNavigate();
   const { olevels } = state;
   const { pathname } = useLocation();
+  const { setYearRange } = state;
 
   const override = {
     display: "block",
@@ -80,10 +81,9 @@ const Programme = () => {
     setIsLoading(true);
 
     try {
-      let yearRange = "2021-2022";
       const studentData = state;
       const studentFullName = `${studentData?.biodata?.firstname} ${studentData?.biodata?.lastname}`;
-      await createStudentRegistration(yearRange, studentFullName, studentData);
+      await createStudentRegistration(setYearRange, studentFullName, studentData);
       // Navigate to next page
       const NEXTROUTE = "/students";
       navigate(NEXTROUTE);
@@ -93,7 +93,7 @@ const Programme = () => {
       setIsLoading(false);
     } finally {
       setIsLoading(false);
-      localStorage.clear();
+      // localStorage.clear();
       reset();
     }
   };
@@ -223,7 +223,5 @@ const Programme = () => {
       </div>
     </form>
   );
-};
-
-const ProgrammeForm = memo(Programme);
-export default ProgrammeForm;
+});
+export default Programme;
