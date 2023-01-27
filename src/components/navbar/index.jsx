@@ -4,6 +4,7 @@ import logo from "../../assets/images/logo.png";
 import { useProSidebar } from "react-pro-sidebar";
 import { getCurrentimeOfDay } from "../../utilities/currentDate";
 import { useStudentContext } from "../../context/students";
+import { useNavigate } from "react-router-dom";
 
 
 const Navbar = memo(() => {
@@ -11,11 +12,14 @@ const Navbar = memo(() => {
   const { collapseSidebar } = useProSidebar();
   const [yearRange, setYearRange] = useState("2022-2023");
   const { dispatch } = useStudentContext();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const currentHour = new Date().getHours();
     setTimeOfDay(getCurrentimeOfDay(currentHour));
     dispatch({ type: "SET_YEAR_RANGE", payload: yearRange });
+    navigate("/");
+    
   }, [new Date().getHours(), yearRange]);
 
   const HandleSetYearChange = (e) => {
