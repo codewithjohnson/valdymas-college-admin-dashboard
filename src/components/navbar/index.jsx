@@ -23,7 +23,7 @@ const Navbar = memo(() => {
   // set year range
   useEffect(() => {
     setYearRange(yearSetRange);
-    navigate("/");
+    // navigate("/");
   }, [yearSetRange]);
 
   const HandleSetYearChange = (e) => {

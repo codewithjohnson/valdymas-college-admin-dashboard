@@ -30,7 +30,7 @@ export const studentRoute = {
       element: <AllStudents />,
     },
     {
-      path: "student/:id",
+      path: "student/:studentID",
       element: <Student />,
     },
 

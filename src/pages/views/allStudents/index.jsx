@@ -33,7 +33,7 @@ const AllStudents = memo(() => {
       </h3>
 
       {/* STUDENT UTILS */}
-      <div className="studentUtils p-5 flex-col sm:flex sm:flex-row justify-end items-center  ">
+      <div className="studentUtils p-5 py-2 flex-col sm:flex sm:flex-row justify-end items-center  ">
         <div className="utilActions mt-5 sm:mt-0 flex items-center gap-x-3 sm:gap-x-2">
           <Tooltip title="print" placement="top" arrow>
             <span className=" material-symbols-outlined select-none p-3 cursor-pointer text-slate-600 text-[23px] hover:bg-gray-200 hover:rounded-full">

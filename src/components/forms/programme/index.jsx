@@ -1,5 +1,5 @@
 import React, { useState, memo, useEffect } from "react";
-import { useNavigate, useLocation, useOutletContext } from "react-router-dom";
+import { useNavigate, useLocation, useOutletContext, redirect } from "react-router-dom";
 import SelectInput from "../../../components/selectInput";
 import { createStudentRegistration } from "../../../services/firestore/students/students";
 import Spinner from "../../../components/spinner";
@@ -32,7 +32,6 @@ const Programme = memo(() => {
   const {
     register,
     reset,
-    trigger,
     watch,
     handleSubmit,
     errors,
@@ -57,10 +56,6 @@ const Programme = memo(() => {
     redirectToOlevels();
   }, [olevels]);
 
-  // Conditioning subject selection
-  const watchDept = watch("department");
-  var DeptCat = subjectCombinationSep[watchDept];
-
   // Handle save information
   const onFormSubmitAndSave = async (data) => {
     dispatch({ type: "PROGRAMME/SET_PROGRAMME", payload: data });
@@ -84,7 +79,6 @@ const Programme = memo(() => {
       const studentFullName = `${studentData?.biodata?.firstname} ${studentData?.biodata?.lastname}`;
       await createStudentRegistration(setYearRange, studentFullName, studentData);
 
-      // Navigate to next page
       const NEXTROUTE = "/students";
       navigate(NEXTROUTE);
     } catch (err) {
@@ -92,8 +86,8 @@ const Programme = memo(() => {
       setIsLoading(false);
     } finally {
       setIsLoading(false);
-      // localStorage.clear();
       reset();
+      // localStorage.clear();
     }
   };
 
@@ -207,12 +201,11 @@ const Programme = memo(() => {
         )}
 
         {/* Next Page */}
-        {isSaved && (
+        {(isSaved || isValid) && (
           <button
             disabled={isLoading}
-            className={`bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out flex items-center gap-x-2 ${
-              isLoading && "opacity-50"
-            }}`}
+            className={`bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out flex items-center gap-x-2
+             ${isLoading ? "opacity-20" : "opacity-100"}}`}
             onClick={onFormComplete}
           >
             <Spinner isLoading={isLoading} override={override} size={20} />
