@@ -1,55 +1,36 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { object, string } from "yup";
 import { useNavigate } from "react-router-dom";
 import logo from "../../../assets/images/logo.png";
+
+// firebase
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { getServices } from "../../../services/firebase";
 
+// components
+import Spinner from "../../../components/spinner";
+
+// form hooks
+import { useLoginFormHooks } from "../../../schemas/login";
+
 const Login = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState();
   const navigate = useNavigate();
-
-  const loginSChema = object({
-    email: string().required("email name cannot be empty"),
-    password: string().min(8).required("password must be at least 8 characters"),
-  });
   const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(loginSChema),
-  });
+    loginRegister,
+    loginReset,
+    loginTrigger,
+    loginHandleSubmit,
+    loginErrors,
+    loginIsValid,
+  } = useLoginFormHooks();
 
-  const loginAdmin = async (data) => {
-    const { auth } = getServices();
-    signInWithEmailAndPassword(auth, data.email, data.password)
-      .then(() => {
-        navigate("/");
-      })
-      .catch((error) => {
-        if (error) {
-          console.log(error.code);
-          setError("Invalid email or password");
-        }
-      });
-  };
-
-  const onSubmitForm = (data) => {
-    setIsLoading(true);
-    loginAdmin(data);
-    reset();
-    setIsLoading(false);
+  const onFormSubmit = (data) => {
+    console.log(data);
   };
 
   return (
     <div className="font-poppins min-h-screen flex flex-col sm:flex sm:flex-row my-0 mx-auto h-full w-full bg-gray-100 justify-center items-center relative overflow-hidden">
       {/* left */}
-      <div className="instruction--container bg-teal-700 text-white py-8 px-8 rounded-md border-none w-[500px] h-[538px] select-none">
+      <div className="instruction--container bg-teal-700 text-white pt-5 px-8 rounded-md border-none w-[500px] h-[538px] select-none z-10">
         <div className="instruction__content">
           <p className="text-xl capitalize">
             <span className="font-semibold">welcome</span> to Valydmas College Portal
@@ -74,7 +55,10 @@ const Login = () => {
 
       {/* right */}
 
-      <form className="flex flex-col w-[500px] rounded-md bg-white pb-6 z-10">
+      <form
+        onSubmit={loginHandleSubmit(onFormSubmit)}
+        className="flex flex-col w-[500px] rounded-md bg-white pb-6 z-10"
+      >
         <p className="text-green-900 text-sm m-4 pl-2 py-2  w-full border-l-4 border-l-orange-500 select-none ">
           Sign in to portal
         </p>
@@ -86,15 +70,16 @@ const Login = () => {
 
           <div className="select">
             <select
-              name=""
-              id=""
-              className="block w-full p-3 py-4 mt-2 text-sm border rounded-lg shadow-sm  placeholder-slate-300 border-green-200 focus:outline-none focus:ring focus:ring-green-100 hover:border-green-800 cursor-pointer"
+              name="level"
+              id="level"
+              {...loginRegister("level")}
+              className={`block w-full p-3 py-4 mt-2 border rounded-lg shadow-sm text-green-900 border-green-200 focus:outline-none focus:ring focus:ring-green-100 hover:border-green-800 cursor-pointer ${
+                loginErrors?.level ? " border-red-500" : ""
+              }   `}
             >
-              <option disabled value="">
-                Select Year
-              </option>
-              <option value="">Student</option>
-              <option value="">Admin</option>
+              <option value="">select level</option>
+              <option value="student">Student</option>
+              <option value="admin">Admin</option>
             </select>
           </div>
 
@@ -106,8 +91,11 @@ const Login = () => {
               type="text"
               name="email"
               id="email"
+              {...loginRegister("email")}
               placeholder="example@gmail.com"
-              className="block w-full p-3  mt-2 text-sm border rounded-lg shadow-sm  placeholder-slate-300 border-green-200 focus:outline-none focus:ring focus:ring-green-100 hover:border-green-800 "
+              className={`block w-full p-3  mt-2 text-sm border rounded-lg shadow-sm  placeholder-slate-300 border-green-200 focus:outline-none focus:ring focus:ring-green-100 hover:border-green-800 ${
+                loginErrors?.email ? " border-red-500" : ""
+              }  `}
             />
           </div>
 
@@ -119,7 +107,10 @@ const Login = () => {
               type="password"
               name="password"
               id="password"
-              className="block w-full p-3  mt-2 text-sm border rounded-lg shadow-sm  placeholder-slate-300 border-green-200 focus:outline-none focus:ring focus:ring-green-100 hover:border-green-800 "
+              {...loginRegister("password")}
+              className={`block w-full p-3  mt-2 text-sm border rounded-lg shadow-sm  placeholder-slate-300 border-green-200 focus:outline-none focus:ring focus:ring-green-100 hover:border-green-800 ${
+                loginErrors?.password ? " border-red-500" : ""
+              }  `}
             />
           </div>
 

@@ -48,7 +48,6 @@ const Programme = memo(() => {
       const PREVROUTE = "/students/add-student/olevels";
       navigate(PREVROUTE);
     } else {
-      // get last path
       const lastPath = pathname.split("/").pop();
       currentPath !== lastPath && setCurrentPath(lastPath);
     }
@@ -84,10 +83,10 @@ const Programme = memo(() => {
       const studentData = state;
       const studentFullName = `${studentData?.biodata?.firstname} ${studentData?.biodata?.lastname}`;
       await createStudentRegistration(setYearRange, studentFullName, studentData);
+
       // Navigate to next page
       const NEXTROUTE = "/students";
       navigate(NEXTROUTE);
-      window.location.reload();
     } catch (err) {
       console.log(err.message);
       setIsLoading(false);
