@@ -5,25 +5,42 @@ import { useProSidebar } from "react-pro-sidebar";
 import { getCurrentimeOfDay } from "../../utilities/currentDate";
 import { useStudentContext } from "../../context/students";
 import { useNavigate } from "react-router-dom";
-
+import { useYearRangeFormHooks } from "../../schemas/yearRange";
 
 const Navbar = memo(() => {
   const [timeOfDay, setTimeOfDay] = useState("");
   const { collapseSidebar } = useProSidebar();
   const [yearRange, setYearRange] = useState("2022-2023");
-  const { dispatch } = useStudentContext();
+  const { dispatch, state } = useStudentContext();
   const navigate = useNavigate();
+  const { setYearRange: yearSetRange } = state;
 
+  const {
+    yearRangeRegister,
+    yearRangeWatch,
+    yearRangeReset,
+    yearRangeTrigger,
+    yearRangeHandleSubmit,
+    yearRangeSetValue,
+    yearRangeIsValid,
+    errors,
+  } = useYearRangeFormHooks();
+
+  // get current time of day
   useEffect(() => {
     const currentHour = new Date().getHours();
     setTimeOfDay(getCurrentimeOfDay(currentHour));
-    dispatch({ type: "SET_YEAR_RANGE", payload: yearRange });
+  }, [new Date().getHours()]);
+
+  // set year range
+  useEffect(() => {
+    setYearRange(yearSetRange);
     navigate("/");
-    
-  }, [new Date().getHours(), yearRange]);
+  }, [yearSetRange]);
 
   const HandleSetYearChange = (e) => {
     setYearRange(e.target.value);
+    dispatch({ type: "SET_YEAR_RANGE", payload: e.target.value });
   };
 
   return (
@@ -64,8 +81,8 @@ const Navbar = memo(() => {
               name="setYearRange"
               id="setYearRange"
               value={yearRange}
+              {...yearRangeRegister("setYearRange")}
               onChange={HandleSetYearChange}
-              // {...yearRangeRegister("setYearRange")}
               className="border-none focus:outline-none focus:ring focus:ring-green-100 hover:border-green-80 cursor-pointer  text-sm text-green-900 opacity-70  bg-green-100"
             >
               <option value="2022-2023">2022-2023</option>

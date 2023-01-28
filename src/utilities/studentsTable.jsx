@@ -87,12 +87,15 @@ export const columns = [
       return (
         <div className="flex flex-col gap-y-1 justify-between items-center">
           <span
-            onClick={() => console.log(params.data.studentID)}
+            onClick={() => console.log(params.row.studentID)}
             className="material-symbols-outlined select-none p-2 cursor-pointer text-[23px]  hover:rounded-full hover:bg-sky-200 text-sky-900"
           >
             edit_note
           </span>
-          <span className="material-symbols-outlined select-none p-2 cursor-pointer text-[23px] hover:bg-red-200 hover:rounded-full text-red-900">
+          <span
+            onClick={() => console.log(params.row.studentID)}
+            className="material-symbols-outlined select-none p-2 cursor-pointer text-[23px] hover:bg-red-200 hover:rounded-full text-red-900"
+          >
             delete
           </span>
         </div>
