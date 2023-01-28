@@ -5,7 +5,6 @@ import { useProSidebar } from "react-pro-sidebar";
 import { getCurrentimeOfDay } from "../../utilities/currentDate";
 import { useStudentContext } from "../../context/students";
 import { useNavigate } from "react-router-dom";
-import { useYearRangeFormHooks } from "../../schemas/yearRange";
 
 const Navbar = memo(() => {
   const [timeOfDay, setTimeOfDay] = useState("");
@@ -14,17 +13,6 @@ const Navbar = memo(() => {
   const { dispatch, state } = useStudentContext();
   const navigate = useNavigate();
   const { setYearRange: yearSetRange } = state;
-
-  const {
-    yearRangeRegister,
-    yearRangeWatch,
-    yearRangeReset,
-    yearRangeTrigger,
-    yearRangeHandleSubmit,
-    yearRangeSetValue,
-    yearRangeIsValid,
-    errors,
-  } = useYearRangeFormHooks();
 
   // get current time of day
   useEffect(() => {
@@ -81,7 +69,6 @@ const Navbar = memo(() => {
               name="setYearRange"
               id="setYearRange"
               value={yearRange}
-              {...yearRangeRegister("setYearRange")}
               onChange={HandleSetYearChange}
               className="border-none focus:outline-none focus:ring focus:ring-green-100 hover:border-green-80 cursor-pointer  text-sm text-green-900 opacity-70  bg-green-100"
             >

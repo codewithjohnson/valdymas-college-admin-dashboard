@@ -1,5 +1,3 @@
-import { useMemo } from "react";
-
 function getFullName(params) {
   return `${params.row.firstName || ""} ${params.row.lastName || ""}`;
 }
