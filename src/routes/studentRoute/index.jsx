@@ -19,6 +19,7 @@ const Biodata = Loadable(lazy(() => import("../../pages/views/newStudent/biodata
 const Programme = Loadable(lazy(() => import("../../pages/views/newStudent/programme")));
 const Olevels = Loadable(lazy(() => import("../../pages/views/newStudent/Olevels")));
 const Student = Loadable(lazy(() => import("../../pages/views/student")));
+const UploadPage = Loadable(lazy(() => import("../../pages/views/newStudent/upload")));
 
 export const studentRoute = {
   path: "students",
@@ -60,6 +61,10 @@ export const studentRoute = {
         {
           path: "biodata",
           element: <Biodata />,
+        },
+        {
+          path: "upload",
+          element: <UploadPage />,
         },
         {
           path: "programme",

@@ -16,7 +16,7 @@ const NewStudent = memo(() => {
         <PathArrow />
         <Link to="/students">students</Link>
         <PathArrow />
-        {currentPath}
+        <span className="text-red-900 font-medium">{currentPath}</span>
       </div>
     );
   };

@@ -41,14 +41,14 @@ const BiodataForm = () => {
   // Handle form submit
   const onBiodataFormSubmit = (data) => {
     dispatch(addBiodataDispatcher(data));
-    const NEXTROUTE = "/students/add-student/olevels";
+    const NEXTROUTE = "/students/add-student/upload";
     navigate(NEXTROUTE);
   };
 
   return (
     <div className="p-5 pb-8 font-poppins">
       <header className="flex justify-between items-center">
-        <h3 className="p-3 pb-5 text-sm text-green-900 capitalize bg-green-100 rounded-md w-max select-none ">
+        <h3 className="p-3 pb-5 text-sm text-green-900 capitalize bg-green-100 rounded-md w-max select-none font-medium">
           Biodata (personal information)
         </h3>
         <p className="capitalize text-sm sm:text-base text-green-800 font-semibold select-none ">

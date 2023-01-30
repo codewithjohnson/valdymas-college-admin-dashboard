@@ -4,6 +4,7 @@ import { studentRoute } from "../studentRoute";
 
 const App = Loadable(lazy(() => import("../../App")));
 const Dashboard = Loadable(lazy(() => import("../../pages/views/dashboard")));
+
 export const mainRoute = {
   path: "/",
   element: <App />,

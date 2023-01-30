@@ -3,8 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const Student = () => {
   const navigate = useNavigate();
-  const params = useParams();
-  const studentID = params.studentID;
+  const { studentID } = useParams();
+  
 
   return (
     <div className="student-details bg-white rounded-2xl h-full w-full font-poppins">

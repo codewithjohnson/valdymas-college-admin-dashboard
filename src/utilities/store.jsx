@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid";
 
 export const initialState = {
-  setYearRange:"",
+  setYearRange: "",
   biodata: {
     firstname: "",
     lastname: "",
@@ -16,6 +16,10 @@ export const initialState = {
     maritalStatus: "",
     stateOfOrigin: "",
     lga: "",
+  },
+  dataCapture: {
+    olevelCertificate: null,
+    passport: null,
   },
   programme: {
     modeOfEntry: "",

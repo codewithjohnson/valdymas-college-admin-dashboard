@@ -30,7 +30,7 @@ const Login = () => {
   return (
     <div className="font-poppins min-h-screen flex flex-col sm:flex sm:flex-row my-0 mx-auto h-full w-full bg-gray-100 justify-center items-center relative overflow-hidden">
       {/* left */}
-      <div className="instruction--container bg-teal-700 text-white pt-5 px-8 rounded-md border-none w-[500px] h-[538px] select-none z-10">
+      <div className="instruction--container bg-teal-700 text-white pt-5 px-8 rounded-md border-none sm:w-[500px] h-[538px] select-none z-10">
         <div className="instruction__content">
           <p className="text-xl capitalize">
             <span className="font-semibold">welcome</span> to Valydmas College Portal
@@ -46,7 +46,7 @@ const Login = () => {
                 for first time user, your password is your surname
               </li>
               <li className="py-5 capitalize my-3 px-2 shadow-xl">
-                if you do not have an account, contact the admin or developer
+                if you do not have an account, contact an admin
               </li>
             </ul>
           </div>
