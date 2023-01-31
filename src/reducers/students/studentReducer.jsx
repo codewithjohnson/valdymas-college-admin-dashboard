@@ -29,6 +29,34 @@ export const studentReducer = (state, action) => {
         },
       };
 
+    case "DATA_CAPTURE/ADD_PASSPORT":
+      return {
+        ...state,
+        dataCapture: {
+          ...state.dataCapture,
+          passport: {
+            ...state.dataCapture.passport,
+            selectFiles: action.payload.selectFiles,
+            data: action.payload.base64,
+            status: true,
+          },
+        },
+      };
+
+    case "DATA_CAPTURE/ADD_OLEVEL_RESULT":
+      return {
+        ...state,
+        dataCapture: {
+          ...state.dataCapture,
+          olevelResult: {
+            ...state.dataCapture.olevelResult,
+            selectFiles: action.payload.selectFiles,
+            data: action.payload.base64,
+            status: true,
+          },
+        },
+      };
+
     case "PROGRAMME/SET_PROGRAMME":
       return {
         ...state,

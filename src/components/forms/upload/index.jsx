@@ -1,20 +1,69 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useOutletContext, useNavigate, useLocation } from "react-router-dom";
 import { useStudentContext } from "../../../context/students";
 import DataCapture from "../../../components/dataTable/data-capture";
+import { useUploadFormHooks } from "../../../schemas/upload";
 
 const UploadForm = () => {
+  const [isDone, setIsDone] = useState(false);
   const [currentPath, setCurrentPath] = useOutletContext();
   const { state, dispatch } = useStudentContext();
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  const { olevelCertificate, passport } = state?.dataCapture;
+  const {
+    uploadRegister,
+    uploadHandleSubmit,
+    uploadFormState,
+    uploadReset,
+    uploadErrors,
+    uploadIsSubmitting,
+    uploadIsValid,
+    uploadIsSubmitted,
+  } = useUploadFormHooks();
 
   useEffect(() => {
     const lastPath = pathname.split("/").pop();
     currentPath !== lastPath && setCurrentPath(lastPath);
   }, []);
+
+  useEffect(() => {
+    if (uploadIsSubmitted && uploadIsValid) {
+      onFormSubmit(uploadFormState);
+      uploadReset();
+    }
+  }, [uploadFormState]);
+
+  const convertFileToBase64 = (dispatchName, selectFiles, data) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(data.attachment[0]);
+    reader.onload = () => {
+      const base64 = reader.result;
+      dispatch({ type: dispatchName, payload: { selectFiles, base64 } });
+    };
+  };
+
+  const onFormSubmit = (data) => {
+    const { selectFiles } = data;
+    if (selectFiles === "passport") {
+      const dispatchName = "DATA_CAPTURE/ADD_PASSPORT";
+      convertFileToBase64(dispatchName, selectFiles, data);
+    } else if (selectFiles === "olevel") {
+      const dispatchName = "DATA_CAPTURE/ADD_OLEVEL_RESULT";
+      convertFileToBase64(dispatchName, selectFiles, data);
+    }
+  };
+
+  const prevPage = (e) => {
+    e.preventDefault();
+    const PREVROUTE = "/students/add-student/biodata";
+    navigate(PREVROUTE);
+  };
+
+  const nextPage = (e) => {
+    e.preventDefault();
+    navigate(1);
+  };
 
   return (
     <div className="p-5 font-poppins">
@@ -35,29 +84,61 @@ const UploadForm = () => {
           </span>
         </section>
         <section>
-          <form className="mt-10">
+          <form onSubmit={uploadHandleSubmit(onFormSubmit)} className="mt-10">
             <div className="select">
               <select
                 name="selectFiles"
                 id="selectFiles"
-                className="studentInputClass cursor-pointer"
+                {...uploadRegister("selectFiles")}
+                className={`studentInputClass cursor-pointer ${
+                  uploadErrors?.selectFiles && "border-red-800"
+                }`}
               >
                 <option value="select">select file to upload</option>
                 <option value="passport">passport</option>
                 <option value="olevel">olevel</option>
               </select>
+              {uploadErrors?.selectFiles && (
+                <p className="text-red-800 text-[11px] mt-2">
+                  {uploadErrors?.selectFiles.message}
+                </p>
+              )}
             </div>
-            <div className=" mt-5">
-              <label htmlFor="attachment" className="capitalize text-gray-800 text-sm">
-                attachments
-              </label>
-              <input
-                type="file"
-                name="file"
-                className="studentInputClass cursor-pointer"
-              />
+            <div className=" mt-8">
+              <div className="up">
+                <label
+                  htmlFor="attachment"
+                  className="capitalize text-gray-800 text-sm font-medium"
+                >
+                  select image
+                </label>
+                <input
+                  type="file"
+                  name="attachment"
+                  id="attachment"
+                  {...uploadRegister("attachment")}
+                  className={`studentInputClass cursor-pointer placeholder:text-green-300 ${
+                    uploadErrors?.attachment && "border-red-800"
+                  }}`}
+                />
+                <p className=" text-[11px] mt-2 text-stone-900">
+                  accepted files: png, jpeg, jpg{" "}
+                  <span className="text-green-800">
+                    (file size should not exceed 200kb)
+                  </span>{" "}
+                </p>
+                {uploadErrors?.attachment && (
+                  <p className="text-red-800 text-[11px] mt-2">
+                    {uploadErrors?.attachment.message}
+                  </p>
+                )}
+              </div>
               <div className="submit flex flex-row justify-end mt-5 mb-5">
-                <button className="bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out ">
+                <button
+                  className={`bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out ${
+                    uploadIsValid ? "block" : "hidden"
+                  } `}
+                >
                   submit
                 </button>
               </div>
@@ -71,6 +152,26 @@ const UploadForm = () => {
             uploaded documents
           </p>
           <DataCapture />
+          <div className="navigate mt-8 mb-10 flex flex-row justify-between ">
+            {/* previous page */}
+            <button
+              onClick={prevPage}
+              type="button"
+              className={`bg-green-900 px-5 py-4 capitalize rounded-md text-white cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out  `}
+            >
+              prev page
+            </button>
+            {/* next page */}
+            <button
+              type="button"
+              onClick={nextPage}
+              className={`bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out ${
+                uploadIsValid ? "block" : "hidden"
+              } `}
+            >
+              next page
+            </button>
+          </div>
         </div>
       </main>
     </div>

@@ -24,7 +24,7 @@ const NewStudent = memo(() => {
   return (
     <div className="w-full h-full bg-white new rounded-2xl">
       <header className="flex items-center justify-between p-5 border-b border-b-slate-200 ">
-        <h2 className="text-lg capitalize select-none new--student font-poppins">
+        <h2 className="text-lg capitalize select-none new--student font-poppins ">
           new student
         </h2>
 

@@ -1,14 +1,18 @@
-import { memo, useState } from "react";
+import { memo } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { getColumns, getRows } from "../../../utilities/dataCapture";
+import { useStudentContext } from "../../../context/students";
 
 const DataCapture = memo(() => {
+  const { state } = useStudentContext();
+  const rowData = Object.entries(state?.dataCapture);
+
   return (
     <div className="">
       <DataGrid
         rowHeight={100}
         autoHeight
-        rows={getRows()}
+        rows={getRows(rowData)}
         getRowClassName={() => `myDataGridRow`}
         columns={getColumns()}
         pageSize={5}

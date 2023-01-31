@@ -18,8 +18,16 @@ export const initialState = {
     lga: "",
   },
   dataCapture: {
-    olevelCertificate: null,
-    passport: null,
+    olevelResult: {
+      selectFiles: "",
+      data: null,
+      status:false,
+    },
+    passport: {
+      selectFiles: "",
+      data: null,
+      status:false,
+    },
   },
   programme: {
     modeOfEntry: "",
