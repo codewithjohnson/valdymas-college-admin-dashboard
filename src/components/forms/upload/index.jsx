@@ -10,30 +10,51 @@ const UploadForm = () => {
   const { state, dispatch } = useStudentContext();
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const { biodata } = state;
+  const { olevelResult, passport } = state?.dataCapture;
 
   const {
     uploadRegister,
     uploadHandleSubmit,
-    uploadFormState,
     uploadReset,
     uploadErrors,
-    uploadIsSubmitting,
     uploadIsValid,
     uploadIsSubmitted,
   } = useUploadFormHooks();
 
-  useEffect(() => {
+  // redirect to biodata if firstname is empty
+  const redirectToBiodata = () => {
+    if (!biodata.firstname) {
+      const redirectRoute = "/students/add-student/biodata";
+      navigate(redirectRoute);
+    }
+  };
+
+  // get last path
+  const getLastPath = () => {
     const lastPath = pathname.split("/").pop();
     currentPath !== lastPath && setCurrentPath(lastPath);
-  }, []);
+  };
+
+  // check if olevel and passport is uploaded
+  const checkIfDone = () => {
+    if (olevelResult.status && passport.status) {
+      setIsDone(true);
+    }
+  };
 
   useEffect(() => {
-    if (uploadIsSubmitted && uploadIsValid) {
-      onFormSubmit(uploadFormState);
-      uploadReset();
-    }
-  }, [uploadFormState]);
+    redirectToBiodata();
+    getLastPath();
+    checkIfDone();
+  }, [state]);
 
+  // reset form on submit
+  useEffect(() => {
+    uploadReset();
+  }, [uploadIsSubmitted]);
+
+  // Convert file to base64
   const convertFileToBase64 = (dispatchName, selectFiles, data) => {
     const reader = new FileReader();
     reader.readAsDataURL(data.attachment[0]);
@@ -43,6 +64,7 @@ const UploadForm = () => {
     };
   };
 
+  // Handle form submit
   const onFormSubmit = (data) => {
     const { selectFiles } = data;
     if (selectFiles === "passport") {
@@ -62,7 +84,9 @@ const UploadForm = () => {
 
   const nextPage = (e) => {
     e.preventDefault();
-    navigate(1);
+    setIsDone(false);
+    const NEXTROUTE = "/students/add-student/olevels";
+    navigate(NEXTROUTE);
   };
 
   return (
@@ -76,7 +100,7 @@ const UploadForm = () => {
         </p>
       </header>
       <main className="mt-5">
-        <section className="guide bg-amber-200 text-black p-5">
+        <section className="guide bg-amber-200 text-black p-5 select-none">
           <span className="font-bold capitalize">instructions: </span>
           <span className="text-gray-700 pl-3">
             you are to upload the student <span className="font-semibold">passport</span>{" "}
@@ -148,7 +172,7 @@ const UploadForm = () => {
 
         {/* display saved passport and olevel certificate to local storage */}
         <div className="dataCapture">
-          <p className="capitalize mb-7 mt-15 text-lg text-green-900 font-semibold">
+          <p className="capitalize mb-7 mt-15 text-[16px] text-green-900 font-semibold">
             uploaded documents
           </p>
           <DataCapture />
@@ -166,7 +190,7 @@ const UploadForm = () => {
               type="button"
               onClick={nextPage}
               className={`bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out ${
-                uploadIsValid ? "block" : "hidden"
+                isDone ? "block" : "hidden"
               } `}
             >
               next page

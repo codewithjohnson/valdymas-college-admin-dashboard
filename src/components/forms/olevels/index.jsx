@@ -51,20 +51,8 @@ const Olevel = () => {
   } = secondSittingFormHooks();
 
   // check if previous page [biodata] has been handled
-  const { biodata } = state;
+  const { dataCapture } = state;
   const { sittingOne, sittingTwo } = state?.olevels;
-
-  // redirect to biodata if not filled
-  const redirectToBiodata = () => {
-    if (!biodata.firstname) {
-      const redirectRoute = "/students/add-student/biodata";
-      navigate(redirectRoute);
-    } else {
-      // get last path
-      const lastPath = pathname.split("/").pop();
-      currentPath !== lastPath && setCurrentPath(lastPath);
-    }
-  };
 
   // set form values
   const setFormValues = () => {
@@ -80,7 +68,6 @@ const Olevel = () => {
 
   // set form values on mount
   useEffect(() => {
-    redirectToBiodata();
     setFormValues();
   }, [biodata]);
 

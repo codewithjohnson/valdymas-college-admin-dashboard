@@ -1,6 +1,11 @@
 export const getColumns = (data) => {
   const columns = [
-    { field: "id", headerName: "s/n", width: 50 },
+    {
+      field: "id",
+      headerName: "s/n",
+      headerClassName: "font-poppins uppercase",
+      width: 50,
+    },
     {
       field: "document/description",
       headerName: "description",
@@ -26,11 +31,26 @@ export const getColumns = (data) => {
       headerClassName: "font-poppins uppercase",
       flex: 1,
     },
+
     {
       field: "status",
       headerName: "status",
       headerClassName: "font-poppins uppercase",
       flex: 1,
+    },
+
+    {
+      field: "image",
+      headerName: "image",
+      headerClassName: "font-poppins uppercase",
+      flex: 1,
+      renderCell: (params) => {
+        return (
+          <div className="flex flex-col gap-y-1 justify-between items-center">
+            <img src={params.row.image} alt="" className="w-10 h-10 rounded-full" />
+          </div>
+        );
+      },
     },
   ];
   return columns;
@@ -61,15 +81,17 @@ export const getRows = (data) => {
         status: item[1].status,
         name: fileName,
         "uploaded/date": fileLastModifiedDate,
+        image: item[1].data,
       };
     } else {
       return {
         id: index + 1,
-        "document/description": '',
-        "document/type": '',
-        status: '',
-        name: '',
-        "uploaded/date": '',
+        "document/description": "",
+        "document/type": "",
+        status: "",
+        name: "",
+        "uploaded/date": "",
+        image: "",
       };
     }
   });

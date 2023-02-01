@@ -10,7 +10,7 @@ export const uploadSchema = object({
 
   attachment: mixed()
     .test("fileFormat", "Unsupported Format", (value) => {
-      return value && ["image/jpeg", "image/jpg"].includes(value[0]?.type);
+      return value && ["image/jpeg", "image/jpg", "image/png"].includes(value[0]?.type);
     })
     .test("fileSize", "File too large", (value) => {
       // test for 100kb
@@ -24,7 +24,7 @@ export const useUploadFormHooks = () => {
   const {
     register: uploadRegister,
     handleSubmit: uploadHandleSubmit,
-    formState: uploadFormState,
+
     reset: uploadReset,
     formState: {
       errors: uploadErrors,
@@ -39,7 +39,6 @@ export const useUploadFormHooks = () => {
   return {
     uploadRegister,
     uploadHandleSubmit,
-    uploadFormState,
     uploadReset,
     uploadErrors,
     uploadIsSubmitting,
