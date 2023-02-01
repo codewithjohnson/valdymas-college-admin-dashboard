@@ -1,10 +1,24 @@
 import React, { useState, memo, useEffect } from "react";
 import { useNavigate, useLocation, useOutletContext } from "react-router-dom";
-import SelectInput from "../../../components/selectInput";
-import { createStudentRegistration } from "../../../services/firestore/students/students";
-import Spinner from "../../../components/spinner";
-import { useProgrammeFormHooks } from "../../../schemas/programme";
+
+// state context
 import { useStudentContext } from "../../../context/students";
+
+// components
+import SelectInput from "../../../components/selectInput";
+import Spinner from "../../../components/spinner";
+
+// firestore
+import {
+  createStudentDoc,
+  createStudentRegistration,
+} from "../../../services/firestore/students/students";
+
+// storage
+import { uploadStudentFiles } from "../../../services/storage";
+
+// form hooks
+import { useProgrammeFormHooks } from "../../../schemas/programme";
 
 import {
   subjectCombinationWithId,
@@ -71,8 +85,15 @@ const Programme = memo(() => {
 
     try {
       const studentData = state;
+      const dataCapture = studentData?.dataCapture;
       const studentFullName = `${studentData?.biodata?.firstname} ${studentData?.biodata?.lastname}`;
-      await createStudentRegistration(setYearRange, studentFullName, studentData);
+      const studentID = await createStudentDoc(setYearRange, studentFullName);
+
+      // save student data to firestore
+      await createStudentRegistration(setYearRange, studentID, studentData);
+
+      // upload files to firebase storage
+    await uploadStudentFiles(dataCapture, setYearRange, studentID, studentFullName);
 
       const NEXTROUTE = "/students";
       navigate(NEXTROUTE);

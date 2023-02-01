@@ -40,11 +40,11 @@ export const getStudentsCollectionRef = async (yearRange) => {
 };
 
 // create student doc with auto generated id and reference the student name
-export const createStudentDoc = async (yearRange, studentName) => {
+export const createStudentDoc = async (yearRange, studentFullName) => {
   const studentsCollectionRef = await getStudentsCollectionRef(yearRange);
   const studentDocRef = doc(studentsCollectionRef);
   await setDoc(studentDocRef, {
-    studentName,
+    studentFullName,
     createdAt: serverTimestamp(),
     role: "student",
   });
@@ -97,10 +97,9 @@ export const getStudentsData = async (yearRange) => {
 };
 
 // create final student registration
-export const createStudentRegistration = async (yearRange, studentName, studentData) => {
+export const createStudentRegistration = async (yearRange, studentID, studentData) => {
   setValdymasDoc(yearRange);
   getStudentsCollectionRef(yearRange);
-  const studentID = await createStudentDoc(yearRange, studentName);
   createStudentInfoCollection(yearRange, studentID);
   await addStudentsData(yearRange, studentID, studentData);
 };
