@@ -51,25 +51,34 @@ const Olevel = () => {
   } = secondSittingFormHooks();
 
   // check if previous page [biodata] has been handled
-  const { dataCapture } = state;
+  const { olevelResult, passport } = state?.dataCapture;
   const { sittingOne, sittingTwo } = state?.olevels;
+
+  // check if olevel and passport is uploaded
+  const checkDataCaptureIsDone = () => {
+    if (!olevelResult.status && !passport.status) {
+      const redirectRoute = "/students/add-student/upload";
+      navigate(redirectRoute);
+    }
+  };
 
   // set form values
   const setFormValues = () => {
     const globalSittingNumber = state?.olevels?.GlobalsittingNumber;
-    if (globalSittingNumber) {
+    if (globalSittingNumber === "1" || globalSittingNumber === "2") {
       setSittingNumber(globalSittingNumber);
       setFirstSittingFormValues(firstSittingSetValue, sittingOne);
-      if (globalSittingNumber === "2") {
-        setSecondSittingFormValues(secondSittingSetValue, sittingTwo);
-      }
+    }
+    if (globalSittingNumber === "2") {
+      setSecondSittingFormValues(secondSittingSetValue, sittingTwo);
     }
   };
 
   // set form values on mount
   useEffect(() => {
+    checkDataCaptureIsDone();
     setFormValues();
-  }, [biodata]);
+  }, []);
 
   // Form One
   const onFormOneSubmit = (data) => {

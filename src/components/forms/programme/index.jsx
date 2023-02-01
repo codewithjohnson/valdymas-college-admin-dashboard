@@ -1,5 +1,5 @@
 import React, { useState, memo, useEffect } from "react";
-import { useNavigate, useLocation, useOutletContext, redirect } from "react-router-dom";
+import { useNavigate, useLocation, useOutletContext } from "react-router-dom";
 import SelectInput from "../../../components/selectInput";
 import { createStudentRegistration } from "../../../services/firestore/students/students";
 import Spinner from "../../../components/spinner";
@@ -10,7 +10,6 @@ import {
   subjectCombinationWithId,
   departmentWithId,
   entryModeWithId,
-  subjectCombinationSep,
 } from "../../../utilities/programme";
 
 const Programme = memo(() => {
@@ -29,16 +28,14 @@ const Programme = memo(() => {
     borderColor: "white",
   };
 
-  const {
-    register,
-    reset,
-    watch,
-    handleSubmit,
-    errors,
-    isSubmitting,
-    isValidating,
-    isValid,
-  } = useProgrammeFormHooks();
+  const { register, reset, handleSubmit, errors, isSubmitting, isValidating, isValid } =
+    useProgrammeFormHooks();
+
+  // get last path
+  const getPath = () => {
+    const lastPath = pathname.split("/").pop();
+    currentPath !== lastPath && setCurrentPath(lastPath);
+  };
 
   // check if previous page has been handled
   const redirectToOlevels = () => {
@@ -46,14 +43,12 @@ const Programme = memo(() => {
     if (!GlobalsittingNumber) {
       const PREVROUTE = "/students/add-student/olevels";
       navigate(PREVROUTE);
-    } else {
-      const lastPath = pathname.split("/").pop();
-      currentPath !== lastPath && setCurrentPath(lastPath);
     }
   };
 
   useEffect(() => {
     redirectToOlevels();
+    getPath();
   }, [olevels]);
 
   // Handle save information
@@ -201,7 +196,7 @@ const Programme = memo(() => {
         )}
 
         {/* Next Page */}
-        {(isSaved || isValid) && (
+        {isSaved && (
           <button
             disabled={isLoading}
             className={`bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out flex items-center gap-x-2

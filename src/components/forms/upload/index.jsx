@@ -119,8 +119,8 @@ const UploadForm = () => {
                 }`}
               >
                 <option value="select">select file to upload</option>
-                <option value="passport">passport</option>
                 <option value="olevel">olevel</option>
+                <option value="passport">passport</option>
               </select>
               {uploadErrors?.selectFiles && (
                 <p className="text-red-800 text-[11px] mt-2">

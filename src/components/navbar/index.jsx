@@ -14,21 +14,20 @@ const Navbar = memo(() => {
   const navigate = useNavigate();
   const { setYearRange: yearSetRange } = state;
 
+  // set year range to state on mount
+  useEffect(() => {
+    dispatch({ type: "SET_YEAR_RANGE", payload: yearRange });
+  }, [yearRange]);
+
   // get current time of day
   useEffect(() => {
     const currentHour = new Date().getHours();
     setTimeOfDay(getCurrentimeOfDay(currentHour));
   }, [new Date().getHours()]);
 
-  // set year range
-  useEffect(() => {
-    setYearRange(yearSetRange);
-    // navigate("/");
-  }, [yearSetRange]);
-
+  // handle year range change
   const HandleSetYearChange = (e) => {
     setYearRange(e.target.value);
-    dispatch({ type: "SET_YEAR_RANGE", payload: e.target.value });
   };
 
   return (

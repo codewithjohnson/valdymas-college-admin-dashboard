@@ -1,4 +1,4 @@
-import { initializeApp, getApp, getApps } from "firebase/app";
+import { initializeApp, getApps } from "firebase/app";
 import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 import { getAuth, connectAuthEmulator } from "firebase/auth";
 import { getStorage } from "firebase/storage";
@@ -13,7 +13,7 @@ export const initializeServices = () => {
   return { firestore, auth, storage, isConfigured };
 };
 
-export const connectToEmulators = ({ auth, firestore, functions }) => {
+export const connectToEmulators = ({ auth, firestore, storage }) => {
   connectFirestoreEmulator(firestore, "localhost", 8080);
   connectAuthEmulator(auth, "http://localhost:9099");
 };
@@ -27,6 +27,6 @@ export const getServices = () => {
     console.log("Firebase services initialized in development mode");
   }
 
-  const { firestore, auth } = services;
-  return { firestore, auth };
+  const { firestore, auth, storage } = services;
+  return { firestore, auth, storage };
 };
