@@ -12,7 +12,6 @@ const Navbar = memo(() => {
   const [yearRange, setYearRange] = useState("2022-2023");
   const { dispatch, state } = useStudentContext();
   const navigate = useNavigate();
-  const { setYearRange: yearSetRange } = state;
 
   // set year range to state on mount
   useEffect(() => {

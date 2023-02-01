@@ -18,23 +18,32 @@ const AllStudents = memo(() => {
   const { state } = useStudentContext();
   const { setYearRange } = state;
 
+  const getStudents = async () => {
+    const students = await getStudentsData(setYearRange);
+    setStudents(students);
+  };
+
   useEffect(() => {
-    const getStudents = async () => {
-      const students = await getStudentsData(setYearRange);
-      setStudents(students);
-    };
     getStudents();
   }, []);
 
   return (
     <div className="w-full h-full bg-white new rounded-2xl pb-8 font-poppins ">
-      <h3 className="capitalize text-lg border-b border-b-slate-200 p-5 ">
-        students list
-      </h3>
+      <header>
+        <h3 className="capitalize text-lg border-b border-b-slate-200 p-5 ">
+          students list
+        </h3>
+      </header>
 
       {/* STUDENT UTILS */}
       <div className="studentUtils p-5 py-2 flex-col sm:flex sm:flex-row justify-end items-center  ">
         <div className="utilActions mt-5 sm:mt-0 flex items-center gap-x-3 sm:gap-x-2">
+          <Tooltip onClick={getStudents} title="refresh" placement="top" arrow>
+            <span className="material-symbols-outlined select-none p-3 cursor-pointer text-slate-600 text-[23px] hover:bg-gray-200 hover:rounded-full">
+              autorenew
+            </span>
+          </Tooltip>
+
           <Tooltip title="print" placement="top" arrow>
             <span className=" material-symbols-outlined select-none p-3 cursor-pointer text-slate-600 text-[23px] hover:bg-gray-200 hover:rounded-full">
               print
