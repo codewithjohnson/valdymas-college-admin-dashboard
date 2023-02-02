@@ -16,7 +16,7 @@ const ErrorPage = () => {
                   Sorry about that! Please visit our homepage to get where you
                   need to go.
                 </p>
-                <button class=" lg:w-auto my-2 border rounded md py-4 px-8 text-center bg-indigo-500 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-opacity-50">
+                <button class=" lg:w-auto my-2 border sm:text-center rounded md py-4 px-8 text-center bg-indigo-500 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-opacity-50">
                    <Link to="/">Back To Homepage</Link>
                 </button>
               </div>

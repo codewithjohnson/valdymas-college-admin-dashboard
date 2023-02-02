@@ -30,15 +30,19 @@ const Login = () => {
   return (
     <div className="font-poppins min-h-screen flex flex-col sm:flex sm:flex-row my-0 mx-auto h-full w-full bg-gray-100 justify-center items-center relative overflow-hidden">
       {/* left */}
-      <div className="instruction--container bg-teal-700 text-white pt-5 px-8 rounded-md border-none w-[500px] h-[538px] select-none z-10">
+
+      <div className="instruction--container bg-teal-700 text-white pt-8 px-8 my-6 rounded-md border-none  w-[80%] sm:w-[500px] h-[538px] select-none z-10 ">
         <div className="instruction__content">
           <p className="text-xl capitalize">
-            <span className="font-semibold">welcome</span> to Valydmas College Portal
+            <span className="font-semibold">welcome</span> to Valydmas College
+            Portal
           </p>
           <div className="instruction mt-10">
             <p className=" text-lg">Instructions to sign in</p>
             <ul className="list-disc text-gray-300 text-sm pl-9 ">
-              <li className="py-5 capitalize  my-3 px-3 shadow-xl ">select your level</li>
+              <li className="py-5 capitalize  my-3 px-3 shadow-xl ">
+                select your level
+              </li>
               <li className="py-5 capitalize my-3 px-2 shadow-xl">
                 enter your email and password to sign in
               </li>
@@ -52,12 +56,10 @@ const Login = () => {
           </div>
         </div>
       </div>
-
       {/* right */}
-
       <form
         onSubmit={loginHandleSubmit(onFormSubmit)}
-        className="flex flex-col w-[500px] rounded-md bg-white pb-6 z-10"
+        className="flex flex-col  w-[80%] sm:w-[500px] my-4  rounded-md bg-white pb-6 z-10"
       >
         <p className="text-green-900 text-sm m-4 pl-2 py-2  w-full border-l-4 border-l-orange-500 select-none ">
           Sign in to portal
@@ -124,7 +126,6 @@ const Login = () => {
           </div>
         </div>
       </form>
-
       <svg
         viewBox="0 0 200 200"
         xmlns="http://www.w3.org/2000/svg"
@@ -137,7 +138,6 @@ const Login = () => {
           transform="translate(100 100)"
         />
       </svg>
-
       <svg
         viewBox="0 0 200 200"
         xmlns="http://www.w3.org/2000/svg"
