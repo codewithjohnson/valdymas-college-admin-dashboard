@@ -14,8 +14,8 @@ export const initializeServices = () => {
 };
 
 export const connectToEmulators = ({ auth, firestore, storage }) => {
-  connectFirestoreEmulator(firestore, "localhost", 8080);
   connectAuthEmulator(auth, "http://localhost:9099");
+  connectFirestoreEmulator(firestore, "localhost", 8080);
 };
 
 export const getServices = () => {

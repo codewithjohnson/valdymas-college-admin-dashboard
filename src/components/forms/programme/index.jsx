@@ -93,7 +93,7 @@ const Programme = memo(() => {
       await createStudentRegistration(setYearRange, studentID, studentData);
 
       // upload files to firebase storage
-    await uploadStudentFiles(dataCapture, setYearRange, studentID, studentFullName);
+      await uploadStudentFiles(dataCapture, setYearRange, studentID, studentFullName);
 
       const NEXTROUTE = "/students";
       navigate(NEXTROUTE);

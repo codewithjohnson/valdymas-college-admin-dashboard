@@ -8,10 +8,10 @@ const StudentsTable = memo(({ studentsData }) => {
   const rows = getRows(studentsData);
 
   const HandleEditStudentProfile = (studentID) => {
-    navigate(`/students/student/${studentID}`);
+    navigate(`/student/${studentID}`);
   };
   const HandleDeleteStudentProfile = (studentID) => {
-    navigate(`/students/student/${studentID}`);
+    navigate(`/student/${studentID}`);
   };
 
   return (
