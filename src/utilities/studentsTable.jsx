@@ -6,7 +6,7 @@ function getFullName(params) {
 export const getRows = (data) => {
   const rows = data.map((student, index) => {
     const biodata = student?.studentInfo[0];
-    const programme = student?.studentInfo[2];
+    const programme = student?.studentInfo[3];
     return {
       id: index + 1,
       studentID: student?.studentID,
@@ -85,13 +85,13 @@ export const getColumns = (HandleEditStudentProfile, HandleDeleteStudentProfile)
         return (
           <div className="flex flex-col gap-y-1 justify-between items-center">
             <span
-              onClick={()=>HandleEditStudentProfile(params.row.studentID)}
+              onClick={() => HandleEditStudentProfile(params.row.studentID)}
               className="material-symbols-outlined select-none p-2 cursor-pointer text-[23px]  hover:rounded-full hover:bg-sky-200 text-sky-900"
             >
               edit_note
             </span>
             <span
-              onClick={()=>HandleDeleteStudentProfile(params.row.studentID)}
+              onClick={() => HandleDeleteStudentProfile(params.row.studentID)}
               className="material-symbols-outlined select-none p-2 cursor-pointer text-[23px] hover:bg-red-200 hover:rounded-full text-red-900"
             >
               delete

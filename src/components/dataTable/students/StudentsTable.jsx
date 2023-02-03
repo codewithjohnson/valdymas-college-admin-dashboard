@@ -2,16 +2,20 @@ import React, { memo } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { getColumns, getRows } from "../../../utilities/studentsTable";
 import { useNavigate } from "react-router-dom";
+import { deleteStudentDoc } from "../../../services/firestore/students/students";
+import { useStudentContext } from "../../../context/students";
 
 const StudentsTable = memo(({ studentsData }) => {
+  const { state } = useStudentContext();
+  const { setYearRange } = state;
   const navigate = useNavigate();
   const rows = getRows(studentsData);
 
   const HandleEditStudentProfile = (studentID) => {
     navigate(`/student/${studentID}`);
   };
-  const HandleDeleteStudentProfile = (studentID) => {
-    navigate(`/student/${studentID}`);
+  const HandleDeleteStudentProfile = async (studentID) => {
+    await deleteStudentDoc(setYearRange, studentID);
   };
 
   return (

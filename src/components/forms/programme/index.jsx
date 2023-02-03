@@ -14,9 +14,6 @@ import {
   createStudentRegistration,
 } from "../../../services/firestore/students/students";
 
-// storage
-import { uploadStudentFiles } from "../../../services/storage";
-
 // form hooks
 import { useProgrammeFormHooks } from "../../../schemas/programme";
 
@@ -31,8 +28,8 @@ const Programme = memo(() => {
   const { state, dispatch } = useStudentContext();
   const [isSaved, setIsSaved] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
   const { olevels } = state;
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   const { setYearRange } = state;
 
@@ -92,9 +89,7 @@ const Programme = memo(() => {
       // save student data to firestore
       await createStudentRegistration(setYearRange, studentID, studentData);
 
-      // upload files to firebase storage
-      await uploadStudentFiles(dataCapture, setYearRange, studentID, studentFullName);
-
+      // Navigate to next page
       const NEXTROUTE = "/students";
       navigate(NEXTROUTE);
     } catch (err) {

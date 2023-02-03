@@ -8,6 +8,7 @@ import {
   arrayUnion,
   collection,
   updateDoc,
+  deleteDoc,
   getDoc,
   onSnapshot,
   serverTimestamp,
@@ -65,11 +66,13 @@ export const addStudentsData = async (yearRange, studentID, studentData) => {
     yearRange,
     studentID
   );
-  const { biodata, programme, olevels } = studentData;
+  const { biodata, dataCapture, programme, olevels } = studentData;
   const biodataDocRef = doc(studentInfoCollectionRef, "biodata");
+  const dataCaptureDocRef = doc(studentInfoCollectionRef, "dataCapture");
   const programmeDocRef = doc(studentInfoCollectionRef, "programme");
   const olevelsDocRef = doc(studentInfoCollectionRef, "olevels");
   await setDoc(biodataDocRef, biodata);
+  await setDoc(dataCaptureDocRef, dataCapture);
   await setDoc(programmeDocRef, programme);
   await setDoc(olevelsDocRef, olevels);
 };
@@ -94,6 +97,36 @@ export const getStudentsData = async (yearRange) => {
     })
   );
   return studentsInfo;
+};
+
+// rewrite getStudentsData function to use real time listener
+export const getStudentsDataListener = async (yearRange, setStudentData) => {
+  const studentsCollectionRef = await getStudentsCollectionRef(yearRange);
+  const unsubscribe = onSnapshot(studentsCollectionRef, async (querySnapshot) => {
+    const studentsInfo = await Promise.all(
+      querySnapshot.docs.map(async (studentDoc) => {
+        const studentID = studentDoc.id;
+        const studentInfoCollectionRef = await createStudentInfoCollection(
+          yearRange,
+          studentID
+        );
+        const studentInfoDocs = await getDocs(studentInfoCollectionRef);
+        const studentInfo = studentInfoDocs.docs.map((doc) => {
+          return { ...doc.data() };
+        });
+        return { studentID, studentInfo };
+      })
+    );
+    setStudentData(studentsInfo);
+  });
+  return unsubscribe;
+};
+
+// delete student doc using student id
+export const deleteStudentDoc = async (yearRange, studentID) => {
+  const studentsCollectionRef = await getStudentsCollectionRef(yearRange);
+  const studentDocRef = doc(studentsCollectionRef, studentID);
+  await deleteDoc(studentDocRef);
 };
 
 // create final student registration
