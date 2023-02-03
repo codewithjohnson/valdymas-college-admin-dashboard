@@ -1,10 +1,7 @@
 import React, { memo, lazy, useState, useEffect } from "react";
 
 // firestore
-import {
-  getDocs,
-  onSnapshot,
-} from "firebase/firestore";
+import { getDocs, onSnapshot } from "firebase/firestore";
 
 // context
 import { useStudentContext } from "../../../context/students";
@@ -14,7 +11,6 @@ import {
   getStudentsCollectionRef,
   createStudentInfoCollection,
 } from "../../../services/firestore/students/students";
-
 
 // material ui
 import Tooltip from "@mui/material/Tooltip";
