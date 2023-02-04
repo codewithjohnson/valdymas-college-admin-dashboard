@@ -12,7 +12,8 @@ const StudentsTable = memo(({ studentsData }) => {
   const rows = getRows(studentsData);
 
   const HandleEditStudentProfile = (studentID) => {
-    navigate(`/student/${studentID}`);
+    const studentProfilePath = `/student/${studentID}`;
+    navigate(studentProfilePath);
   };
   const HandleDeleteStudentProfile = async (studentID) => {
     await deleteStudentDoc(setYearRange, studentID);

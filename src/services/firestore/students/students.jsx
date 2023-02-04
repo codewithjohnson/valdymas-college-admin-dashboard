@@ -77,26 +77,17 @@ export const addStudentsData = async (yearRange, studentID, studentData) => {
   await setDoc(olevelsDocRef, olevels);
 };
 
-// get student biodata, programme and olevels docs from info collection for all students using real time listener
-export const getStudentsData = async (yearRange) => {
-  const studentsCollectionRef = await getStudentsCollectionRef(yearRange);
-  const querySnapshot = await getDocs(studentsCollectionRef);
-  // get info for all students in docs
-  const studentsInfo = await Promise.all(
-    querySnapshot.docs.map(async (studentDoc) => {
-      const studentID = studentDoc.id;
-      const studentInfoCollectionRef = await createStudentInfoCollection(
-        yearRange,
-        studentID
-      );
-      const studentInfoDocs = await getDocs(studentInfoCollectionRef);
-      const studentInfo = studentInfoDocs.docs.map((doc) => {
-        return { ...doc.data() };
-      });
-      return { studentID, studentInfo };
-    })
+// get student docs: biodata,dataCapture, programme and olevels using student id
+export const getStudentDoc = async (yearRange, studentID) => {
+  const studentInfoCollectionRef = await createStudentInfoCollection(
+    yearRange,
+    studentID
   );
-  return studentsInfo;
+  const studentInfoDocs = await getDocs(studentInfoCollectionRef);
+  const studentInfo = studentInfoDocs.docs.map((doc) => {
+    return { ...doc.data() };
+  });
+  return studentInfo;
 };
 
 // rewrite getStudentsData function to use real time listener

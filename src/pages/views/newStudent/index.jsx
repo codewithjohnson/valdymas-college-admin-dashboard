@@ -1,9 +1,15 @@
-import React, { useState, memo } from "react";
-import { Outlet, Link } from "react-router-dom";
+import React, { useState, memo, useEffect } from "react";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 import PathArrow from "../../../components/ui/pathArrow";
 
 const NewStudent = memo(() => {
   const [currentPath, setCurrentPath] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const firstRoute = "/students/add-student/biodata";
+    navigate(firstRoute);
+  }, []);
 
   const RelativePath = () => {
     return (
