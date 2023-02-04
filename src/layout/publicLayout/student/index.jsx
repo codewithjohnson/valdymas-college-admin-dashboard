@@ -4,7 +4,7 @@ import Navbar from "../../../components/public/navbar";
 
 const studentLayout = memo(() => {
   return (
-    <div>
+    <div className="min-h-screen bg-gradient-to-r from-zinc-900 to-slate-700">
       <Navbar />
       <main>
         <Outlet />;

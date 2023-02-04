@@ -36,4 +36,26 @@
   .cellName {
     @apply capitalize;
   }
+
+  .profile__picture {
+    grid-area: profilePicture;
+  }
+  .biodata {
+    grid-area: biodata;
+  }
+  .olevels {
+    grid-area: olevel;
+  }
+  .programme {
+    grid-area: programme;
+  }
+
+  .studentPageGrid {
+    display: grid;
+    grid-template-areas:
+      "profilePicture biodata biodata"
+      ". olevel olevel"
+      ". programme programme";
+      grid-template-columns: 350px 1fr;
+  }
 }

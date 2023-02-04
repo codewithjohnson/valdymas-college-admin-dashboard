@@ -44,14 +44,14 @@ const Navbar = memo(() => {
 
         <span
           onClick={() => setIsOpen(!isOpen)}
-          className="material-symbols-outlined text-gray-200 sm:hidden cursor-pointer"
+          className="material-symbols-outlined text-gray-200 sm:hidden cursor-pointer select-none"
         >
           menu
         </span>
 
         {/* menu items */}
         <ul
-          className={`text-white gap-x-5 absolute top-[76px] left-0 right-0 sm:flex sm:flex-row sm:static capitalize bg-slate-900 font-poppins ${
+          className={`text-white transition-all ease-in-out duration-150 gap-x-5 absolute top-[76px] left-0 right-0 sm:flex sm:flex-row sm:static capitalize bg-slate-900 font-poppins select-none ${
             isOpen ? "block" : "hidden"
           }`}
         >
@@ -63,6 +63,16 @@ const Navbar = memo(() => {
           <Link to="/students">
             <li className="hover:text-orange-400 px-5 py-5 cursor-pointer hover:bg-slate-800">
               students
+            </li>
+          </Link>
+          <Link to="/students">
+            <li className="hover:text-orange-400 px-5 py-5 cursor-pointer hover:bg-slate-800">
+              results
+            </li>
+          </Link>
+          <Link to="/students">
+            <li className="hover:text-orange-400 px-5 py-5 cursor-pointer hover:bg-slate-800">
+              reviews
             </li>
           </Link>
         </ul>
