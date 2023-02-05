@@ -37,6 +37,26 @@
     @apply capitalize;
   }
 
+  .publicHeader {
+    grid-area: header;
+  }
+  .publicMain {
+    grid-area: main;
+  }
+  .publicFooter {
+    grid-area: footer;
+  }
+
+  .publicLayout {
+    display: grid;
+    grid-template-areas:
+      "header header header"
+      "main main main"
+      "footer footer footer";
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 120px 1fr 200px;
+  }
+
   .profile__picture {
     grid-area: profilePicture;
   }
@@ -56,6 +76,16 @@
       "profilePicture biodata biodata"
       ". olevel olevel"
       ". programme programme";
-      grid-template-columns: 350px 1fr;
+    grid-template-columns: 350px 1fr;
+  }
+
+  .studentPageGridMobile {
+    display: grid;
+    grid-template-areas:
+      "profilePicture"
+      "biodata"
+      "olevel"
+      "programme";
+    grid-template-columns: 1fr;
   }
 }
