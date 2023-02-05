@@ -36,6 +36,10 @@ const Olevels = memo(({ student }) => {
     { subject: subjectThree?.subject, value: subjectThree?.grade },
     { subject: subjectFour?.subject, value: subjectFour?.grade },
     { subject: subjectFive?.subject, value: subjectFive?.grade },
+    { subject: subjectSix?.subject, value: subjectSix?.grade },
+    { subject: subjectSeven?.subject, value: subjectSeven?.grade },
+    { subject: subjectEight?.subject, value: subjectEight?.grade },
+    { subject: subjectNine?.subject, value: subjectNine?.grade },
   ];
 
   const secondSittingexamType = sittingTwo?.secondSittingexamType;
@@ -61,8 +65,21 @@ const Olevels = memo(({ student }) => {
   const subjectEight2 = sittingTwo?.subjectEight;
   const subjectNine2 = sittingTwo?.subjectNine;
 
+  // create an array from the nine variable above with subject and grade as label and value
+  const subjectArray2 = [
+    { subject: subjectOne2?.subject, value: subjectOne2?.grade },
+    { subject: subjectTwo2?.subject, value: subjectTwo2?.grade },
+    { subject: subjectThree2?.subject, value: subjectThree2?.grade },
+    { subject: subjectFour2?.subject, value: subjectFour2?.grade },
+    { subject: subjectFive2?.subject, value: subjectFive2?.grade },
+    { subject: subjectSix2?.subject, value: subjectSix2?.grade },
+    { subject: subjectSeven2?.subject, value: subjectSeven2?.grade },
+    { subject: subjectEight2?.subject, value: subjectEight2?.grade },
+    { subject: subjectNine2?.subject, value: subjectNine2?.grade },
+  ];
+
   return (
-    <div className="olevels  bg-gray-900 rounded-2xl">
+    <div className="olevels bg-gray-900 rounded-2xl">
       <h3 className="p-3 py-5 text-sm sm:text-base capitalize select-none font-medium bg-gradient-to-r from-slate-800 to-sky-900 rounded-t-2xl w-full">
         O'level result details
       </h3>
@@ -83,7 +100,7 @@ const Olevels = memo(({ student }) => {
         </div>
         <section>
           <div className="mt-2">
-            <header className="grid gap-5 grid-cols-1 md:grid md:grid-cols-2">
+            <div className="grid gap-5 grid-cols-1 md:grid md:grid-cols-2">
               {/* first sitting header */}
               <div className="sitting__one">
                 <p className="text-gray-400 mt-2 mb-2 capitalize bg-black w-fit px-3 py-3 select-none">
@@ -107,6 +124,27 @@ const Olevels = memo(({ student }) => {
                     </div>
                   );
                 })}
+
+                <div className="FIRST-SITTING w-full mt-4">
+                  <div className="head flex flex-row justify-between capitalize border-b border-slate-700 py-1 text-gray-500">
+                    <p>subject</p>
+                    <p>grade</p>
+                  </div>
+
+                  <div className="result">
+                    {subjectArray.map((item, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className="result flex flex-row justify-between capitalize text-gray-400"
+                        >
+                          <p className="py-2">{item.subject}</p>
+                          <p className="py-2">{item.value}</p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
 
               {/* second sitting */}
@@ -132,8 +170,29 @@ const Olevels = memo(({ student }) => {
                     </div>
                   );
                 })}
+
+                <div className="SECOND-SITTING w-full mt-4">
+                  <div className="head flex flex-row justify-between capitalize border-b border-slate-700 py-1 text-gray-500">
+                    <p>subject</p>
+                    <p>grade</p>
+                  </div>
+
+                  <div className="result">
+                    {subjectArray2.map((item, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className="result flex flex-row justify-between capitalize text-gray-400"
+                        >
+                          <p className="py-2"> {item.subject}</p>
+                          <p className="py-2">{item.value}</p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
-            </header>
+            </div>
           </div>
         </section>
       </main>

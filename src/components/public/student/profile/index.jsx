@@ -9,7 +9,7 @@ const ProfilePic = memo(({ student }) => {
   const passport = student?.[1]?.passport?.data;
 
   return (
-    <div className="profile__picture bg-gradient-to-r from-slate-800 to-slate-900 rounded-xl divide-y divide-slate-700 shadow-2xl">
+    <div className="profile__picture h-fit bg-gradient-to-r from-slate-800 to-slate-900 rounded-xl divide-y divide-slate-700 shadow-2xl">
       <div className="pic p-10 pb-1">
         <img
           src={passport}

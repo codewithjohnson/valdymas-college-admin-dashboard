@@ -54,7 +54,7 @@
       "main main main"
       "footer footer footer";
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 120px 1fr 200px;
+    grid-template-rows: 120px 1fr 100px;
   }
 
   .profile__picture {
