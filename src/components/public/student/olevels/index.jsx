@@ -19,7 +19,6 @@ const Olevels = memo(({ student }) => {
   ];
 
   const subjectOne = sittingOne?.subjectOne;
-  console.log(subjectOne);
   const subjectTwo = sittingOne?.subjectTwo;
   const subjectThree = sittingOne?.subjectThree;
   const subjectFour = sittingOne?.subjectFour;

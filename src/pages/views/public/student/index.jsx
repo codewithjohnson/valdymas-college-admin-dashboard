@@ -15,10 +15,11 @@ const Student = memo(() => {
   const { setYearRange } = state;
   const { studentID } = useParams();
   const navigate = useNavigate();
+  const year = "2022-2023"
 
   useEffect(() => {
     const getStudent = async () => {
-      const studentDoc = await getStudentDoc(setYearRange, studentID);
+      const studentDoc = await getStudentDoc(year, studentID);
       setStudent(studentDoc);
     };
     getStudent();

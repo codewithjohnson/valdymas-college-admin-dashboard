@@ -15,6 +15,7 @@ export const loginSchema = object({
     .email("Email is invalid"),
   password: string()
     .trim()
+    .typeError("")
     .required("Password is required")
     .min(6, "Password must be at least 6 characters"),
 });
@@ -27,7 +28,13 @@ export const useLoginFormHooks = () => {
     trigger: loginTrigger,
     handleSubmit: loginHandleSubmit,
     setValue: loginSetValue,
-    formState: { errors: loginErrors, isValid: loginIsValid },
+    formState: {
+      errors: loginErrors,
+      isValid: loginIsValid,
+      isSubmitting: loginIsSubmitting,
+      isSubmitted: loginIsSubmitted,
+      isSubmitSuccessful: loginIsSubmitSuccessful,
+    },
   } = useForm({
     resolver: yupResolver(loginSchema),
   });
@@ -41,5 +48,8 @@ export const useLoginFormHooks = () => {
     loginSetValue,
     loginErrors,
     loginIsValid,
+    loginIsSubmitting,
+    loginIsSubmitted,
+    loginIsSubmitSuccessful,
   };
 };

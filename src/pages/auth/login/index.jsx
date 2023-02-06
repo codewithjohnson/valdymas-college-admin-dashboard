@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../../assets/images/logo.png";
 
@@ -14,6 +14,16 @@ import { useLoginFormHooks } from "../../../schemas/login";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { auth } = getServices();
+
+  // spinner override
+  const override = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "white",
+  };
+
+  // form hooks
   const {
     loginRegister,
     loginReset,
@@ -21,10 +31,34 @@ const Login = () => {
     loginHandleSubmit,
     loginErrors,
     loginIsValid,
+    loginIsSubmitting,
+    loginIsSubmitted,
+    loginIsSubmitSuccessful,
   } = useLoginFormHooks();
 
+  // reset form on successful submit
+  useEffect(() => {
+    if (loginIsSubmitted && loginIsSubmitSuccessful) {
+      loginReset();
+    }
+  }, [loginIsSubmitted, loginIsSubmitSuccessful]);
+
+  // on form submit and attempt to login
   const onFormSubmit = (data) => {
-    console.log(data);
+    const { email, password } = data;
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+
+        navigate("/dashboard");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      });
   };
 
   return (
@@ -34,15 +68,12 @@ const Login = () => {
       <div className="instruction--container bg-teal-700 text-white pt-8 px-8 my-6 rounded-md border-none sm: w-[80%] sm:w-[500px] h-[538px] select-none z-10 ">
         <div className="instruction__content">
           <p className="text-xl capitalize">
-            <span className="font-semibold">welcome</span> to Valydmas College
-            Portal
+            <span className="font-semibold">welcome</span> to Valydmas College Portal
           </p>
           <div className="instruction mt-10">
             <p className=" text-lg">Instructions to sign in</p>
             <ul className="list-disc text-gray-300 text-sm pl-9 ">
-              <li className="py-5 capitalize  my-3 px-3 shadow-xl ">
-                select your level
-              </li>
+              <li className="py-5 capitalize  my-3 px-3 shadow-xl ">select your level</li>
               <li className="py-5 capitalize my-3 px-2 shadow-xl">
                 enter your email and password to sign in
               </li>
@@ -118,9 +149,13 @@ const Login = () => {
 
           <div className="submit-btn mt-6">
             <button
+              disabled={loginIsSubmitting || !loginIsValid}
               type="submit"
-              className="bg-teal-700 w-full text-white p-3 py-4 rounded-lg hover:bg-teal-900"
+              className={`bg-teal-700 w-full text-white p-3 py-4 rounded-lg flex flex-row justify-center items-center gap-3 cursor-pointer hover:bg-teal-900 ${
+                loginIsSubmitting && "cursor-not-allowed opacity-50"
+              }`}
             >
+              <Spinner isLoading={loginIsSubmitting} />
               sign in
             </button>
           </div>

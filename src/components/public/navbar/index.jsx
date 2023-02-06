@@ -1,10 +1,12 @@
 import React, { memo, useState, useEffect, useRef } from "react";
-import logo from "../../../assets/images/logo.png";
+import { publicMenuItems } from "../../../utilities/public/menu";
 import { useNavigate, Link } from "react-router-dom";
+import logo from "../../../assets/images/logo.png";
 
 const Navbar = memo(() => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
+  const menuLinks = publicMenuItems;
 
   // close menu when clicked outside
   useEffect(() => {
@@ -28,6 +30,13 @@ const Navbar = memo(() => {
       }
     });
   }, [isOpen]);
+
+  const HandleOnclick = (link) => {
+    if (link.name === "logout") {
+      console.log("logout");
+      return;
+    }
+  };
 
   return (
     <nav
@@ -55,26 +64,23 @@ const Navbar = memo(() => {
             isOpen ? "block" : "hidden"
           }`}
         >
-          <a href="">
-            <li className="hover:text-orange-400 px-5 py-5 cursor-pointer  hover:bg-slate-800">
-              materials
-            </li>
-          </a>
-          <Link to="/students">
-            <li className="hover:text-orange-400 px-5 py-5 cursor-pointer hover:bg-slate-800">
-              students
-            </li>
-          </Link>
-          <Link to="/students">
-            <li className="hover:text-orange-400 px-5 py-5 cursor-pointer hover:bg-slate-800">
-              results
-            </li>
-          </Link>
-          <Link to="/students">
-            <li className="hover:text-orange-400 px-5 py-5 cursor-pointer hover:bg-slate-800">
-              reviews
-            </li>
-          </Link>
+          {menuLinks.map((link, index) => {
+            return (
+              <li
+                key={index}
+                className="hover:text-orange-400 px-5 py-5 cursor-pointer hover:bg-slate-800"
+                onClick={() => HandleOnclick(link)}
+              >
+                {link.side === "server" ? (
+                  <a target="_blank" href={link.link}>
+                    {link.name}
+                  </a>
+                ) : (
+                  <Link to={link.link}>{link.name}</Link>
+                )}
+              </li>
+            );
+          })}
         </ul>
       </div>
     </nav>
