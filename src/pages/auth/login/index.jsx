@@ -24,8 +24,7 @@ import { useLoginFormHooks } from "../../../schemas/login";
 const Login = () => {
   const navigate = useNavigate();
   const { auth } = getServices();
-  const { state, dispatch } = useStudentContext();
-  const yearRange = state?.setYearRange;
+  const yearRange = "2022-2023";
 
   // spinner override
   const override = {
@@ -74,6 +73,7 @@ const Login = () => {
   const loginStudent = async (level, userID) => {
     if (level === "student") {
       const isStudent = await findStudent(yearRange, userID);
+
       if (isStudent) {
         const studentID = isStudent;
         const NEXTROUTE = `/student/${studentID}`;

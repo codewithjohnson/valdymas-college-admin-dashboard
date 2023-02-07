@@ -82,7 +82,6 @@ const Programme = memo(() => {
 
     try {
       const studentData = state;
-      const dataCapture = studentData?.dataCapture;
       const studentFullName = `${studentData?.biodata?.firstname} ${studentData?.biodata?.lastname}`;
       const studentID = await createStudentDoc(setYearRange, studentFullName);
 
@@ -98,7 +97,7 @@ const Programme = memo(() => {
     } finally {
       setIsLoading(false);
       reset();
-      // localStorage.clear();
+      localStorage.clear();
     }
   };
 
