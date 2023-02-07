@@ -38,6 +38,8 @@ const Olevel = () => {
     firstSittingSetError,
     firstSittingHandleSubmit,
     firstSittingIsValid,
+    firstSittingIsSubmitted,
+    firstSittingIsSubmitSuccessful,
   } = firstSittingFormHooks();
 
   const {
@@ -48,7 +50,22 @@ const Olevel = () => {
     secondSittingSetError,
     secondSittingHandleSubmit,
     secondSittingIsValid,
+    secondSittingIsSubmitted,
+    secondSittingIsSubmitSuccessful,
   } = secondSittingFormHooks();
+
+  const showNextBtn = () => {
+    if (sittingNumber === "1") {
+      if (firstSittingIsSubmitted) {
+        return true;
+      } else if (sittingNumber == "2") {
+        if (firstSittingIsSubmitted && secondSittingIsSubmitted) {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
 
   // check if previous page [biodata] has been handled
   const { olevelResult, passport } = state?.dataCapture;
@@ -88,7 +105,7 @@ const Olevel = () => {
       payload: { GlobalsittingNumber: sittingNumber },
     });
     dispatch({ type: "OLEVELS/SITTING_ONE", payload: sittingOneData });
-    setIsubmitted(true);
+    // setIsubmitted(true);
   };
 
   // Form Two
@@ -99,7 +116,7 @@ const Olevel = () => {
       payload: { GlobalsittingNumber: sittingNumber },
     });
     dispatch({ type: "OLEVELS/SITTING_TWO", payload: sittingTwoData });
-    setIsubmitted(true);
+    // setIsubmitted(true);
   };
 
   // go to previous page
@@ -464,14 +481,15 @@ const Olevel = () => {
         >
           previous page
         </button>
-        <button
-          onClick={goToNextPage}
-          className={`bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out ${
-            isSubmitted ? "visible" : "invisible"
-          }`}
-        >
-          next page
-        </button>
+
+        {showNextBtn() && (
+          <button
+            onClick={goToNextPage}
+            className={`bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform `}
+          >
+            next page
+          </button>
+        )}
       </div>
     </>
   );

@@ -97,7 +97,7 @@ const Programme = memo(() => {
     } finally {
       setIsLoading(false);
       reset();
-      localStorage.clear();
+      // localStorage.clear();
     }
   };
 
