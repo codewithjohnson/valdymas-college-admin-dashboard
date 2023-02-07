@@ -12,6 +12,7 @@ import { getServices } from "../../../services/firebase";
 import {
   checkAdminExists,
   checkAdminRole,
+  findStudent,
 } from "../../../services/firestore/students/students";
 
 // components
@@ -55,24 +56,40 @@ const Login = () => {
   // login function
   const login = async (auth, email, password) => {
     const { user } = await signInWithEmailAndPassword(auth, email, password);
-    const userID = user?.uid;
-    return userID;
+    return user;
+  };
+
+  // login admin
+  const loginAdmin = async (level, userID) => {
+    if (level === "admin") {
+      const isAdmin = await checkAdminExists(yearRange, userID);
+      if (isAdmin) {
+        const NEXTROUTE = "/students";
+        navigate(NEXTROUTE);
+      }
+    }
+  };
+
+  // login student
+  const loginStudent = async (level, userID) => {
+    if (level === "student") {
+      const isStudent = await findStudent(yearRange, userID);
+      if (isStudent) {
+        const studentID = isStudent;
+        const NEXTROUTE = `/student/${studentID}`;
+        navigate(NEXTROUTE);
+      }
+    }
   };
 
   // on form submit and attempt to login
   const onFormSubmit = async (data) => {
     const { level, email, password } = data;
     try {
-      const userID = await login(auth, email, password);
-      if (level === "admin") {
-        // check if admin exists
-        const isAdmin = await checkAdminExists(yearRange, userID);
-        if (isAdmin) {
-          navigate("/students");
-        }
-      } else if (level === "student") {
-        console.log("student");
-      }
+      const user = await login(auth, email, password);
+      const userID = user.uid;
+      loginAdmin(level, userID);
+      loginStudent(level, userID);
     } catch (error) {
       const errorMessage = error.message;
       const errorCode = error.code;

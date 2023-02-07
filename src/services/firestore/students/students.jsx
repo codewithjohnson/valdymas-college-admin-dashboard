@@ -60,14 +60,22 @@ export const createStudentDoc = async (yearRange, studentFullName) => {
   return studentDocRef.id;
 };
 
+// check if a student exists
+const checkStudentExists = async (yearRange, studentID) => {
+  const studentsCollectionRef = await getStudentsCollectionRef(yearRange);
+  const studentDocRef = doc(studentsCollectionRef, studentID);
+  const studentDoc = await getDoc(studentDocRef);
+  return studentDoc.exists();
+};
+
 // check if a user has the role of student
-const checkStudentRole = async (yearRange, studentID) => { 
+const checkStudentRole = async (yearRange, studentID) => {
   const studentsCollectionRef = await getStudentsCollectionRef(yearRange);
   const studentDocRef = doc(studentsCollectionRef, studentID);
   const studentDoc = await getDoc(studentDocRef);
   const studentRole = studentDoc.data().role;
   return studentRole === "student";
-}
+};
 
 // create info collection for student
 export const createStudentInfoCollection = async (yearRange, studentID) => {
@@ -92,6 +100,16 @@ export const addStudentsData = async (yearRange, studentID, studentData) => {
   await setDoc(dataCaptureDocRef, dataCapture);
   await setDoc(programmeDocRef, programme);
   await setDoc(olevelsDocRef, olevels);
+};
+
+// find a student using authID passed from firebase auth and return student ID
+export const findStudent = async (yearRange, authID) => {
+  const studentsCollectionRef = await getStudentsCollectionRef(yearRange);
+  const querySnapshot = await getDocs(studentsCollectionRef);
+  const studentDoc = querySnapshot.docs.find((doc) => {
+    return doc.data().authID === authID;
+  });
+  return studentDoc.id;
 };
 
 // get student docs: biodata,dataCapture, programme and olevels using student id
