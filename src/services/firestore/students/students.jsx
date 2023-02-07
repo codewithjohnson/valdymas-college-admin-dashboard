@@ -32,6 +32,14 @@ export const setValdymasDoc = async (yearRange) => {
   });
 };
 
+// get a doc from valdymas with year range as id
+export const getValdymasDoc = async (yearRange) => {
+  const valdymasCollectionRef = getValdymasCollectionRef();
+  const valdymasDocRef = doc(valdymasCollectionRef, yearRange);
+  const valdymasDoc = await getDoc(valdymasDocRef);
+  return valdymasDoc.data();
+};
+
 // return a collection called "students" inside year range doc
 export const getStudentsCollectionRef = async (yearRange) => {
   const valdymasCollectionRef = getValdymasCollectionRef();
@@ -51,6 +59,15 @@ export const createStudentDoc = async (yearRange, studentFullName) => {
   });
   return studentDocRef.id;
 };
+
+// check if a user has the role of student
+const checkStudentRole = async (yearRange, studentID) => { 
+  const studentsCollectionRef = await getStudentsCollectionRef(yearRange);
+  const studentDocRef = doc(studentsCollectionRef, studentID);
+  const studentDoc = await getDoc(studentDocRef);
+  const studentRole = studentDoc.data().role;
+  return studentRole === "student";
+}
 
 // create info collection for student
 export const createStudentInfoCollection = async (yearRange, studentID) => {
@@ -126,4 +143,28 @@ export const createStudentRegistration = async (yearRange, studentID, studentDat
   getStudentsCollectionRef(yearRange);
   createStudentInfoCollection(yearRange, studentID);
   await addStudentsData(yearRange, studentID, studentData);
+};
+
+// get a collection called "admins" inside year range doc
+export const getAdminsCollectionRef = async (yearRange) => {
+  const valdymasCollectionRef = getValdymasCollectionRef();
+  const valdymasDocRef = doc(valdymasCollectionRef, yearRange);
+  const adminsCollectionRef = collection(valdymasDocRef, "admins");
+  return adminsCollectionRef;
+};
+
+// check if an admin exists using admin id
+export const checkAdminExists = async (yearRange, adminID) => {
+  const adminsCollectionRef = await getAdminsCollectionRef(yearRange);
+  const adminDocRef = doc(adminsCollectionRef, adminID);
+  const adminDoc = await getDoc(adminDocRef);
+  return adminDoc.exists();
+};
+
+// check the role of the admin using admin id
+export const checkAdminRole = async (yearRange, adminID) => {
+  const adminsCollectionRef = await getAdminsCollectionRef(yearRange);
+  const adminDocRef = doc(adminsCollectionRef, adminID);
+  const adminDoc = await getDoc(adminDocRef);
+  return adminDoc.data().role;
 };

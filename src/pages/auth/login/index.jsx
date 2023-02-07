@@ -2,9 +2,17 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../../assets/images/logo.png";
 
+import { useStudentContext } from "../../../context/students";
+
 // firebase
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { getServices } from "../../../services/firebase";
+
+// firestore
+import {
+  checkAdminExists,
+  checkAdminRole,
+} from "../../../services/firestore/students/students";
 
 // components
 import Spinner from "../../../components/spinner";
@@ -15,6 +23,8 @@ import { useLoginFormHooks } from "../../../schemas/login";
 const Login = () => {
   const navigate = useNavigate();
   const { auth } = getServices();
+  const { state, dispatch } = useStudentContext();
+  const yearRange = state?.setYearRange;
 
   // spinner override
   const override = {
@@ -27,7 +37,6 @@ const Login = () => {
   const {
     loginRegister,
     loginReset,
-    loginTrigger,
     loginHandleSubmit,
     loginErrors,
     loginIsValid,
@@ -43,22 +52,32 @@ const Login = () => {
     }
   }, [loginIsSubmitted, loginIsSubmitSuccessful]);
 
+  // login function
+  const login = async (auth, email, password) => {
+    const { user } = await signInWithEmailAndPassword(auth, email, password);
+    const userID = user?.uid;
+    return userID;
+  };
+
   // on form submit and attempt to login
-  const onFormSubmit = (data) => {
-    const { email, password } = data;
-
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log(user);
-
-        navigate("/dashboard");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-      });
+  const onFormSubmit = async (data) => {
+    const { level, email, password } = data;
+    try {
+      const userID = await login(auth, email, password);
+      if (level === "admin") {
+        // check if admin exists
+        const isAdmin = await checkAdminExists(yearRange, userID);
+        if (isAdmin) {
+          navigate("/students");
+        }
+      } else if (level === "student") {
+        console.log("student");
+      }
+    } catch (error) {
+      const errorMessage = error.message;
+      const errorCode = error.code;
+      console.log(errorMessage, errorCode);
+    }
   };
 
   return (
@@ -110,7 +129,7 @@ const Login = () => {
                 loginErrors?.level ? " border-red-500" : ""
               }   `}
             >
-              <option value="">select level</option>
+              <option value="level">select level</option>
               <option value="student">Student</option>
               <option value="admin">Admin</option>
             </select>
@@ -149,7 +168,7 @@ const Login = () => {
 
           <div className="submit-btn mt-6">
             <button
-              disabled={loginIsSubmitting || !loginIsValid}
+              disabled={loginIsSubmitting}
               type="submit"
               className={`bg-teal-700 w-full text-white p-3 py-4 rounded-lg flex flex-row justify-center items-center gap-3 cursor-pointer hover:bg-teal-900 ${
                 loginIsSubmitting && "cursor-not-allowed opacity-50"
