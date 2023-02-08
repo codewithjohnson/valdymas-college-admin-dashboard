@@ -217,3 +217,45 @@ export const checkAdminRole = async (yearRange, adminID) => {
   const adminDoc = await getDoc(adminDocRef);
   return adminDoc.data().role;
 };
+
+// ====================================== UPDATE STUDENT DATA ======================================
+
+// update biodata of student
+export const updateStudentBiodata = async (yearRange, studentID, biodata) => {
+  const studentInfoCollectionRef = await createStudentInfoCollection(
+    yearRange,
+    studentID
+  );
+  const biodataDocRef = doc(studentInfoCollectionRef, "biodata");
+  await updateDoc(biodataDocRef, biodata);
+};
+
+// update data capture of student
+export const updateStudentDataCapture = async (yearRange, studentID, dataCapture) => {
+  const studentInfoCollectionRef = await createStudentInfoCollection(
+    yearRange,
+    studentID
+  );
+  const dataCaptureDocRef = doc(studentInfoCollectionRef, "dataCapture");
+  await updateDoc(dataCaptureDocRef, dataCapture);
+};
+
+// update programme of student
+export const updateStudentProgramme = async (yearRange, studentID, programme) => {
+  const studentInfoCollectionRef = await createStudentInfoCollection(
+    yearRange,
+    studentID
+  );
+  const programmeDocRef = doc(studentInfoCollectionRef, "programme");
+  await updateDoc(programmeDocRef, programme);
+};
+
+// update olevels of student
+export const updateStudentOlevels = async (yearRange, studentID, olevels) => {
+  const studentInfoCollectionRef = await createStudentInfoCollection(
+    yearRange,
+    studentID
+  );
+  const olevelsDocRef = doc(studentInfoCollectionRef, "olevels");
+  await updateDoc(olevelsDocRef, olevels);
+};
