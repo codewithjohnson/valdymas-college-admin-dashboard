@@ -1,6 +1,7 @@
 import React, { memo, useState, useEffect } from "react";
 import { getStudentDoc } from "../../../../services/firestore/students/students";
 import { useParams } from "react-router-dom";
+import { useIsAuthorized } from "../../../../hooks/useAuth";
 
 // components
 import ProfilePic from "../../../../components/public/student/profile";
@@ -12,15 +13,17 @@ const Student = memo(() => {
   const [student, setStudent] = useState(null);
   const { studentID } = useParams();
 
+  // check if user is authorized
+  useIsAuthorized();
+
   // Todo: get this from local storage: year range
   const year = "2022-2023";
 
-  const getStudent = async () => {
-    const studentDoc = await getStudentDoc(year, studentID);
-    setStudent(studentDoc);
-  };
-
   useEffect(() => {
+    const getStudent = async () => {
+      const studentDoc = await getStudentDoc(year, studentID);
+      setStudent(studentDoc);
+    };
     getStudent();
   }, []);
 

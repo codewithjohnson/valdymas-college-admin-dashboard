@@ -1,31 +1,26 @@
 import React, { memo, useState, useEffect, useRef } from "react";
-import { publicMenuItems } from "../../../utilities/public/menu";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+
+// assets
 import logo from "../../../assets/images/logo.png";
 
-// services
-import { checkAdminExists } from "../../../services/firestore/students/students";
+// utilities
+import { publicMenuItems } from "../../../utilities/public/menu";
 
-const Navbar = memo(({ user }) => {
+// hooks
+import { useIsAuthorized } from "../../../hooks/useAuth";
+import { useIsAdmin } from "../../../hooks/useAdmin";
+
+const Navbar = memo(() => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
   const menuRef = useRef(null);
   const menuLinks = publicMenuItems;
 
-  // Todo: get this from local storage: year range
-  const yearRange = "2022-2023";
-
-  // get user id
-  const userID = user?.uid;
-
   // check if user is admin
-  useEffect(() => {
-    const checkAdmin = async () => {
-      const admin = await checkAdminExists(yearRange, userID);
-      setIsAdmin(admin);
-    };
-    checkAdmin();
-  }, [user]);
+  const { isAdmin, loading } = useIsAdmin();
+
+  // check if user is authorized
+  useIsAuthorized();
 
   // close menu when clicked outside
   useEffect(() => {
@@ -52,7 +47,7 @@ const Navbar = memo(({ user }) => {
 
   const HandleOnclick = (link) => {
     if (link.name === "logout") {
-      return;
+      console.log("logout");
     }
   };
 

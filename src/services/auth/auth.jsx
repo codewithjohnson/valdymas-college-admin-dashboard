@@ -1,7 +1,7 @@
 // validate authentification
 import { createContext, useContext, useState, useEffect } from "react";
 import { getServices } from "../../services/firebase";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 
 // create context
 const AuthContext = createContext();
@@ -16,15 +16,18 @@ export const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
       setLoading(false);
-     
     });
+
     return unsubscribe;
   }, []);
 
+  const handleLogout = async () => {
+    const { auth } = getServices();
+    await signOut(auth);
+  };
+
   return (
-    <AuthContext.Provider value={{ user, loading }}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={{ user, loading }}>{children}</AuthContext.Provider>
   );
 };
 

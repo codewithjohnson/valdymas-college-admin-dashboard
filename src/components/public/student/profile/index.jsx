@@ -1,6 +1,8 @@
 import { memo } from "react";
+import { useIsAdmin } from "../../../../hooks/useAdmin";
 
 const ProfilePic = memo(({ student }) => {
+  const { isAdmin, loading } = useIsAdmin();
   const studentSchoolID = student?.[4]?.studentSchoolID;
   const firstName = student?.[0]?.firstname;
   const lastName = student?.[0]?.lastname;
@@ -33,9 +35,11 @@ const ProfilePic = memo(({ student }) => {
         <h1 className="text-sm sm:text-base text-gray-400 capitalize py-1">
           programme: <span className="normal-case"> {programme}</span>
         </h1>
-        <h1 className="text-sm sm:text-base text-amber-600 capitalize py-1 ">
-          agent: <span className="capitalize"> {agent}</span>{" "}
-        </h1>
+        {isAdmin && (
+          <h1 className="text-sm sm:text-base text-amber-600 capitalize py-1 ">
+            agent: <span className="capitalize"> {agent}</span>{" "}
+          </h1>
+        )}
       </div>
     </div>
   );

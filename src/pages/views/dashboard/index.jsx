@@ -1,6 +1,15 @@
-import React from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useIsAdmin } from "../../../hooks/useAdmin";
 
 const Dashboard = () => {
+  const { isAdmin, loading } = useIsAdmin();
+  const navigate = useNavigate();
+
+  if (!loading && !isAdmin) {
+    navigate("/auth/login");
+  }
+
   return (
     <div className="w-full h-full text-sm">
       Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem architecto libero

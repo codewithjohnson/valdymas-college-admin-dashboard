@@ -1,21 +1,19 @@
 import { memo, lazy, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Loadable from "../../components/Loadable";
-import { useAuth } from "../../services/auth/auth";
+import { useIsAdmin } from "../../hooks/useAdmin";
 
 const Navbar = Loadable(lazy(() => import("../../components/navbar")));
 const Aside = Loadable(lazy(() => import("../../components/sidebar")));
 
 const MainLayout = memo(({ children }) => {
-  const { user, loading } = useAuth();
+  const { isAdmin, loading } = useIsAdmin();
   const navigate = useNavigate();
 
-  // redirect to login page if user is not verified
-  useEffect(() => {
-    if (!loading && !user) {
-      navigate("/auth/login");
-    }
-  }, [user]);
+  if (!loading && !isAdmin) {
+    console.log("isAdmin", isAdmin);
+    navigate("/auth/login");
+  }
 
   return (
     <div className="relative h-[300px]">

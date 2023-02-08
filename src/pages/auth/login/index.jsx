@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+// hooks
+import { useIsAdmin } from "../../../hooks/useAdmin";
+
+// assets
 import logo from "../../../assets/images/logo.png";
 
 // firebase
@@ -22,10 +27,17 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { auth } = getServices();
+  const { isAdmin, loading } = useIsAdmin();
+
+  if (!loading && isAdmin) {
+    console.log("isAdmin", isAdmin);
+    navigate("/dashboard");
+  }
 
   // Todo: get this from local storage: year range
   const yearRange = "2022-2023";
 
+  // handle show password
   const handleshowPassword = () => {
     setShowPassword(!showPassword);
   };
