@@ -1,15 +1,17 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../services/auth/auth";
+import { useIsAdmin } from "../../../hooks/useAdmin";
+import { checkAdminExists } from "../../../services/firestore/students/students";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const authParams = useAuth();
   const { user, loading } = authParams;
+  const { isAdmin } = useIsAdmin();
 
   useEffect(() => {
     if (!loading && !user) {
-      console.log("user is not logged in");
       navigate("/auth/login");
     }
   }, [user, loading]);

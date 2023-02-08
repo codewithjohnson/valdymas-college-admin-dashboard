@@ -30,7 +30,10 @@ const Login = () => {
   // if user is logged in, redirect to dashboard
   useEffect(() => {
     if (!loading && user) {
-      navigate("/dashboard");
+      user.getIdTokenResult().then((idTokenResult) => {
+        const role = idTokenResult.claims.role;
+        role === "admin" ? loginAdmin() : loginStudent(user.uid);
+      });
     }
   }, [user, loading]);
 
@@ -74,38 +77,32 @@ const Login = () => {
     return user;
   };
 
-  // login admin
-  const loginAdmin = async (level, userID) => {
-    if (level === "admin") {
-      const isAdmin = await checkAdminExists(yearRange, userID);
-      if (isAdmin) {
-        const NEXTROUTE = "/";
-        navigate(NEXTROUTE);
-      }
-    }
-  };
+  // admin login
+  async function loginAdmin() {
+    const nextRoute = "/dashboard ";
+    navigate(nextRoute);
+  }
 
-  // login student
-  const loginStudent = async (level, userID) => {
-    if (level === "student") {
-      const isStudent = await findStudent(yearRange, userID);
-
-      if (isStudent) {
-        const studentID = isStudent;
-        const NEXTROUTE = `/student/${studentID}`;
-        navigate(NEXTROUTE);
-      }
-    }
-  };
+  // student login
+  async function loginStudent(userID) {
+    const isStudent = await findStudent(yearRange, userID);
+    const studentID = isStudent;
+    const nextRoute = `/student/${studentID}`;
+    navigate(nextRoute);
+  }
 
   // on form submit and attempt to login
   const onFormSubmit = async (data) => {
     const { level, email, password } = data;
     try {
       const user = await login(auth, email, password);
-      const userID = user.uid;
-      loginAdmin(level, userID);
-      loginStudent(level, userID);
+      if (user) {
+        // get user claims
+        user.getIdTokenResult().then((idTokenResult) => {
+          const role = idTokenResult.claims.role;
+          role === "admin" ? loginAdmin() : loginStudent(user.uid);
+        });
+      }
     } catch (error) {
       const errorMessage = error.message;
       const errorCode = error.code;
