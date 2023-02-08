@@ -33,7 +33,6 @@ const Navbar = memo(() => {
 
   const HandleOnclick = (link) => {
     if (link.name === "logout") {
-      console.log("logout");
       return;
     }
   };
@@ -68,7 +67,7 @@ const Navbar = memo(() => {
             return (
               <li
                 key={index}
-                className="hover:text-orange-400 px-5 py-5 cursor-pointer hover:bg-slate-800"
+                className={`hover:text-orange-400 px-5 py-5 cursor-pointer hover:bg-slate-800`}
                 onClick={() => HandleOnclick(link)}
               >
                 {link.side === "server" ? (

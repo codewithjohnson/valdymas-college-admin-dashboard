@@ -4,6 +4,7 @@ export const publicMenuItems = [
     name: "dashboard",
     link: "/dashboard",
     side: "client",
+    permission:"admin"
   },
   {
     name: "materials",
