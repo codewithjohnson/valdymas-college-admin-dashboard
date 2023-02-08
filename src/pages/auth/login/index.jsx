@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-// hooks
-import { useIsAdmin } from "../../../hooks/useAdmin";
+import { useAuth } from "../../../services/auth/auth";
 
 // assets
 import logo from "../../../assets/images/logo.png";
@@ -27,12 +25,14 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { auth } = getServices();
-  const { isAdmin, loading } = useIsAdmin();
+  const { user, loading } = useAuth();
 
-  if (!loading && isAdmin) {
-    console.log("isAdmin", isAdmin);
-    navigate("/dashboard");
-  }
+  // if user is logged in, redirect to dashboard
+  useEffect(() => {
+    if (!loading && user) {
+      navigate("/dashboard");
+    }
+  }, [user, loading]);
 
   // Todo: get this from local storage: year range
   const yearRange = "2022-2023";

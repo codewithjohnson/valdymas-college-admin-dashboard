@@ -4,7 +4,6 @@ import logo from "../../assets/images/logo.png";
 import { useProSidebar } from "react-pro-sidebar";
 import { getCurrentimeOfDay } from "../../utilities/currentDate";
 import { useStudentContext } from "../../context/students";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../services/auth/auth";
 
 const Navbar = memo(() => {
@@ -13,7 +12,6 @@ const Navbar = memo(() => {
   const { collapseSidebar } = useProSidebar();
   const [yearRange, setYearRange] = useState("2022-2023");
   const { dispatch, state } = useStudentContext();
-  const navigate = useNavigate();
 
   // get user display name
   const displayName = user?.displayName.split(" ")[0];

@@ -7,31 +7,40 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 const AuthContext = createContext();
 
 // create provider
-export const AuthProvider = ({ children }) => {
+const useFirebaseAuth = () => {
+  const { auth } = getServices();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const { auth } = getServices();
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+  const onStateChange = async (user) => {
+    setLoading(true);
+    if (!user) {
+      setUser(null);
+      setLoading(false);
+      return;
+    } else {
       setUser(user);
       setLoading(false);
-    });
-
-    return unsubscribe;
-  }, []);
-
-  const handleLogout = async () => {
-    const { auth } = getServices();
-    await signOut(auth);
+    }
+    setLoading(false);
   };
 
-  return (
-    <AuthContext.Provider value={{ user, loading }}>{children}</AuthContext.Provider>
-  );
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, onStateChange);
+    return () => unsubscribe();
+  }, []);
+
+  return { user, loading };
+};
+
+// auth provider
+export const AuthProvider = ({ children }) => {
+  const authParams = useFirebaseAuth();
+  return <AuthContext.Provider value={authParams}>{children}</AuthContext.Provider>;
 };
 
 // create hook
 export const useAuth = () => {
-  return useContext(AuthContext);
+  const authParams = useContext(AuthContext);
+  return authParams;
 };

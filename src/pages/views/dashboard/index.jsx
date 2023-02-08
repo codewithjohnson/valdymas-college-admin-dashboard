@@ -1,14 +1,18 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useIsAdmin } from "../../../hooks/useAdmin";
+import { useAuth } from "../../../services/auth/auth";
 
 const Dashboard = () => {
-  const { isAdmin, loading } = useIsAdmin();
   const navigate = useNavigate();
+  const authParams = useAuth();
+  const { user, loading } = authParams;
 
-  if (!loading && !isAdmin) {
-    navigate("/auth/login");
-  }
+  useEffect(() => {
+    if (!loading && !user) {
+      console.log("user is not logged in");
+      navigate("/auth/login");
+    }
+  }, [user, loading]);
 
   return (
     <div className="w-full h-full text-sm">

@@ -11,11 +11,11 @@ export const useIsAdmin = () => {
 
   useEffect(() => {
     const checkAdmin = async () => {
-      const admin = await checkAdminExists(yearRange, user.uid);
+      const admin = await checkAdminExists(yearRange, user?.uid);
       setIsAdmin(admin);
     };
     checkAdmin();
-  }, [user]);
+  }, [user, loading, yearRange]);
 
   return { isAdmin, loading };
 };
