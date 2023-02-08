@@ -5,13 +5,18 @@ import { useProSidebar } from "react-pro-sidebar";
 import { getCurrentimeOfDay } from "../../utilities/currentDate";
 import { useStudentContext } from "../../context/students";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../services/auth/auth";
 
 const Navbar = memo(() => {
+  const { user } = useAuth();
   const [timeOfDay, setTimeOfDay] = useState("");
   const { collapseSidebar } = useProSidebar();
   const [yearRange, setYearRange] = useState("2022-2023");
   const { dispatch, state } = useStudentContext();
   const navigate = useNavigate();
+
+  // get user display name
+  const displayName = user?.displayName.split(" ")[0];
 
   // set year range to state on mount
   useEffect(() => {
@@ -57,7 +62,7 @@ const Navbar = memo(() => {
       <div className="right flex flex-row justify-between items-center  flex-1">
         {/* Time of Day */}
         <p className="text-slate-700  font-poppins text-[15px] md:text-xl font-semibold capitalize ml-4 select-none sm:ml-8">
-          good {timeOfDay}, <span className="text-red-900">Johnson</span> 🖐🏼
+          good {timeOfDay}, <span className="text-red-900">{displayName}</span> 🖐🏼
         </p>
 
         <div className="rl flex justify-between gap-5 items-center">
@@ -77,7 +82,7 @@ const Navbar = memo(() => {
 
           {/* Current Admin Logged in */}
           <p className="hidden md:block user--profile gap-2 text-red-800 bg-red-50 p-3 font-poppins rounded-lg text-sm select-none">
-            muyiwamighty@gmail.com
+            {user?.email}
           </p>
         </div>
       </div>

@@ -1,12 +1,10 @@
 import React, { useState, memo, useEffect } from "react";
 import { Outlet, Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../../../services/auth/auth";
 import PathArrow from "../../../components/ui/pathArrow";
 
 const NewStudent = memo(() => {
   const [currentPath, setCurrentPath] = useState("");
   const navigate = useNavigate();
-  const { user, loading } = useAuth();
 
   useEffect(() => {
     const firstRoute = "/students/add-student/biodata";

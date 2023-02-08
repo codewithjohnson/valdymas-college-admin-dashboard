@@ -66,7 +66,7 @@ const Login = () => {
     if (level === "admin") {
       const isAdmin = await checkAdminExists(yearRange, userID);
       if (isAdmin) {
-        const NEXTROUTE = "/students";
+        const NEXTROUTE = "/";
         navigate(NEXTROUTE);
       }
     }

@@ -1,10 +1,22 @@
-import { memo, lazy } from "react";
+import { memo, lazy, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Loadable from "../../components/Loadable";
+import { useAuth } from "../../services/auth/auth";
 
 const Navbar = Loadable(lazy(() => import("../../components/navbar")));
 const Aside = Loadable(lazy(() => import("../../components/sidebar")));
 
 const MainLayout = memo(({ children }) => {
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
+
+  // redirect to login page if user is not verified
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate("/auth/login");
+    }
+  }, [user]);
+
   return (
     <div className="relative h-[300px]">
       <header className="h-[95px] fixed z-20 left-0 right-0 flex justify-center items-center">
