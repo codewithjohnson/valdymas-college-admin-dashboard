@@ -85,21 +85,52 @@ export const createStudentInfoCollection = async (yearRange, studentID) => {
   return studentInfoCollectionRef;
 };
 
+// get the number of students registered
+export const getNumberOfStudents = async (yearRange) => {
+  const studentsCollectionRef = await getStudentsCollectionRef(yearRange);
+  const querySnapshot = await getDocs(studentsCollectionRef);
+  return querySnapshot.size;
+};
+
+// extract the last 2 digits of the year from the above year range
+const getyearRangeLastSubstring = (yearRange) => {
+  const yearRangeArray = yearRange.split("-");
+  const yearRangeLast = yearRangeArray[1];
+  const yearRangeLastSubstring = yearRangeLast.substring(2, 4);
+  return yearRangeLastSubstring;
+};
+
 //  add student biodata, programme and olevels  to info collection
 export const addStudentsData = async (yearRange, studentID, studentData) => {
   const studentInfoCollectionRef = await createStudentInfoCollection(
     yearRange,
     studentID
   );
-  const { biodata, dataCapture, programme, olevels } = studentData;
+  const { setYearRange, biodata, dataCapture, programme, olevels } = studentData;
+
+  // get the last 2 digits of the year from the above year range
+  const yearRangeLastSubstring = getyearRangeLastSubstring(setYearRange);
+
+  // get department  from programme and extract the first 3 characters
+  const { department } = programme;
+  const departmentCode = department.substring(0, 3);
+
+  // get length of students registered
+  const numberOfStudents = await getNumberOfStudents(setYearRange);
+
+  // create student school ID
+  const studentSchoolID = `VAL/${yearRangeLastSubstring}/${departmentCode}/${numberOfStudents}`;
+
   const biodataDocRef = doc(studentInfoCollectionRef, "biodata");
   const dataCaptureDocRef = doc(studentInfoCollectionRef, "dataCapture");
   const programmeDocRef = doc(studentInfoCollectionRef, "programme");
   const olevelsDocRef = doc(studentInfoCollectionRef, "olevels");
+  const studentSchoolIDDocRef = doc(studentInfoCollectionRef, "studentSchoolID");
   await setDoc(biodataDocRef, biodata);
   await setDoc(dataCaptureDocRef, dataCapture);
   await setDoc(programmeDocRef, programme);
   await setDoc(olevelsDocRef, olevels);
+  await setDoc(studentSchoolIDDocRef, { studentSchoolID });
 };
 
 // find a student using authID passed from firebase auth and return student ID

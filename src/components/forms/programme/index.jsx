@@ -138,27 +138,50 @@ const Programme = memo(() => {
       </div>
 
       <div className="bottom  sm:flex justify-between gap-x-10 mt-5 sm:mt-10">
-        {/* Proposed Course of Study */}
-        <div className="courseOfStudy mt-6 w-full">
-          <label
-            htmlFor="courseOfStudy"
-            className="text-gray-800 text-[15px] w-full capitalize"
-          >
-            proposed course of study
-          </label>
-          <input
-            type="text"
-            id="courseOfStudy"
-            name="courseOfStudy"
-            placeholder="proposed course"
-            {...register("courseOfStudy")}
-            className="studentInputClass w-full mt-3"
-          />
-          {errors.courseOfStudy && (
-            <p className="text-red-500 text-[12px] mt-1">
-              {errors.courseOfStudy.message}
-            </p>
-          )}
+        <div className="left w-full">
+          {/* course of study */}
+          <div className="courseOfStudy mt-6 w-full">
+            <label
+              htmlFor="courseOfStudy"
+              className="text-gray-800 text-[15px] w-full capitalize"
+            >
+              proposed course of study
+            </label>
+            <input
+              type="text"
+              id="courseOfStudy"
+              name="courseOfStudy"
+              placeholder="proposed course"
+              {...register("courseOfStudy")}
+              className="studentInputClass w-full mt-3"
+            />
+            {errors.courseOfStudy && (
+              <p className="text-red-500 text-[12px] mt-1">
+                {errors.courseOfStudy.message}
+              </p>
+            )}
+          </div>
+
+          {/* agent */}
+          <div className="courseOfStudy mt-6 w-full">
+            <label
+              htmlFor="agent"
+              className="text-gray-800 text-[15px] w-full capitalize"
+            >
+              Agent
+            </label>
+            <input
+              type="text"
+              id="agent"
+              name="agent"
+              placeholder="agent"
+              {...register("agent")}
+              className="studentInputClass w-full mt-3"
+            />
+            {errors.agent && (
+              <p className="text-red-500 text-[12px] mt-1">{errors.agent.message}</p>
+            )}
+          </div>
         </div>
 
         {/* Subject Combination */}

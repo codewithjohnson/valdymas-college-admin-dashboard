@@ -1,10 +1,12 @@
-import { memo, useEffect, useState } from "react";
+import { memo } from "react";
 
 const ProfilePic = memo(({ student }) => {
+  const studentSchoolID = student?.[4]?.studentSchoolID;
   const firstName = student?.[0]?.firstname;
   const lastName = student?.[0]?.lastname;
   const fullName = `${firstName} ${lastName}`;
   const programme = student?.[3]?.modeOfEntry;
+  const agent = student?.[3]?.agent;
   const department = student?.[3]?.department;
   const passport = student?.[1]?.passport?.data;
 
@@ -22,11 +24,17 @@ const ProfilePic = memo(({ student }) => {
       </div>
 
       <div className="info mt-3 flex flex-col justify-center items-center pb-4 select-none">
-        <h1 className="text-sm sm:text-base text-gray-400 capitalize py-2 ">
+        <h1 className="text-sm sm:text-base text-gray-400 capitalize py-1 ">
           department: <span className="normal-case"> {department}</span>{" "}
         </h1>
-        <h1 className="text-sm sm:text-base text-gray-400 capitalize py-2 ">
+        <h1 className="text-sm sm:text-base text-gray-400 capitalize py-1 font-medium ">
+          ID: <span className="normal-case"> {studentSchoolID}</span>{" "}
+        </h1>
+        <h1 className="text-sm sm:text-base text-gray-400 capitalize py-1">
           programme: <span className="normal-case"> {programme}</span>
+        </h1>
+        <h1 className="text-sm sm:text-base text-amber-600 capitalize py-1 ">
+          agent: <span className="capitalize"> {agent}</span>{" "}
         </h1>
       </div>
     </div>

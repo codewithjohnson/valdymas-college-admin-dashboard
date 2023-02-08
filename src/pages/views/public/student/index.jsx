@@ -1,7 +1,6 @@
 import React, { memo, useState, useEffect } from "react";
 import { getStudentDoc } from "../../../../services/firestore/students/students";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { useStudentContext } from "../../../../context/students";
+import { useParams } from "react-router-dom";
 
 // components
 import ProfilePic from "../../../../components/public/student/profile";
@@ -11,11 +10,8 @@ import Programme from "../../../../components/public/student/programme";
 
 const Student = memo(() => {
   const [student, setStudent] = useState(null);
-  const { state } = useStudentContext();
-  const { setYearRange } = state;
   const { studentID } = useParams();
-  const navigate = useNavigate();
-  const year = "2022-2023"
+  const year = "2022-2023";
 
   useEffect(() => {
     const getStudent = async () => {

@@ -33,6 +33,7 @@ export const initialState = {
     modeOfEntry: "",
     department: "",
     courseOfStudy: "",
+    agent:"",
     subject1: "",
     subject2: "",
     subject3: "",

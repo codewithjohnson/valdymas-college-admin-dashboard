@@ -65,6 +65,7 @@ export const studentReducer = (state, action) => {
           modeOfEntry: action.payload.modeOfEntry,
           department: action.payload.department,
           courseOfStudy: action.payload.courseOfStudy,
+          agent: action.payload.agent,
           subject1: action.payload.subject1,
           subject2: action.payload.subject2,
           subject3: action.payload.subject3,
