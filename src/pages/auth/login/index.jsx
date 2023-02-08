@@ -9,7 +9,6 @@ import { getServices } from "../../../services/firebase";
 // firestore
 import {
   checkAdminExists,
-  checkAdminRole,
   findStudent,
 } from "../../../services/firestore/students/students";
 
@@ -23,6 +22,8 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { auth } = getServices();
+
+  // Todo: get this from local storage: year range
   const yearRange = "2022-2023";
 
   const handleshowPassword = () => {

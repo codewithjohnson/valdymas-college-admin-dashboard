@@ -1,7 +1,6 @@
 import React, { memo, useState, useEffect } from "react";
 import { getStudentDoc } from "../../../../services/firestore/students/students";
 import { useParams } from "react-router-dom";
-import { useAuth } from "../../../../services/auth/auth";
 
 // components
 import ProfilePic from "../../../../components/public/student/profile";
@@ -10,9 +9,10 @@ import Olevels from "../../../../components/public/student/olevels";
 import Programme from "../../../../components/public/student/programme";
 
 const Student = memo(() => {
-  const { user } = useAuth();
   const [student, setStudent] = useState(null);
   const { studentID } = useParams();
+
+  // Todo: get this from local storage: year range
   const year = "2022-2023";
 
   const getStudent = async () => {

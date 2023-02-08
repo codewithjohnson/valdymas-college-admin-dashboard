@@ -27,7 +27,7 @@ const ProfilePic = memo(({ student }) => {
         <h1 className="text-sm sm:text-base text-gray-400 capitalize py-1 ">
           department: <span className="normal-case"> {department}</span>{" "}
         </h1>
-        <h1 className="text-sm sm:text-base text-gray-400 capitalize py-1 font-medium ">
+        <h1 className="text-sm sm:text-base text-gray-400 capitalize py-1">
           ID: <span className="normal-case"> {studentSchoolID}</span>{" "}
         </h1>
         <h1 className="text-sm sm:text-base text-gray-400 capitalize py-1">

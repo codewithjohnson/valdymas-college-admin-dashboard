@@ -108,18 +108,30 @@ export const addStudentsData = async (yearRange, studentID, studentData) => {
   );
   const { setYearRange, biodata, dataCapture, programme, olevels } = studentData;
 
+  // get length of students registered
+  const numberOfStudents = await getNumberOfStudents(setYearRange);
+
+  // add two 0 or one 0 if the number of students is less than 10 or less than 100 to the function above
+  const transformNumberOfStudents = (numberOfStudents) => {
+    if (numberOfStudents < 10) {
+      return `00${numberOfStudents}`;
+    } else if (numberOfStudents < 100) {
+      return `0${numberOfStudents}`;
+    } else {
+      return numberOfStudents;
+    }
+  };
+
   // get the last 2 digits of the year from the above year range
   const yearRangeLastSubstring = getyearRangeLastSubstring(setYearRange);
 
   // get department  from programme and extract the first 3 characters
   const { department } = programme;
   const departmentCode = department.substring(0, 3);
-
-  // get length of students registered
-  const numberOfStudents = await getNumberOfStudents(setYearRange);
+  const transformedNumberOfStudents = transformNumberOfStudents(numberOfStudents);
 
   // create student school ID
-  const studentSchoolID = `VAL/${yearRangeLastSubstring}/${departmentCode}/${numberOfStudents}`;
+  const studentSchoolID = `VAL/${yearRangeLastSubstring}/${departmentCode}/${transformedNumberOfStudents}`;
 
   const biodataDocRef = doc(studentInfoCollectionRef, "biodata");
   const dataCaptureDocRef = doc(studentInfoCollectionRef, "dataCapture");

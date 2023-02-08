@@ -3,10 +3,29 @@ import { publicMenuItems } from "../../../utilities/public/menu";
 import { useNavigate, Link } from "react-router-dom";
 import logo from "../../../assets/images/logo.png";
 
-const Navbar = memo(() => {
+// services
+import { checkAdminExists } from "../../../services/firestore/students/students";
+
+const Navbar = memo(({ user }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const menuRef = useRef(null);
   const menuLinks = publicMenuItems;
+
+  // Todo: get this from local storage: year range
+  const yearRange = "2022-2023";
+
+  // get user id
+  const userID = user?.uid;
+
+  // check if user is admin
+  useEffect(() => {
+    const checkAdmin = async () => {
+      const admin = await checkAdminExists(yearRange, userID);
+      setIsAdmin(admin);
+    };
+    checkAdmin();
+  }, [user]);
 
   // close menu when clicked outside
   useEffect(() => {
@@ -67,7 +86,9 @@ const Navbar = memo(() => {
             return (
               <li
                 key={index}
-                className={`hover:text-orange-400 px-5 py-5 cursor-pointer hover:bg-slate-800`}
+                className={`hover:text-orange-400 px-5 py-5 cursor-pointer hover:bg-slate-800 ${
+                  link.permission === "admin" && !isAdmin ? "hidden" : "block"
+                }`}
                 onClick={() => HandleOnclick(link)}
               >
                 {link.side === "server" ? (
@@ -75,7 +96,12 @@ const Navbar = memo(() => {
                     {link.name}
                   </a>
                 ) : (
-                  <Link to={link.link}>{link.name}</Link>
+                  <Link
+                    className={`${link.permission === "admin" && isAdmin ? "" : ""}`}
+                    to={link.link}
+                  >
+                    {link.name}
+                  </Link>
                 )}
               </li>
             );

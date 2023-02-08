@@ -20,7 +20,7 @@ const studentLayout = memo(() => {
   return (
     <div className="min-h-screen bg-gradient-to-r from-zinc-900 to-slate-700 publicLayout">
       <header className="publicHeader">
-        <Navbar />
+        <Navbar user={user} />
       </header>
       <main className="publicMain">
         <Outlet />;
