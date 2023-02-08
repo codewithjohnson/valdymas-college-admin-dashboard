@@ -54,17 +54,10 @@ const Olevel = () => {
     secondSittingIsSubmitSuccessful,
   } = secondSittingFormHooks();
 
-  const showNextBtn = () => {
-    if (sittingNumber === "1") {
-      if (firstSittingIsSubmitted) {
-        return true;
-      } else if (sittingNumber == "2") {
-        if (firstSittingIsSubmitted && secondSittingIsSubmitted) {
-          return true;
-        }
-      }
-    }
-    return false;
+  // get last path
+  const getPath = () => {
+    const lastPath = pathname.split("/").pop();
+    currentPath !== lastPath && setCurrentPath(lastPath);
   };
 
   // check if previous page [biodata] has been handled
@@ -95,6 +88,7 @@ const Olevel = () => {
   useEffect(() => {
     checkDataCaptureIsDone();
     setFormValues();
+    getPath();
   }, []);
 
   // Form One
@@ -482,14 +476,12 @@ const Olevel = () => {
           previous page
         </button>
 
-        {showNextBtn() && (
-          <button
-            onClick={goToNextPage}
-            className={`bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform `}
-          >
-            next page
-          </button>
-        )}
+        <button
+          onClick={goToNextPage}
+          className={`bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform `}
+        >
+          next page
+        </button>
       </div>
     </>
   );

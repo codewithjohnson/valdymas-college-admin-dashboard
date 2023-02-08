@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../../assets/images/logo.png";
 
-import { useStudentContext } from "../../../context/students";
-
 // firebase
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { getServices } from "../../../services/firebase";
@@ -22,9 +20,14 @@ import Spinner from "../../../components/spinner";
 import { useLoginFormHooks } from "../../../schemas/login";
 
 const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { auth } = getServices();
   const yearRange = "2022-2023";
+
+  const handleshowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   // spinner override
   const override = {
@@ -168,19 +171,30 @@ const Login = () => {
             />
           </div>
 
-          <div className="password mt-6">
+          <div className="password mt-6 relative">
             <label htmlFor="password" className="text-gray-800  capitalize">
               Password
             </label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               name="password"
               id="password"
               {...loginRegister("password")}
-              className={`block w-full p-3  mt-2 text-sm border rounded-lg shadow-sm  placeholder-slate-300 border-green-200 focus:outline-none focus:ring focus:ring-green-100 hover:border-green-800 ${
+              className={`block relative w-full p-3  mt-2 text-sm border rounded-lg shadow-sm  placeholder-slate-300 border-green-200 focus:outline-none focus:ring focus:ring-green-100 hover:border-green-800 ${
                 loginErrors?.password ? " border-red-500" : ""
               }  `}
             />
+            <span className="absolute text-gray-400 cursor-pointer top-11 right-2">
+              {showPassword ? (
+                <span onClick={handleshowPassword} className="material-symbols-outlined">
+                  visibility_off
+                </span>
+              ) : (
+                <span onClick={handleshowPassword} className="material-symbols-outlined">
+                  visibility
+                </span>
+              )}
+            </span>
           </div>
 
           <div className="submit-btn mt-6">
