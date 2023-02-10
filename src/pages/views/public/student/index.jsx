@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { getStudentDoc } from "../../../../services/firestore/students/students";
 import { useParams } from "react-router-dom";
 import { useIsAuthorized } from "../../../../hooks/useAuth";
@@ -9,7 +9,7 @@ import Biodata from "../../../../components/public/student/biodata";
 import Olevels from "../../../../components/public/student/olevels";
 import Programme from "../../../../components/public/student/programme";
 
-const Student = memo(() => {
+const Student = () => {
   const [student, setStudent] = useState(null);
   const { studentID } = useParams();
 
@@ -37,5 +37,5 @@ const Student = memo(() => {
       </div>
     </div>
   );
-});
+};
 export default Student;

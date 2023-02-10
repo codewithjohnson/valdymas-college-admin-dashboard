@@ -2,7 +2,7 @@ import { memo } from "react";
 import { useIsAdmin } from "../../../../hooks/useAdmin";
 
 const ProfilePic = memo(({ student }) => {
-  const { isAdmin, loading } = useIsAdmin();
+  const { isAdmin } = useIsAdmin();
   const studentSchoolID = student?.[4]?.studentSchoolID;
   const firstName = student?.[0]?.firstname;
   const lastName = student?.[0]?.lastname;

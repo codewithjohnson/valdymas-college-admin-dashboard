@@ -12,10 +12,6 @@ export const useIsAdmin = () => {
           const role = idTokenResult.claims.role;
           if (role === "admin") {
             setIsAdmin(true);
-          } else if (role === "student") {
-            setIsAdmin(false);
-          } else {
-            setIsAdmin(false);
           }
         });
       }

@@ -130,7 +130,7 @@ const Olevels = memo(({ student }) => {
                     <p>grade</p>
                   </div>
 
-                  <div className="result">
+                  <ul className="result">
                     {subjectArray.map((item, index) => {
                       return (
                         <div
@@ -142,7 +142,7 @@ const Olevels = memo(({ student }) => {
                         </div>
                       );
                     })}
-                  </div>
+                  </ul>
                 </div>
               </div>
 

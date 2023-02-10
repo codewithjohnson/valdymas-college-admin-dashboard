@@ -40,9 +40,9 @@ const Biodata = memo(({ student }) => {
         Biodata (personal information)
       </h3>
 
-      <main className="p-5 grid grid-cols-1 gap-5  md:grid md:grid-cols-3">
+      <ul className="p-5 grid grid-cols-1 gap-5  md:grid md:grid-cols-3">
         {biodata.map((data, index) => (
-          <div>
+          <div key={index}>
             <label
               className="text-sm sm:text-base capitalize select-none  text-gray-400 font-medium"
               htmlFor={data.value}
@@ -59,7 +59,7 @@ const Biodata = memo(({ student }) => {
             />
           </div>
         ))}
-      </main>
+      </ul>
     </div>
   );
 });

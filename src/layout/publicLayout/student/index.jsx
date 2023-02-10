@@ -1,12 +1,12 @@
-import { memo, lazy } from "react";
+import { lazy } from "react";
 import { Outlet } from "react-router-dom";
 import Loadable from "../../../components/loadable";
 import { useIsAuthorized } from "../../../hooks/useAuth";
 
-const Navbar = Loadable(lazy(() => import("../../../components/public/navbar")));
+import Navbar from "../../../components/public/navbar";
 const Footer = Loadable(lazy(() => import("../../../components/public/footer")));
 
-const studentLayout = memo(() => {
+const studentLayout = () => {
   // check if user is authorized
   useIsAuthorized();
 
@@ -23,6 +23,6 @@ const studentLayout = memo(() => {
       </div>
     </div>
   );
-});
+};
 
 export default studentLayout;

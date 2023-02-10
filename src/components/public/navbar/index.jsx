@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
 // assets
@@ -11,7 +11,7 @@ import { publicMenuItems } from "../../../utilities/public/menu";
 import { useIsAuthorized } from "../../../hooks/useAuth";
 import { useIsAdmin } from "../../../hooks/useAdmin";
 
-const Navbar = memo(() => {
+const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
   const menuLinks = publicMenuItems;
@@ -105,6 +105,6 @@ const Navbar = memo(() => {
       </div>
     </nav>
   );
-});
+};
 
 export default Navbar;
