@@ -12,6 +12,15 @@ const useFirebaseAuth = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const HandleSignOut = async () => {
+    try {
+      await signOut(auth);
+      setUser(null);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const onStateChange = async (user) => {
     setLoading(true);
     if (!user) {
@@ -30,7 +39,7 @@ const useFirebaseAuth = () => {
     return () => unsubscribe();
   }, []);
 
-  return { user, loading };
+  return { user, loading, HandleSignOut };
 };
 
 // auth provider

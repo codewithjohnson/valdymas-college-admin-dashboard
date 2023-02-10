@@ -1,14 +1,19 @@
 // create a array of objects containing links for menu
 export const publicMenuItems = [
   {
+    name: "home",
+    link: "",
+    side: "client",
+  },
+  {
     name: "dashboard",
     link: "/dashboard",
     side: "client",
-    permission:"admin"
+    permission: "admin",
   },
   {
     name: "documents",
-    link: "",
+    link: "documents",
     side: "client",
   },
   {
@@ -18,18 +23,8 @@ export const publicMenuItems = [
   },
 
   {
-    name: "reviews",
-    link: "",
-    side: "client",
-  },
-  {
-    name: "results",
-    link: "",
-    side: "client",
-  },
-  {
     name: "logout",
     link: "",
     side: "client",
-  }
+  },
 ];

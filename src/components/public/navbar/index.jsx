@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../../services/auth/auth";
 
 // assets
 import logo from "../../../assets/images/logo.png";
@@ -16,8 +17,11 @@ const Navbar = () => {
   const menuRef = useRef(null);
   const menuLinks = publicMenuItems;
 
+  // get auth params
+  const { HandleSignOut } = useAuth();
+
   // check if user is admin
-  const { isAdmin, loading } = useIsAdmin();
+  const { isAdmin } = useIsAdmin();
 
   // check if user is authorized
   useIsAuthorized();
@@ -47,7 +51,7 @@ const Navbar = () => {
 
   const HandleOnclick = (link) => {
     if (link.name === "logout") {
-      console.log("logout");
+      HandleSignOut();
     }
   };
 

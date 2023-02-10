@@ -4,7 +4,7 @@ const StudentLayout = Loadable(
   lazy(() => import("../../../layout/publicLayout/student"))
 );
 const Student = Loadable(lazy(() => import("../../../pages/views/public/student")));
-
+const StudentDocs = Loadable(lazy(() => import("../../../pages/views/public/documents")));
 
 export const studentRoute = {
   path: "/student/:studentID",
@@ -13,6 +13,10 @@ export const studentRoute = {
     {
       path: "",
       element: <Student />,
+    },
+    {
+      path: "documents",
+      element: <StudentDocs />,
     },
   ],
 };
