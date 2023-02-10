@@ -1,41 +1,34 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../../services/auth/auth";
 
 // assets
 import logo from "../../../assets/images/logo.png";
 
-// firebase
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { getServices } from "../../../services/firebase";
-
-// firestore
-import {
-  checkAdminExists,
-  findStudent,
-} from "../../../services/firestore/students/students";
-
 // components
 import Spinner from "../../../components/spinner";
 
+// firebase auth
+import { signInWithEmailAndPassword } from "firebase/auth";
+
 // form hooks
 import { useLoginFormHooks } from "../../../schemas/login";
+
+// firebase services
+import { getServices } from "../../../services/firebase";
+
+// firestore services
+import { findStudent } from "../../../services/firestore/students/students";
+
+// redirect admin and student
+import { useRedirectAdminStudent } from "../../../hooks/redirectAdmin";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { auth } = getServices();
-  const { user, loading } = useAuth();
 
-  // if user is logged in, redirect to dashboard
-  useEffect(() => {
-    if (!loading && user) {
-      user.getIdTokenResult().then((idTokenResult) => {
-        const role = idTokenResult.claims.role;
-        role === "admin" ? loginAdmin() : loginStudent(user.uid);
-      });
-    }
-  }, [user, loading]);
+  // if user is logged in, redirect to appropriate page
+  useRedirectAdminStudent();
 
   // Todo: get this from local storage: year range
   const yearRange = "2022-2023";
@@ -87,6 +80,7 @@ const Login = () => {
   async function loginStudent(userID) {
     const isStudent = await findStudent(yearRange, userID);
     const studentID = isStudent;
+
     const nextRoute = `/student/${studentID}`;
     navigate(nextRoute);
   }

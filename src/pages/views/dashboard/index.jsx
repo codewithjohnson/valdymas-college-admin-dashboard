@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../services/auth/auth";
 import { useIsAdmin } from "../../../hooks/useAdmin";
-import { checkAdminExists } from "../../../services/firestore/students/students";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -13,6 +12,13 @@ const Dashboard = () => {
   useEffect(() => {
     if (!loading && !user) {
       navigate("/auth/login");
+    } else if (!loading && user) {
+      user.getIdTokenResult().then((idTokenResult) => {
+        const role = idTokenResult.claims.role;
+        if (role !== "admin") {
+          navigate("/auth/login");
+        }
+      });
     }
   }, [user, loading]);
 

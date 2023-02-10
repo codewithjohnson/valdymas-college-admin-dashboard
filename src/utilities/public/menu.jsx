@@ -7,6 +7,11 @@ export const publicMenuItems = [
     permission:"admin"
   },
   {
+    name: "documents",
+    link: "",
+    side: "client",
+  },
+  {
     name: "materials",
     link: "https://valdymasintelligence.org/valdymas-institute/",
     side: "server",

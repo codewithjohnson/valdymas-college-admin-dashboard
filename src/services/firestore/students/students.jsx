@@ -152,6 +152,7 @@ export const findStudent = async (yearRange, authID) => {
   const studentDoc = querySnapshot.docs.find((doc) => {
     return doc.data().authID === authID;
   });
+  console.log(studentDoc);
   return studentDoc.id;
 };
 

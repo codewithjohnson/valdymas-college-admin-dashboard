@@ -9,8 +9,8 @@ export const useIsAuthorized = () => {
   // redirect to login page if user is not verified
   useEffect(() => {
     if (!loading && !user) {
-      console.log("user is not verified");
-      navigate("/auth/login");
+      const AUTHROUTE = "/auth/login";
+      navigate(AUTHROUTE);
     }
   }, [user]);
 };
