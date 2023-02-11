@@ -1,13 +1,13 @@
-import { useAuth } from "../../../services/auth/auth";
 import LoaderFull from "../../../components/loaderFull";
-import { useEffect } from "react";
+
+import { useIsAdmin } from "../../../hooks/useAdmin";
 
 const Dashboard = () => {
-  const authParams = useAuth();
+  const { isAdmin } = useIsAdmin();
 
-  const { user, loading } = authParams;
-
-  return (
+  return !isAdmin ? (
+    <LoaderFull />
+  ) : (
     <div className="w-full h-full text-sm">
       Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem architecto libero
       praesentium, placeat temporibus nisi eaque exercitationem maiores. Unde, numquam

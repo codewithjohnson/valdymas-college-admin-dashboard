@@ -1,16 +1,18 @@
-import { memo, lazy, useEffect } from "react";
+import { memo, lazy } from "react";
 
 import Loadable from "../../components/Loadable";
-import { useAuth } from "../../services/auth/auth";
 import LoaderFull from "../../components/loaderFull";
+import { useIsAdmin } from "../../hooks/useAdmin";
 
 const Navbar = Loadable(lazy(() => import("../../components/navbar")));
 const Aside = Loadable(lazy(() => import("../../components/sidebar")));
 
 const MainLayout = memo(({ children }) => {
-  const { user, loading } = useAuth();
+  const { isAdmin } = useIsAdmin();
 
-  return (
+  return !isAdmin ? (
+    <LoaderFull />
+  ) : (
     <div className="relative h-[300px]">
       <header className="h-[95px] fixed z-20 left-0 right-0 flex justify-center items-center">
         <Navbar />

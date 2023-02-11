@@ -35,7 +35,7 @@ export const useRedirectAdminStudent = () => {
           }
         });
       } else {
-        navigate("/auth/login");
+        loginStudent(user.uid);
       }
     };
     checkAdmin();

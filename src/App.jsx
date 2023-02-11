@@ -6,17 +6,20 @@ import { useAuth } from "./services/auth/auth";
 
 // hooks
 import { useRedirectAdminStudent } from "./hooks/redirectAdmin";
+import { useIsAdmin } from "./hooks/useAdmin";
 
 // layout
 import MainLayout from "./layout/mainLayout";
 
 const App = () => {
   const { user, loading } = useAuth();
+  const isAdmin = useIsAdmin();
 
   // redirect admin and student
   useRedirectAdminStudent();
 
   return (
+    !isAdmin? <LoaderFull /> :
     <MainLayout>
       <Outlet />
     </MainLayout>
