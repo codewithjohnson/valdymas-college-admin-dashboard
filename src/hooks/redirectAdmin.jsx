@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../services/auth/auth";
 import { findStudent } from "../services/firestore/students/students";
+import LoaderFull from "../components/loaderFull";
 
 export const useRedirectAdminStudent = () => {
   const { user, loading } = useAuth();

@@ -107,7 +107,7 @@ const Login = () => {
     <div className="font-poppins min-h-screen flex flex-col sm:flex sm:flex-row my-0 mx-auto h-full w-full bg-gray-100 justify-center items-center relative overflow-hidden">
       {/* left */}
 
-      <div className="instruction--container bg-teal-700 text-white pt-8 px-8 my-6 rounded-md border-none sm: w-[80%] sm:w-[500px] h-[538px] select-none z-10 ">
+      <div className="instruction--container bg-teal-700 text-white pt-8 px-8 my-6 rounded-md border-none sm: w-[90%] sm:w-[500px] h-[538px] select-none z-10 ">
         <div className="instruction__content">
           <p className="text-xl capitalize">
             <span className="font-semibold">welcome</span> to Valydmas College Portal
@@ -132,7 +132,7 @@ const Login = () => {
       {/* right */}
       <form
         onSubmit={loginHandleSubmit(onFormSubmit)}
-        className="flex flex-col  w-[80%] sm:w-[500px] my-4  rounded-md bg-white pb-6 z-10"
+        className="flex flex-col  w-[90%] sm:w-[500px] my-4  rounded-md bg-white pb-6 z-10"
       >
         <p className="text-green-900 text-sm m-4 pl-2 py-2  w-full border-l-4 border-l-orange-500 select-none ">
           Sign in to portal
