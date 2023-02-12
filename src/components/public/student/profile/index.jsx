@@ -13,7 +13,13 @@ const ProfilePic = memo(({ student }) => {
   const passport = student?.[1]?.passport?.data;
 
   return (
-    <div className="profile__picture h-fit bg-gradient-to-r from-slate-800 to-slate-900 rounded-xl divide-y divide-slate-700 shadow-2xl">
+    <div className="profile__picture relative h-fit bg-gradient-to-r from-slate-800 to-slate-900 rounded-xl divide-y divide-slate-700 shadow-2xl">
+      {isAdmin && (
+        <div className="status bg-orange-500 w-fit text-black p-2 text-[11px] sm:text-[12px] font-semibold capitalize absolute -top-4 right-0 rounded-lg">
+          admin on page
+        </div>
+      )}
+
       <div className="pic p-10 pb-1">
         <img
           src={passport}

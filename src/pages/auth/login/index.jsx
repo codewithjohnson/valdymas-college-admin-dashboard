@@ -13,6 +13,9 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 // form hooks
 import { useLoginFormHooks } from "../../../schemas/login";
 
+// utitilities
+import { loginAdmin, loginStudent } from "../../../utilities/auth/navigate";
+
 // firebase services
 import { getServices } from "../../../services/firebase";
 
@@ -70,20 +73,6 @@ const Login = () => {
     return user;
   };
 
-  // admin login
-  async function loginAdmin() {
-    const nextRoute = "/dashboard ";
-    navigate(nextRoute);
-  }
-
-  // student login
-  async function loginStudent(userID) {
-    const isStudent = await findStudent(yearRange, userID);
-    const studentID = isStudent;
-    const nextRoute = `/student/${studentID}`;
-    navigate(nextRoute);
-  }
-
   // on form submit and attempt to login
   const onFormSubmit = async (data) => {
     const { level, email, password } = data;
@@ -93,7 +82,9 @@ const Login = () => {
         // get user claims
         user.getIdTokenResult().then((idTokenResult) => {
           const role = idTokenResult.claims.role;
-          role === "admin" ? loginAdmin() : loginStudent(user.uid);
+          role === "admin"
+            ? loginAdmin(navigate)
+            : loginStudent(user.uid, navigate, findStudent);
         });
       }
     } catch (error) {

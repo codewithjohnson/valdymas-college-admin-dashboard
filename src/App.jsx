@@ -18,11 +18,12 @@ const App = () => {
   // redirect admin and student
   useRedirectAdminStudent();
 
-  return (
-    !isAdmin? <LoaderFull /> :
+  return isAdmin ? (
     <MainLayout>
       <Outlet />
     </MainLayout>
+  ) : (
+    <LoaderFull />
   );
 };
 

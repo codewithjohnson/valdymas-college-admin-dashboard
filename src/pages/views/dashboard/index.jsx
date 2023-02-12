@@ -5,9 +5,7 @@ import { useIsAdmin } from "../../../hooks/useAdmin";
 const Dashboard = () => {
   const { isAdmin } = useIsAdmin();
 
-  return !isAdmin ? (
-    <LoaderFull />
-  ) : (
+  return isAdmin ? (
     <div className="w-full h-full text-sm">
       Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem architecto libero
       praesentium, placeat temporibus nisi eaque exercitationem maiores. Unde, numquam
@@ -20,6 +18,8 @@ const Dashboard = () => {
       quae illum iure. Quo perspiciatis error deserunt consectetur sequi non aperiam, sit
       deleniti impedit quos libero!
     </div>
+  ) : (
+    <LoaderFull />
   );
 };
 
