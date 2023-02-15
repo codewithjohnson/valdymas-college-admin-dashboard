@@ -36,7 +36,7 @@ const Programme = memo(() => {
   const override = {
     display: "block",
     margin: "0 auto",
-    borderColor: "white",
+    borderColor: "black",
   };
 
   const { register, reset, handleSubmit, errors, isSubmitting, isValidating, isValid } =
