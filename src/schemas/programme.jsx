@@ -17,6 +17,7 @@ export const useProgrammeFormHooks = () => {
   const {
     register,
     reset,
+    setValue,
     trigger,
     watch,
     handleSubmit,
@@ -28,6 +29,7 @@ export const useProgrammeFormHooks = () => {
   return {
     register,
     reset,
+    setValue,
     trigger,
     handleSubmit,
     watch,
@@ -36,4 +38,14 @@ export const useProgrammeFormHooks = () => {
     isValidating,
     isValid,
   };
+};
+
+export const SetFormValues = (setValue, DATA) => {
+  setValue("modeOfEntry", DATA.modeOfEntry);
+  setValue("department", DATA.department);
+  setValue("courseOfStudy", DATA.courseOfStudy);
+  setValue("agent", DATA.agent);
+  setValue("subject1", DATA.subject1);
+  setValue("subject2", DATA.subject2);
+  setValue("subject3", DATA.subject3);
 };

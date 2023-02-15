@@ -93,11 +93,22 @@ export const getNumberOfStudents = async (yearRange) => {
 };
 
 // extract the last 2 digits of the year from the above year range
-const getyearRangeLastSubstring = (yearRange) => {
+export const getyearRangeLastSubstring = (yearRange) => {
   const yearRangeArray = yearRange.split("-");
   const yearRangeLast = yearRangeArray[1];
   const yearRangeLastSubstring = yearRangeLast.substring(2, 4);
   return yearRangeLastSubstring;
+};
+
+// add two 0 or one 0 if the number of students is less than 10 or less than 100 to the function above
+export const transformNumberOfStudents = (numberOfStudents) => {
+  if (numberOfStudents < 10) {
+    return `00${numberOfStudents}`;
+  } else if (numberOfStudents < 100) {
+    return `0${numberOfStudents}`;
+  } else {
+    return numberOfStudents;
+  }
 };
 
 //  add student biodata, programme and olevels  to info collection
@@ -110,17 +121,6 @@ export const addStudentsData = async (yearRange, studentID, studentData) => {
 
   // get length of students registered
   const numberOfStudents = await getNumberOfStudents(setYearRange);
-
-  // add two 0 or one 0 if the number of students is less than 10 or less than 100 to the function above
-  const transformNumberOfStudents = (numberOfStudents) => {
-    if (numberOfStudents < 10) {
-      return `00${numberOfStudents}`;
-    } else if (numberOfStudents < 100) {
-      return `0${numberOfStudents}`;
-    } else {
-      return numberOfStudents;
-    }
-  };
 
   // get the last 2 digits of the year from the above year range
   const yearRangeLastSubstring = getyearRangeLastSubstring(setYearRange);

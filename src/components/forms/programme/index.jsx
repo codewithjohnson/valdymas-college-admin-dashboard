@@ -15,8 +15,10 @@ import {
   createStudentRegistration,
 } from "../../../services/firestore/students/students";
 
+import { getStudentIdFromAdmin } from "../../../utilities/auth/getId";
+
 // form hooks
-import { useProgrammeFormHooks } from "../../../schemas/programme";
+import { useProgrammeFormHooks, SetFormValues } from "../../../schemas/programme";
 
 import {
   subjectCombinationWithId,
@@ -40,8 +42,16 @@ const Programme = memo(() => {
     borderColor: "black",
   };
 
-  const { register, reset, handleSubmit, errors, isSubmitting, isValidating, isValid } =
-    useProgrammeFormHooks();
+  const {
+    register,
+    reset,
+    setValue,
+    handleSubmit,
+    errors,
+    isSubmitting,
+    isValidating,
+    isValid,
+  } = useProgrammeFormHooks();
 
   // get last path
   const getPath = () => {
@@ -59,7 +69,8 @@ const Programme = memo(() => {
   };
 
   useEffect(() => {
-    redirectToOlevels();
+    // redirectToOlevels();
+    SetFormValues(setValue, state?.programme);
     getPath();
   }, [olevels]);
 
@@ -84,14 +95,17 @@ const Programme = memo(() => {
     try {
       const studentData = state;
       const studentFullName = `${studentData?.biodata?.firstname} ${studentData?.biodata?.lastname}`;
-      const studentID = await createStudentDoc(setYearRange, studentFullName);
+      const studentID = await getStudentIdFromAdmin(setYearRange, studentData);
+      console.log(studentID);
+
+      // const studentID = await createStudentDoc(setYearRange, studentFullName);
 
       // save student data to firestore
-      await createStudentRegistration(setYearRange, studentID, studentData);
+      // await createStudentRegistration(setYearRange, studentID, studentData);
 
       // Navigate to next page
       const NEXTROUTE = "/students";
-      navigate(NEXTROUTE);
+      // navigate(NEXTROUTE);
     } catch (err) {
       console.log(err.message);
       setIsLoading(false);
