@@ -49,6 +49,7 @@ const Navbar = () => {
     });
   }, [isOpen]);
 
+  // handle menu items
   const HandleOnclick = (link) => {
     if (link.name === "logout") {
       HandleSignOut();
@@ -58,12 +59,14 @@ const Navbar = () => {
   return (
     <nav
       ref={menuRef}
-      className="  relative w-full bg-gradient-to-r from-slate-900 to-slate-700"
+      className="relative w-full bg-gradient-to-r from-slate-900 to-slate-700"
     >
       <div className=" sm:py-6 sm:px-10 px-5 py-5 flex flex-row justify-between items-center">
         <div className="logo flex flex-row  items-center gap-3 select-none text-gray-100">
           <img src={logo} alt="" className="h-9 w-9 sm:h-12 sm:w-12" />
-          <p className="font-semibold text-lg text-orange-400 sm:text-2xl">VCAPS</p>
+          <p className="font-semibold text-lg text-orange-400 sm:text-2xl">
+            VCAPS
+          </p>
         </div>
 
         {/* right */}
@@ -96,7 +99,9 @@ const Navbar = () => {
                   </a>
                 ) : (
                   <Link
-                    className={`${link.permission === "admin" && isAdmin ? "" : ""}`}
+                    className={`${
+                      link.permission === "admin" && isAdmin ? "" : ""
+                    }`}
                     to={link.link}
                   >
                     {link.name}
