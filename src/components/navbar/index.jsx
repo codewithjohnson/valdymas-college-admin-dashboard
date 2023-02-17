@@ -42,7 +42,9 @@ const Navbar = memo(() => {
             className="hidden sm:flex gap-2 justify-between items-center select-none"
           >
             <img src={logo} alt="" style={{ width: "30px", height: "30px" }} />
-            <p className="text-xl font-semibold font-firaSans text-gray-700">VCAPS</p>
+            <p className="text-xl font-semibold font-firaSans text-gray-700">
+              VCAPS
+            </p>
           </Link>
 
           {/* toggle button */}
@@ -60,7 +62,8 @@ const Navbar = memo(() => {
       <div className="right flex flex-row justify-between items-center  flex-1">
         {/* Time of Day */}
         <p className="text-slate-700  font-poppins text-[15px] md:text-xl font-semibold capitalize ml-4 select-none sm:ml-8">
-          good {timeOfDay}, <span className="text-red-900">{displayName}</span> 🖐🏼
+          good {timeOfDay}, <span className="text-red-900">{displayName}</span>{" "}
+          🖐🏼
         </p>
 
         <div className="rl flex justify-between gap-5 items-center">
