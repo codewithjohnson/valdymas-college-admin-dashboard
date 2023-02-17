@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 // assets
 import logo from "../../../assets/images/logo.png";
@@ -7,28 +6,18 @@ import logo from "../../../assets/images/logo.png";
 // components
 import Spinner from "../../../components/spinner";
 
-// firebase auth
-import { signInWithEmailAndPassword } from "firebase/auth";
-
 // form hooks
 import { useLoginFormHooks } from "../../../schemas/login";
 
 // utitilities
-import { loginAdmin, loginStudent } from "../../../utilities/auth/navigate";
-
-// firebase services
-import { getServices } from "../../../services/firebase";
-
-// firestore services
-import { findStudent } from "../../../services/firestore/students/students";
+import { useLogin } from "../../../hooks/useLogin";
 
 // redirect admin and student
 import { useRedirectAdminStudent } from "../../../hooks/redirectAdmin";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
-  const { auth } = getServices();
+  const { login } = useLogin();
 
   // if user is logged in, redirect to appropriate page
   useRedirectAdminStudent();
@@ -39,13 +28,6 @@ const Login = () => {
   // handle show password
   const handleshowPassword = () => {
     setShowPassword(!showPassword);
-  };
-
-  // spinner override
-  const override = {
-    display: "block",
-    margin: "0 auto",
-    borderColor: "white",
   };
 
   // form hooks
@@ -67,31 +49,10 @@ const Login = () => {
     }
   }, [loginIsSubmitted, loginIsSubmitSuccessful]);
 
-  // login function
-  const login = async (auth, email, password) => {
-    const { user } = await signInWithEmailAndPassword(auth, email, password);
-    return user;
-  };
-
   // on form submit and attempt to login
   const onFormSubmit = async (data) => {
     const { level, email, password } = data;
-    try {
-      const user = await login(auth, email, password);
-      if (user) {
-        // get user claims
-        user.getIdTokenResult().then((idTokenResult) => {
-          const role = idTokenResult.claims.role;
-          role === "admin"
-            ? loginAdmin(navigate)
-            : loginStudent(user.uid, navigate, findStudent);
-        });
-      }
-    } catch (error) {
-      const errorMessage = error.message;
-      const errorCode = error.code;
-      console.log(errorMessage, errorCode);
-    }
+    login(level, email, password);
   };
 
   return (
@@ -101,12 +62,15 @@ const Login = () => {
       <div className="instruction--container bg-teal-700 text-white pt-8 px-8 my-6 rounded-md border-none sm: w-[90%] sm:w-[500px] h-[538px] select-none z-10 ">
         <div className="instruction__content">
           <p className="text-xl capitalize">
-            <span className="font-semibold">welcome</span> to Valydmas College Portal
+            <span className="font-semibold">welcome</span> to Valydmas College
+            Portal
           </p>
           <div className="instruction mt-10">
             <p className=" text-lg">Instructions to sign in</p>
             <ul className="list-disc text-gray-300 text-sm pl-9 ">
-              <li className="py-5 capitalize  my-3 px-3 shadow-xl ">select your level</li>
+              <li className="py-5 capitalize  my-3 px-3 shadow-xl ">
+                select your level
+              </li>
               <li className="py-5 capitalize my-3 px-2 shadow-xl">
                 enter your email and password to sign in
               </li>
@@ -180,11 +144,17 @@ const Login = () => {
             />
             <span className="absolute text-gray-400 cursor-pointer top-11 right-2">
               {showPassword ? (
-                <span onClick={handleshowPassword} className="material-symbols-outlined">
+                <span
+                  onClick={handleshowPassword}
+                  className="material-symbols-outlined"
+                >
                   visibility_off
                 </span>
               ) : (
-                <span onClick={handleshowPassword} className="material-symbols-outlined">
+                <span
+                  onClick={handleshowPassword}
+                  className="material-symbols-outlined"
+                >
                   visibility
                 </span>
               )}

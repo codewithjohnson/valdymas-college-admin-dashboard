@@ -3,7 +3,7 @@ import { useIsAdmin } from "../../../../hooks/useAdmin";
 
 const ProfilePic = memo(({ student }) => {
   const { isAdmin } = useIsAdmin();
-  const studentSchoolID = student?.[4]?.studentSchoolID;
+  const studentSchoolID = student?.[4]?.studentID.replace(/-/g, "/");
   const firstName = student?.[0]?.firstname;
   const lastName = student?.[0]?.lastname;
   const fullName = `${firstName} ${lastName}`;

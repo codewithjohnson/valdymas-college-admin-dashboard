@@ -48,33 +48,21 @@ export const getStudentsCollectionRef = async (yearRange) => {
   return studentsCollectionRef;
 };
 
-// create student doc with auto generated id and reference the student name
-export const createStudentDoc = async (yearRange, studentFullName) => {
+// create student doc with studentID as id
+
+export const createStudentDoc = async (
+  yearRange,
+  studentID,
+  studentFullName
+) => {
   const studentsCollectionRef = await getStudentsCollectionRef(yearRange);
-  const studentDocRef = doc(studentsCollectionRef);
+  const studentDocRef = doc(studentsCollectionRef, studentID);
   await setDoc(studentDocRef, {
     studentFullName,
     createdAt: serverTimestamp(),
     role: "student",
   });
   return studentDocRef.id;
-};
-
-// check if a student exists
-const checkStudentExists = async (yearRange, studentID) => {
-  const studentsCollectionRef = await getStudentsCollectionRef(yearRange);
-  const studentDocRef = doc(studentsCollectionRef, studentID);
-  const studentDoc = await getDoc(studentDocRef);
-  return studentDoc.exists();
-};
-
-// check if a user has the role of student
-const checkStudentRole = async (yearRange, studentID) => {
-  const studentsCollectionRef = await getStudentsCollectionRef(yearRange);
-  const studentDocRef = doc(studentsCollectionRef, studentID);
-  const studentDoc = await getDoc(studentDocRef);
-  const studentRole = studentDoc.data().role;
-  return studentRole === "student";
 };
 
 // create info collection for student
@@ -117,43 +105,18 @@ export const addStudentsData = async (yearRange, studentID, studentData) => {
     yearRange,
     studentID
   );
-  const { setYearRange, biodata, dataCapture, programme, olevels } = studentData;
-
-  // get length of students registered
-  const numberOfStudents = await getNumberOfStudents(setYearRange);
-
-  // get the last 2 digits of the year from the above year range
-  const yearRangeLastSubstring = getyearRangeLastSubstring(setYearRange);
-
-  // get department  from programme and extract the first 3 characters
-  const { department } = programme;
-  const departmentCode = department.substring(0, 3);
-  const transformedNumberOfStudents = transformNumberOfStudents(numberOfStudents);
-
-  // create student school ID
-  const studentSchoolID = `VAL/${yearRangeLastSubstring}/${departmentCode}/${transformedNumberOfStudents}`;
+  const { biodata, dataCapture, programme, olevels } = studentData;
 
   const biodataDocRef = doc(studentInfoCollectionRef, "biodata");
   const dataCaptureDocRef = doc(studentInfoCollectionRef, "dataCapture");
   const programmeDocRef = doc(studentInfoCollectionRef, "programme");
   const olevelsDocRef = doc(studentInfoCollectionRef, "olevels");
-  const studentSchoolIDDocRef = doc(studentInfoCollectionRef, "studentSchoolID");
+  const studentIDDocRef = doc(studentInfoCollectionRef, "studentID");
   await setDoc(biodataDocRef, biodata);
   await setDoc(dataCaptureDocRef, dataCapture);
   await setDoc(programmeDocRef, programme);
   await setDoc(olevelsDocRef, olevels);
-  await setDoc(studentSchoolIDDocRef, { studentSchoolID });
-};
-
-// find a student using authID passed from firebase auth and return student ID
-export const findStudent = async (yearRange, authID) => {
-  const studentsCollectionRef = await getStudentsCollectionRef(yearRange);
-  const querySnapshot = await getDocs(studentsCollectionRef);
-  const studentDoc = querySnapshot.docs.find((doc) => {
-    return doc.data().authID === authID;
-  });
-
-  return studentDoc.id;
+  await setDoc(studentIDDocRef, { studentID });
 };
 
 // get student docs: biodata,dataCapture, programme and olevels using student id
@@ -172,23 +135,26 @@ export const getStudentDoc = async (yearRange, studentID) => {
 // rewrite getStudentsData function to use real time listener
 export const getStudentsDataListener = async (yearRange, setStudentData) => {
   const studentsCollectionRef = await getStudentsCollectionRef(yearRange);
-  const unsubscribe = onSnapshot(studentsCollectionRef, async (querySnapshot) => {
-    const studentsInfo = await Promise.all(
-      querySnapshot.docs.map(async (studentDoc) => {
-        const studentID = studentDoc.id;
-        const studentInfoCollectionRef = await createStudentInfoCollection(
-          yearRange,
-          studentID
-        );
-        const studentInfoDocs = await getDocs(studentInfoCollectionRef);
-        const studentInfo = studentInfoDocs.docs.map((doc) => {
-          return { ...doc.data() };
-        });
-        return { studentID, studentInfo };
-      })
-    );
-    setStudentData(studentsInfo);
-  });
+  const unsubscribe = onSnapshot(
+    studentsCollectionRef,
+    async (querySnapshot) => {
+      const studentsInfo = await Promise.all(
+        querySnapshot.docs.map(async (studentDoc) => {
+          const studentID = studentDoc.id;
+          const studentInfoCollectionRef = await createStudentInfoCollection(
+            yearRange,
+            studentID
+          );
+          const studentInfoDocs = await getDocs(studentInfoCollectionRef);
+          const studentInfo = studentInfoDocs.docs.map((doc) => {
+            return { ...doc.data() };
+          });
+          return { studentID, studentInfo };
+        })
+      );
+      setStudentData(studentsInfo);
+    }
+  );
   return unsubscribe;
 };
 
@@ -199,13 +165,20 @@ export const deleteStudentDoc = async (yearRange, studentID) => {
   await deleteDoc(studentDocRef);
 };
 
-// create final student registration
-export const createStudentRegistration = async (yearRange, studentID, studentData) => {
+// ==================================== STUDENT REGISTRATION ====================================
+
+export const createStudentRegistration = async (
+  yearRange,
+  studentID,
+  studentData
+) => {
   setValdymasDoc(yearRange);
   getStudentsCollectionRef(yearRange);
   createStudentInfoCollection(yearRange, studentID);
   await addStudentsData(yearRange, studentID, studentData);
 };
+
+//================================================== ADMIN REGISTRATION ================================================
 
 // get a collection called "admins" inside year range doc
 export const getAdminsCollectionRef = async (yearRange) => {
@@ -244,7 +217,11 @@ export const updateStudentBiodata = async (yearRange, studentID, biodata) => {
 };
 
 // update data capture of student
-export const updateStudentDataCapture = async (yearRange, studentID, dataCapture) => {
+export const updateStudentDataCapture = async (
+  yearRange,
+  studentID,
+  dataCapture
+) => {
   const studentInfoCollectionRef = await createStudentInfoCollection(
     yearRange,
     studentID
@@ -254,7 +231,11 @@ export const updateStudentDataCapture = async (yearRange, studentID, dataCapture
 };
 
 // update programme of student
-export const updateStudentProgramme = async (yearRange, studentID, programme) => {
+export const updateStudentProgramme = async (
+  yearRange,
+  studentID,
+  programme
+) => {
   const studentInfoCollectionRef = await createStudentInfoCollection(
     yearRange,
     studentID

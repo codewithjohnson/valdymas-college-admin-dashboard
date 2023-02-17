@@ -1,6 +1,5 @@
 import React, { useState, memo, useEffect } from "react";
 import { useNavigate, useLocation, useOutletContext } from "react-router-dom";
-import axios from "axios";
 
 // state context
 import { useStudentContext } from "../../../context/students";
@@ -18,7 +17,10 @@ import {
 import { getStudentIdFromAdmin } from "../../../utilities/auth/getId";
 
 // form hooks
-import { useProgrammeFormHooks, SetFormValues } from "../../../schemas/programme";
+import {
+  useProgrammeFormHooks,
+  SetFormValues,
+} from "../../../schemas/programme";
 
 import {
   subjectCombinationWithId,
@@ -96,16 +98,24 @@ const Programme = memo(() => {
       const studentData = state;
       const studentFullName = `${studentData?.biodata?.firstname} ${studentData?.biodata?.lastname}`;
       const studentID = await getStudentIdFromAdmin(setYearRange, studentData);
-      console.log(studentID);
 
-      // const studentID = await createStudentDoc(setYearRange, studentFullName);
+      if (studentID) {
+        // create student doc
+        const studentIdFromDb = await createStudentDoc(
+          setYearRange,
+          studentID,
+          studentFullName
+        );
 
-      // save student data to firestore
-      // await createStudentRegistration(setYearRange, studentID, studentData);
-
-      // Navigate to next page
-      const NEXTROUTE = "/students";
-      // navigate(NEXTROUTE);
+        // create student registration
+        await createStudentRegistration(
+          setYearRange,
+          studentIdFromDb,
+          studentData
+        );
+        const NEXTROUTE = "/students";
+        navigate(NEXTROUTE);
+      }
     } catch (err) {
       console.log(err.message);
       setIsLoading(false);
@@ -194,7 +204,9 @@ const Programme = memo(() => {
               className="studentInputClass w-full mt-3"
             />
             {errors.agent && (
-              <p className="text-red-500 text-[12px] mt-1">{errors.agent.message}</p>
+              <p className="text-red-500 text-[12px] mt-1">
+                {errors.agent.message}
+              </p>
             )}
           </div>
         </div>

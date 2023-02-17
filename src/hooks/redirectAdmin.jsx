@@ -1,13 +1,10 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../services/auth/auth";
-import { findStudent } from "../services/firestore/students/students";
-import { loginAdmin, loginStudent } from "../utilities/auth/navigate";
 
 export const useRedirectAdminStudent = () => {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
-  const yearRange = "2022-2023";
 
   useEffect(() => {
     const checkAdmin = async () => {
@@ -15,9 +12,9 @@ export const useRedirectAdminStudent = () => {
         user.getIdTokenResult().then((idTokenResult) => {
           const role = idTokenResult.claims.role;
           if (role === "admin") {
-            loginAdmin(navigate);
+            navigate("/dashboard");
           } else if (role === "student") {
-            loginStudent(user.uid, navigate, findStudent);
+            navigate(`/student/${user.uid}`);
           }
         });
       } else {
