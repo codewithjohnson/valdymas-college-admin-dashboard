@@ -10,27 +10,22 @@ const Navbar = memo(() => {
   const { user } = useAuth();
   const [timeOfDay, setTimeOfDay] = useState("");
   const { collapseSidebar } = useProSidebar();
-  const [yearRange, setYearRange] = useState("2022-2023");
   const { dispatch, state } = useStudentContext();
+  const { setYearRange: currentsetYear } = state;
 
   // get user display name
   const displayName = user?.displayName.split(" ")[0];
 
-  // set year range to state on mount
-  useEffect(() => {
-    dispatch({ type: "SET_YEAR_RANGE", payload: yearRange });
-  }, [yearRange]);
+  // handle year range change
+  const HandleSetYearChange = (e) => {
+    dispatch({ type: "SET_YEAR_RANGE", payload: e.target.value });
+  };
 
   // get current time of day
   useEffect(() => {
     const currentHour = new Date().getHours();
     setTimeOfDay(getCurrentimeOfDay(currentHour));
   }, [new Date().getHours()]);
-
-  // handle year range change
-  const HandleSetYearChange = (e) => {
-    setYearRange(e.target.value);
-  };
 
   return (
     <nav className="navbar flex justify-between w-full px-4 transition duration-200 ease-in-out">
@@ -72,10 +67,11 @@ const Navbar = memo(() => {
             <select
               name="setYearRange"
               id="setYearRange"
-              value={yearRange}
+              value={currentsetYear}
               onChange={HandleSetYearChange}
               className="border-none focus:outline-none focus:ring focus:ring-green-100 hover:border-green-80 cursor-pointer  text-sm text-green-900 opacity-70  bg-green-100"
             >
+              <option value="2021-2022">2021-2022</option>
               <option value="2022-2023">2022-2023</option>
               <option value="2023-2024">2023-2024</option>
             </select>
