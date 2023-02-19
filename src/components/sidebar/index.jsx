@@ -5,14 +5,14 @@ import { sideBarMenuItems } from "../../utilities/menuItems";
 
 const Aside = memo(() => {
   return (
-    <div className={`w-full h-full border-0 font-poppins`}>
+    <div className={`w-full h-full border-0 font-poppins pb-40 bg-sky-100`}>
       <Sidebar
         backgroundColor="white"
         transitionDuration={1000}
         width="250px"
         collapsedWidth="40px"
         border="0"
-        rootStyles={{ overflowY: "hidden", height: "500px", scrollbarWidth: "thin" }}
+        rootStyles={{ overflowY: "hidden", height: "100%"}}
       >
         <Menu>
           <Menu className="capitalize text-[14px] -mx-4 pr-5">

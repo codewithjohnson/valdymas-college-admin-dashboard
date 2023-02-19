@@ -33,4 +33,5 @@ export const sideBarMenuItems = [
       { id: 3, label: "art", link: "/students/departments/arts" },
     ],
   },
+  
 ];
