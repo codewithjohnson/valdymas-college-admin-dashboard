@@ -3,22 +3,23 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import { useProSidebar } from "react-pro-sidebar";
 import { getCurrentimeOfDay } from "../../utilities/currentDate";
-import { useStudentContext } from "../../context/students";
+import { useYearContext } from "../../context/setYears";
 import { useAuth } from "../../services/auth/auth";
 
 const Navbar = memo(() => {
   const { user } = useAuth();
   const [timeOfDay, setTimeOfDay] = useState("");
   const { collapseSidebar } = useProSidebar();
-  const { dispatch, state } = useStudentContext();
-  const { setYearRange: currentsetYear } = state;
+
+  const { dispatch: yearDispatch, state: yearState } = useYearContext();
+  const { setYearRange: currentYear } = yearState;
 
   // get user display name
   const displayName = user?.displayName.split(" ")[0];
 
   // handle year range change
   const HandleSetYearChange = (e) => {
-    dispatch({ type: "SET_YEAR_RANGE", payload: e.target.value });
+    yearDispatch({ type: "SET_YEAR", payload: e.target.value });
   };
 
   // get current time of day
@@ -67,7 +68,7 @@ const Navbar = memo(() => {
             <select
               name="setYearRange"
               id="setYearRange"
-              value={currentsetYear}
+              value={currentYear}
               onChange={HandleSetYearChange}
               className="border-none focus:outline-none focus:ring focus:ring-green-100 hover:border-green-80 cursor-pointer  text-sm text-green-900 opacity-70  bg-green-100"
             >

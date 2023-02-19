@@ -4,7 +4,7 @@ import React, { memo, lazy, useState, useEffect } from "react";
 import { getDocs, onSnapshot } from "firebase/firestore";
 
 // context
-import { useStudentContext } from "../../../context/students";
+import { useYearContext } from "../../../context/setYears";
 
 // services
 import {
@@ -25,29 +25,33 @@ const StudentsTable = Loadable(
 
 const AllStudents = memo(() => {
   const [students, setStudents] = useState([]);
-  const { state } = useStudentContext();
-  const { setYearRange } = state;
+
+  const { state: yearState } = useYearContext();
+  const { setYearRange: currentYear } = yearState;
 
   // get students data from firestore and set it to state on mount and on refresh
   const getStudentsDataListener = async () => {
-    const studentsCollectionRef = await getStudentsCollectionRef(setYearRange);
-    const unsubscribe = onSnapshot(studentsCollectionRef, async (querySnapshot) => {
-      const studentsInfo = await Promise.all(
-        querySnapshot.docs.map(async (studentDoc) => {
-          const studentID = studentDoc.id;
-          const studentInfoCollectionRef = await createStudentInfoCollection(
-            setYearRange,
-            studentID
-          );
-          const studentInfoDocs = await getDocs(studentInfoCollectionRef);
-          const studentInfo = studentInfoDocs.docs.map((doc) => {
-            return { ...doc.data() };
-          });
-          return { studentID, studentInfo };
-        })
-      );
-      setStudents(studentsInfo);
-    });
+    const studentsCollectionRef = await getStudentsCollectionRef(currentYear);
+    const unsubscribe = onSnapshot(
+      studentsCollectionRef,
+      async (querySnapshot) => {
+        const studentsInfo = await Promise.all(
+          querySnapshot.docs.map(async (studentDoc) => {
+            const studentID = studentDoc.id;
+            const studentInfoCollectionRef = await createStudentInfoCollection(
+              currentYear,
+              studentID
+            );
+            const studentInfoDocs = await getDocs(studentInfoCollectionRef);
+            const studentInfo = studentInfoDocs.docs.map((doc) => {
+              return { ...doc.data() };
+            });
+            return { studentID, studentInfo };
+          })
+        );
+        setStudents(studentsInfo);
+      }
+    );
     return unsubscribe;
   };
 

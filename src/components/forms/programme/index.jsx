@@ -3,6 +3,7 @@ import { useNavigate, useLocation, useOutletContext } from "react-router-dom";
 
 // state context
 import { useStudentContext } from "../../../context/students";
+import { useYearContext } from "../../../context/setYears";
 
 // components
 import SelectInput from "../../../components/selectInput";
@@ -36,7 +37,9 @@ const Programme = memo(() => {
   const { olevels } = state;
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { setYearRange } = state;
+
+  const { state: yearState } = useYearContext();
+  const { setYearRange: currentYear } = yearState;
 
   const override = {
     display: "block",
@@ -97,32 +100,35 @@ const Programme = memo(() => {
     try {
       const studentData = state;
       const studentFullName = `${studentData?.biodata?.firstname} ${studentData?.biodata?.lastname}`;
-      const studentID = await getStudentIdFromAdmin(setYearRange, studentData);
+      const studentID = await getStudentIdFromAdmin(currentYear, studentData);
 
       if (studentID) {
         // create student doc
         const studentIdFromDb = await createStudentDoc(
-          setYearRange,
+          currentYear,
           studentID,
           studentFullName
         );
 
         // create student registration
         await createStudentRegistration(
-          setYearRange,
+          currentYear,
           studentIdFromDb,
           studentData
         );
+        alert("Student registration successful");
         const NEXTROUTE = "/students";
         navigate(NEXTROUTE);
       }
     } catch (err) {
-      console.log(err.message);
+      alert(err.message);
       setIsLoading(false);
     } finally {
       setIsLoading(false);
       reset();
-      // localStorage.clear();
+
+      // clear storedStudentData from local storage
+      localStorage.removeItem("storedStudentData");
     }
   };
 
