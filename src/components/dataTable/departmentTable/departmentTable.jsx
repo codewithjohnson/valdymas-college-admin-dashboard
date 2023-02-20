@@ -2,21 +2,14 @@ import React, { memo } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { getColumns, getRows } from "../../../utilities/departmentTable";
 import { useNavigate } from "react-router-dom";
-import { deleteStudentDoc } from "../../../services/firestore/students/students";
-import { useYearContext } from "../../../context/setYears";
 
 const DepartmentTable = memo(({ studentsData }) => {
-  const navigate = useNavigate();
   const rows = getRows(studentsData);
-  const { state: yearState } = useYearContext();
-  const { setYearRange: currentYear } = yearState;
+  const navigate = useNavigate();
 
   const HandleEditStudentProfile = (studentID) => {
     const studentProfilePath = `/student/${studentID}`;
     navigate(studentProfilePath);
-  };
-  const HandleDeleteStudentProfile = async (studentID) => {
-    await deleteStudentDoc(currentYear, studentID);
   };
 
   return (
@@ -39,10 +32,7 @@ const DepartmentTable = memo(({ studentsData }) => {
             ? "cellName"
             : "";
         }}
-        columns={getColumns(
-          HandleEditStudentProfile,
-          HandleDeleteStudentProfile
-        )}
+        columns={getColumns(HandleEditStudentProfile)}
         pageSize={5}
         rowsPerPageOptions={[5]}
         checkboxSelection
