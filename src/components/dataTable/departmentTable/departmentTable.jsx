@@ -30,6 +30,8 @@ const DepartmentTable = memo(({ studentsData }) => {
               params.field === "lastName" ||
               params.field === "fullName"
             ? "cellName"
+            : params.field === "studentID"
+            ? "text-green-800 font-semibold"
             : "";
         }}
         columns={getColumns(HandleEditStudentProfile)}

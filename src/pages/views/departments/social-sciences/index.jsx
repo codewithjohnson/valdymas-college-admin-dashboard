@@ -24,7 +24,7 @@ const SocialSciences = () => {
   return (
     <div>
       {socialScienceStudents.length <= 0 ? (
-        <h1 className="text-center text-xl mt-10 font-poppins">
+        <h1 className="text-center text-xl mt-10 text-gray-500 font-poppins">
           No student found yet....
         </h1>
       ) : (

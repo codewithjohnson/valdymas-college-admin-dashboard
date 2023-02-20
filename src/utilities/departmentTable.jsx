@@ -44,7 +44,7 @@ export const getColumns = (HandleEditStudentProfile) => {
       field: "studentID",
       headerName: "school ID",
       headerClassName: "font-poppins",
-      flex: 1,
+      width: 150,
     },
 
     {
