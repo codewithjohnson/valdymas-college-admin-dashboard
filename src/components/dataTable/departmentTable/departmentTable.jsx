@@ -1,11 +1,11 @@
 import React, { memo } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { getColumns, getRows } from "../../../utilities/studentsTable";
+import { getColumns, getRows } from "../../../utilities/departmentTable";
 import { useNavigate } from "react-router-dom";
 import { deleteStudentDoc } from "../../../services/firestore/students/students";
-import { useYearContext } from "../../../context/setYears/setYears";
+import { useYearContext } from "../../../context/setYears";
 
-const StudentsTable = memo(({ studentsData }) => {
+const DepartmentTable = memo(({ studentsData }) => {
   const navigate = useNavigate();
   const rows = getRows(studentsData);
   const { state: yearState } = useYearContext();
@@ -61,4 +61,4 @@ const StudentsTable = memo(({ studentsData }) => {
   );
 });
 
-export default StudentsTable;
+export default DepartmentTable;

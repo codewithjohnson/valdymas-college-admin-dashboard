@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import { useProSidebar } from "react-pro-sidebar";
 import { getCurrentimeOfDay } from "../../utilities/currentDate";
-import { useYearContext } from "../../context/setYears";
+import { useYearContext } from "../../context/setYears/setYears";
 import { useAuth } from "../../services/auth/auth";
 
 const Navbar = memo(() => {
@@ -74,7 +74,7 @@ const Navbar = memo(() => {
             >
               <option value="2021-2022">2021-2022</option>
               <option value="2022-2023">2022-2023</option>
-              <option value="2023-2024">2023-2024</option>
+              <option disabled value="2023-2024">2023-2024</option>
             </select>
           </form>
 
