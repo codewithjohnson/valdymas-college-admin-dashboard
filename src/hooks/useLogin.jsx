@@ -1,8 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { getServices } from "../services/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { useState } from "react";
 
 export const useLogin = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { auth } = getServices();
 
@@ -27,22 +29,46 @@ export const useLogin = () => {
       } else if (level === "student" && role === "student") {
         loginStudent(user.uid);
       } else {
-        return "Invalid login details";
+        throw new Error("Invalid login credentials");
       }
     });
   };
 
-  // Login the user
-  const login = async (level, email, password) => {
-    try {
-      const user = await signInWithEmailAndPassword(auth, email, password);
-      if (user) {
-        verifyLogin(level, user, navigate);
-      }
-    } catch (error) {
-      return error;
+  // handle errors
+  const handleError = (errorCode) => {
+    switch (errorCode) {
+      case "auth/invalid-email":
+        alert("Invalid email address");
+        break;
+      case "auth/user-disabled":
+        alert("User account has been disabled");
+        break;
+      case "auth/user-not-found":
+        alert("User account not found");
+        break;
+      case "auth/wrong-password":
+        alert("Invalid password");
+        break;
+      default:
     }
   };
 
-  return { login };
+  // try login the user in and handle errors
+  const login = async (level, email, password) => {
+    setIsLoading(true);
+    try {
+      const user = await signInWithEmailAndPassword(auth, email, password);
+      if (user) {
+        setIsLoading(false);
+        alert("Login successful");
+        verifyLogin(level, user, navigate);
+      }
+    } catch (error) {
+      setIsLoading(false);
+      const errorCode = error.code;
+      handleError(errorCode);
+    }
+  };
+
+  return { login, isLoading };
 };
