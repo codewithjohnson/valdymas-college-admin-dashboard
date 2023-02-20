@@ -96,7 +96,13 @@ const AllStudents = memo(() => {
       </div>
 
       {/* DATA TABLE */}
-      <StudentsTable studentsData={students} />
+      {students.length <= 0 ? (
+        <h1 className="text-center text-xl  font-poppins">
+          No student found yet....
+        </h1>
+      ) : (
+        <StudentsTable studentsData={students} />
+      )}
     </div>
   );
 });
