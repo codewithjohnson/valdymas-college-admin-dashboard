@@ -1,4 +1,5 @@
 import React, { memo, lazy, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 // firestore
 import { getDocs, onSnapshot } from "firebase/firestore";
@@ -25,6 +26,7 @@ const StudentsTable = Loadable(
 
 const AllStudents = memo(() => {
   const [students, setStudents] = useState([]);
+  const navigate = useNavigate();
 
   const { state: yearState } = useYearContext();
   const { setYearRange: currentYear } = yearState;
@@ -87,9 +89,12 @@ const AllStudents = memo(() => {
             </span>
           </Tooltip>
 
-          <Tooltip title="delete" placement="top" arrow>
-            <span className="material-symbols-outlined select-none  p-3 cursor-pointer text-slate-600 text-[23px] hover:bg-red-200 hover:rounded-full">
-              delete
+          <Tooltip title="add student" placement="top" arrow>
+            <span
+              onClick={() => navigate("/students/add-student")}
+              className="material-symbols-outlined  select-none p-2 cursor-pointer text-[23px] bg-blue-700 rounded-full text-gray-300 hover:rounded-full"
+            >
+              add
             </span>
           </Tooltip>
         </div>
