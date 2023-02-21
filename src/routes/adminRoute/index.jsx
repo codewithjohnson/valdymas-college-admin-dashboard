@@ -1,5 +1,7 @@
 import { lazy } from "react";
 import Loadable from "../../components/Loadable";
+
+// admin pages
 const AdminLayout = Loadable(lazy(() => import("../../layout/adminLayout")));
 const NewAdmin = Loadable(
   lazy(() => import("../../pages/views/admins/newAdmin"))

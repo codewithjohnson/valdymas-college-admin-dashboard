@@ -25,7 +25,7 @@ export const sideBarMenuItems = [
     ),
     subMenus: [
       { id: 1, label: "admins", link: "/admins" },
-      { id: 1, label: "add new", link: "/admins/new" },
+      { id: 2, label: "add new", link: "/admins/new" },
     ],
   },
   {

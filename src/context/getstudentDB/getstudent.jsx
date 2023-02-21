@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useMemo } from "react";
 import { getDocs, onSnapshot } from "firebase/firestore";
 import { useYearContext } from "../setYears/setYears";
 import {
@@ -6,17 +6,15 @@ import {
   getStudentsCollectionRef,
 } from "../../services/firestore/students/students";
 
-// create student from db context
 export const StudentFromDBContext = createContext();
 
-// create student from db context provider
 export const StudentFromDBContextProvider = ({ children }) => {
   const [students, setStudents] = useState([]);
+  // console.log("students from db");
 
   const { state: yearState } = useYearContext();
   const { setYearRange: currentYear } = yearState;
 
-  // get students data from firestore and set it to state on mount and on refresh
   const getStudentsDataListener = async () => {
     const studentsCollectionRef = await getStudentsCollectionRef(currentYear);
     const unsubscribe = onSnapshot(
