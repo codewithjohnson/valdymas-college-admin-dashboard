@@ -37,7 +37,7 @@ const Login = () => {
 
   // reset form on successful submit
   useEffect(() => {
-    if (loginIsSubmitted && loginIsSubmitSuccessful) {
+    if (loginIsSubmitted && loginIsSubmitSuccessful && !isLoading) {
       loginReset();
     }
   }, [loginIsSubmitted, loginIsSubmitSuccessful]);
