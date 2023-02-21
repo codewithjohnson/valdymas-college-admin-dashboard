@@ -13,7 +13,7 @@ export const mainRoute = {
   errorElement: <ErrorPage />,
   children: [
     {
-      path: "/",
+      path: "",
       element: <Dashboard />,
     },
     {

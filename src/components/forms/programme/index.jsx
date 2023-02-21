@@ -3,7 +3,7 @@ import { useNavigate, useLocation, useOutletContext } from "react-router-dom";
 
 // state context
 import { useStudentContext } from "../../../context/students";
-import { useYearContext } from "../../../context/setYears";
+import { useYearContext } from "../../../context/setYears/setYears";
 
 // components
 import SelectInput from "../../../components/selectInput";
@@ -74,14 +74,14 @@ const Programme = memo(() => {
   };
 
   useEffect(() => {
-    // redirectToOlevels();
+    redirectToOlevels();
     SetFormValues(setValue, state?.programme);
     getPath();
   }, [olevels]);
 
   // Handle save information
   const onFormSubmitAndSave = async (data) => {
-    dispatch({ type: "PROGRAMME/SET_PROGRAMME", payload: data });
+    dispatch({ type: "PROGRAMME/22SET_PROGRAMME", payload: data });
     setIsSaved(true);
   };
 
@@ -117,18 +117,19 @@ const Programme = memo(() => {
           studentData
         );
         alert("Student registration successful");
+        setIsLoading(false);
+        reset();
+
+        // remove stored data
+        localStorage.removeItem("storedStudentData");
+
+        // navigate to next page
         const NEXTROUTE = "/students";
         navigate(NEXTROUTE);
       }
     } catch (err) {
       alert(err.message);
       setIsLoading(false);
-    } finally {
-      setIsLoading(false);
-      reset();
-
-      // clear storedStudentData from local storage
-      localStorage.removeItem("storedStudentData");
     }
   };
 

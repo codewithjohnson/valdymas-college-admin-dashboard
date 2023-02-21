@@ -17,10 +17,10 @@ export const useRedirectAdminStudent = () => {
             navigate(`/student/${user.uid}`);
           }
         });
-      } else {
+      } else if (!loading && !user) {
         navigate("/auth");
       }
     };
     checkAdmin();
-  }, [user]);
+  }, [user, loading]);
 };

@@ -42,6 +42,8 @@ const Olevel = () => {
     firstSittingIsSubmitSuccessful,
   } = firstSittingFormHooks();
 
+  console.log(firstSittingIsValid);
+
   const {
     secondSittingRegister,
     secondSittingReset,
@@ -53,6 +55,8 @@ const Olevel = () => {
     secondSittingIsSubmitted,
     secondSittingIsSubmitSuccessful,
   } = secondSittingFormHooks();
+
+  console.log(secondSittingIsValid);
 
   // get last path
   const getPath = () => {
@@ -99,7 +103,7 @@ const Olevel = () => {
       payload: { GlobalsittingNumber: sittingNumber },
     });
     dispatch({ type: "OLEVELS/SITTING_ONE", payload: sittingOneData });
-    // setIsubmitted(true);
+    setIsubmitted(true);
   };
 
   // Form Two
@@ -110,7 +114,7 @@ const Olevel = () => {
       payload: { GlobalsittingNumber: sittingNumber },
     });
     dispatch({ type: "OLEVELS/SITTING_TWO", payload: sittingTwoData });
-    // setIsubmitted(true);
+    setIsubmitted(true);
   };
 
   // go to previous page

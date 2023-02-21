@@ -24,9 +24,9 @@ export const getServices = () => {
   // if (!services.isConfigured) {
   //   connectToEmulators(services);
   // }
-  if (process.env.NODE_ENV === "development") {
-    console.log("Firebase services initialized in development mode");
-  }
+  // if (process.env.NODE_ENV === "development") {
+  //   console.log("Firebase services initialized in development mode");
+  // }
 
   const { firestore, auth, storage } = services;
   return { firestore, auth, storage };
