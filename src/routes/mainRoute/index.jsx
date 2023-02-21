@@ -1,6 +1,7 @@
 import { lazy } from "react";
 import Loadable from "../../components/loadable/";
 import { studentRoute } from "../studentRoute";
+import { adminRoute } from "../adminRoute";
 
 const App = Loadable(lazy(() => import("../../App")));
 const Dashboard = Loadable(lazy(() => import("../../pages/views/dashboard")));
@@ -21,5 +22,6 @@ export const mainRoute = {
       element: <Dashboard />,
     },
     studentRoute,
+    adminRoute,
   ],
 };
