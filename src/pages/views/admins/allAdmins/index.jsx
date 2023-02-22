@@ -25,14 +25,12 @@ const adminData = [
   },
 ];
 
-
-
 const Admins = () => {
   return (
-    <div className="font-poppins">
+    <div className="font-poppins mt-5">
       <div className="flex flex-col sm:flex sm:flex-row gap-5 p-3">
-        {adminData.map((admin) => {
-          return <AdminCard admin={admin} />;
+        {adminData.map((admin, index) => {
+          return <AdminCard key={index} admin={admin} />;
         })}
       </div>
     </div>

@@ -37,6 +37,8 @@ const StudentsTable = memo(({ studentsData }) => {
               params.field === "lastName" ||
               params.field === "fullName"
             ? "cellName"
+            : params.field === "studentID"
+            ? "font-bold"
             : "";
         }}
         columns={getColumns(

@@ -42,8 +42,6 @@ const Olevel = () => {
     firstSittingIsSubmitSuccessful,
   } = firstSittingFormHooks();
 
-  console.log(firstSittingIsValid);
-
   const {
     secondSittingRegister,
     secondSittingReset,
@@ -55,8 +53,6 @@ const Olevel = () => {
     secondSittingIsSubmitted,
     secondSittingIsSubmitSuccessful,
   } = secondSittingFormHooks();
-
-  console.log(secondSittingIsValid);
 
   // get last path
   const getPath = () => {
@@ -301,7 +297,9 @@ const Olevel = () => {
             </div>
 
             {/* -----------SUBMIT FORM BTN ONE------------- */}
-            <div className={`btns py-5 px-3 flex justify-end lg:justify-start `}>
+            <div
+              className={`btns py-5 px-3 flex justify-end lg:justify-start `}
+            >
               <button
                 type="submit"
                 className={`bg-gray-600 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out  ${
@@ -482,7 +480,9 @@ const Olevel = () => {
 
         <button
           onClick={goToNextPage}
-          className={`bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform `}
+          className={`bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform ${
+            isSubmitted ? "visible" : "invisible"
+          } transition duration-200 ease-in-out}`}
         >
           next page
         </button>

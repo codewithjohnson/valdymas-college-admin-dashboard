@@ -3,7 +3,7 @@ import React from "react";
 const AdminCard = ({ admin }) => {
   return (
     <div
-      className={`admin-container w-[300px]  p-3 px-4 flex flex-col rounded-xl bg-gradient-to-tr from-gray-50 to-slate-100 border border-slate-200 `}
+      className={`admin-container w-[300px]  py-4 px-4 flex flex-col rounded-xl bg-gradient-to-tr from-gray-50 to-slate-100 border border-slate-200 `}
     >
       {/* image  */}
       <div className="image flex justify-start w-full">

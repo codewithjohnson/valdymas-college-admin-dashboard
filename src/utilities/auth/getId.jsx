@@ -12,7 +12,7 @@ export const generateStudentId = async (setYearRange, department) => {
   const currentStudentNumber = numberOfStudents + 1;
 
   // get department code
-  const departmentCode = department.substring(0, 3);
+  const departmentCode = department.substring(0, 3).toUpperCase();
 
   // transform the number of students to a 4 digit number
   const transformedNumberOfStudents =
@@ -40,6 +40,9 @@ export const getStudentIdFromAdmin = async (setYearRange, studentData) => {
   };
 
   // send new student data to the backend
-  const res = await axios.post("http://localhost:3000/api/student", newStudent);
+  const res = await axios.post(
+    "http://localhost:3000/api/students/new",
+    newStudent
+  );
   return res.data;
 };

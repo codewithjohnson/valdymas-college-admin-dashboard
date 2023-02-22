@@ -24,7 +24,10 @@ export const getRows = (data) => {
   return rows;
 };
 
-export const getColumns = (HandleEditStudentProfile, HandleDeleteStudentProfile) => {
+export const getColumns = (
+  HandleEditStudentProfile,
+  HandleDeleteStudentProfile
+) => {
   const columns = [
     { field: "id", headerName: "ID", width: 50 },
     {
@@ -46,6 +49,12 @@ export const getColumns = (HandleEditStudentProfile, HandleDeleteStudentProfile)
       headerClassName: "font-poppins",
       width: 150,
       valueGetter: getFullName,
+    },
+    {
+      field: "studentID",
+      headerName: "Student ID",
+      headerClassName: "font-poppins",
+      width: 150,
     },
     {
       field: "email",

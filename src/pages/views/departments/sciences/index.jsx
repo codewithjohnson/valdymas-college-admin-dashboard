@@ -10,7 +10,7 @@ const Sciences = () => {
 
   // get students whose department is sciences
   const scienceStudents = students.filter((student) => {
-    return student.studentInfo[3].department === "sciences";
+    return student.studentInfo[3]?.department === "science";
   });
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const Sciences = () => {
   }
 
   return (
-    <div>
+    <div className="mt-10">
       {scienceStudents.length <= 0 ? (
         <h1 className="text-center text-xl mt-10 font-poppins">
           No student found yet....

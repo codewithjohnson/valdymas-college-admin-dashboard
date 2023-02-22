@@ -10,7 +10,7 @@ export const StudentFromDBContext = createContext();
 
 export const StudentFromDBContextProvider = ({ children }) => {
   const [students, setStudents] = useState([]);
-  // console.log("students from db");
+  console.log("students from db");
 
   const { state: yearState } = useYearContext();
   const { setYearRange: currentYear } = yearState;

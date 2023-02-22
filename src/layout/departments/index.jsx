@@ -30,7 +30,7 @@ const Department = () => {
       <header
         className={`${
           currentPath === "sciences"
-            ? "bg-orange-200"
+            ? "bg-teal-200"
             : currentPath === "arts"
             ? "bg-blue-200"
             : currentPath === "social-sciences"

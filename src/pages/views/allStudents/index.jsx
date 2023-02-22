@@ -27,6 +27,7 @@ const StudentsTable = Loadable(
 const AllStudents = memo(() => {
   const [students, setStudents] = useState([]);
   const navigate = useNavigate();
+  console.log("all students data");
 
   const { state: yearState } = useYearContext();
   const { setYearRange: currentYear } = yearState;
@@ -58,6 +59,7 @@ const AllStudents = memo(() => {
   };
 
   useEffect(() => {
+    console.log("get all students")
     getStudentsDataListener();
   }, []);
 
@@ -102,7 +104,7 @@ const AllStudents = memo(() => {
 
       {/* DATA TABLE */}
       {students.length <= 0 ? (
-        <h1 className="text-center text-xl  font-poppins">
+        <h1 className="text-center text-xl text-gray-500  font-poppins">
           No student found yet....
         </h1>
       ) : (

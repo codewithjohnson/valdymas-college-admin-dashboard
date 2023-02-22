@@ -81,7 +81,7 @@ const Programme = memo(() => {
 
   // Handle save information
   const onFormSubmitAndSave = async (data) => {
-    dispatch({ type: "PROGRAMME/22SET_PROGRAMME", payload: data });
+    dispatch({ type: "PROGRAMME/SET_PROGRAMME", payload: data });
     setIsSaved(true);
   };
 
