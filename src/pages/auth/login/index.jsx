@@ -156,7 +156,7 @@ const Login = () => {
 
           <div className="submit-btn mt-6">
             <button
-              disabled={loginIsSubmitting}
+              disabled={loginIsSubmitting || isLoading}
               type="submit"
               className={`bg-teal-700 w-full text-white p-3 py-4 rounded-lg flex flex-row justify-center items-center gap-3 cursor-pointer hover:bg-teal-900 ${
                 loginIsSubmitting && "cursor-not-allowed opacity-50"

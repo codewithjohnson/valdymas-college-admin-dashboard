@@ -4,15 +4,12 @@ import {
   doc,
   setDoc,
   getDocs,
-  addDoc,
-  arrayUnion,
   collection,
   updateDoc,
   deleteDoc,
   getDoc,
   onSnapshot,
   serverTimestamp,
-  QuerySnapshot,
 } from "firebase/firestore";
 
 const { firestore } = getServices();

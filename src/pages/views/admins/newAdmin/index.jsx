@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { getAdminAuthID } from "../../../../utilities/auth/getAdminID";
 import { useNewAdminFormHooks } from "../../../../schemas/newAdmin";
 import Spinner from "../../../../components/spinner";
 
@@ -29,16 +30,20 @@ const NewAdmin = () => {
       newAdminReset();
   }, [newAdminIsSubmitSuccessful, newAdminIsSubmitted]);
 
-  const onFormSubmit = (data) => {
-    console.log(data);
+  const onFormSubmit = async (data) => {
+    setIsLoading(true);
     try {
+      const adminAuthID = await getAdminAuthID(data);
+      adminAuthID && alert("new admin created");
+      setIsLoading(false);
     } catch (err) {
       console.log(err);
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="h-full  w-full">
+    <div className="h-full  w-full mb-20">
       <header className="flex justify-between items-center mt-5 p-3">
         <h3 className="p-3 text-sm  capitalize bg-black text-gray-200 rounded-md w-max select-none font-medium">
           new admininstrator
@@ -96,6 +101,30 @@ const NewAdmin = () => {
           {errors?.email && (
             <p role="alert" className="errorMessage">
               {errors?.email.message}
+            </p>
+          )}
+        </div>
+
+        {/* PhotoUrl */}
+        <div className="email">
+          <label
+            htmlFor="PhotoUrl"
+            className="text-gray-600 text-[15px] capitalize"
+          >
+            PhotoUrl
+          </label>
+
+          <input
+            name="text"
+            id="PhotoUrl"
+            placeholder="link to photo"
+            type="PhotoUrl"
+            {...newAdminRegister("PhotoUrl")}
+            className="studentInputClass"
+          />
+          {errors?.PhotoUrl && (
+            <p role="alert" className="errorMessage">
+              {errors?.PhotoUrl.message}
             </p>
           )}
         </div>
@@ -194,14 +223,14 @@ const NewAdmin = () => {
 
         {/* Buttons */}
         <div
-          className={`buttons w-full col-end-4 flex justify-end ${
+          className={`buttons w-full row-end-5 col-end-4 flex mb-4 justify-end ${
             newAdminIsValid ? "" : ""
           }`}
         >
           <button
             type="submit"
             disabled={isLoading}
-            className="bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out flex flex-row justify-center items-center gap-2 "
+            className="bg-green-900  px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out flex flex-row justify-center items-center gap-2 "
           >
             <Spinner isLoading={isLoading} override={override} size={20} />
             create

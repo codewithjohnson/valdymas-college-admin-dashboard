@@ -6,6 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 export const newAdminSchema = object({
   name: string().typeError().trim().min(3).required("Name is required"),
   email: string().email().required("Email is required"),
+  PhotoUrl: string().required("PhotoUrl is required"),
   phoneNumber: string()
     .matches(/^(0|\+234)[789][01]\d{8}$/, "Invalid phone number")
     .required("Phone number is required"),
@@ -52,6 +53,7 @@ export const useNewAdminFormHooks = () => {
 export const SetNewAdminFormValues = (setValue, DATA) => {
   setValue("name", DATA.name);
   setValue("email", DATA.email);
+  setValue("PhotoUrl", DATA.PhotoUrl);
   setValue("phoneNumber", DATA.phoneNumber);
   setValue("department", DATA.department);
   setValue("role", DATA.institutionalRole);

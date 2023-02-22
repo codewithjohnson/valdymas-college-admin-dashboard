@@ -19,8 +19,6 @@ const Student = () => {
   // Todo: get this from local storage: year range
   const year = "2022-2023";
 
-  // Todo: set year range based on user: admin, student, parent
-
   useEffect(() => {
     const getStudent = async () => {
       const studentDoc = await getStudentDoc(year, studentID);

@@ -8,32 +8,6 @@ export const useLogin = () => {
   const navigate = useNavigate();
   const { auth } = getServices();
 
-  // admin login
-  const loginAdmin = async () => {
-    const nextRoute = "/dashboard ";
-    navigate(nextRoute);
-  };
-
-  // student login
-  const loginStudent = async (userID) => {
-    const nextRoute = `/student/${userID}`;
-    navigate(nextRoute);
-  };
-
-  // verify login
-  const verifyLogin = async (level, user) => {
-    user.getIdTokenResult().then((idTokenResult) => {
-      const role = idTokenResult.claims.role;
-      if (level === "admin" && role === "admin") {
-        loginAdmin();
-      } else if (level === "student" && role === "student") {
-        loginStudent(user.uid);
-      } else {
-        throw new Error("Invalid login credentials");
-      }
-    });
-  };
-
   // handle errors
   const handleError = (errorCode) => {
     switch (errorCode) {
@@ -61,7 +35,7 @@ export const useLogin = () => {
       if (user) {
         setIsLoading(false);
         alert("Login successful");
-        verifyLogin(level, user, navigate);
+        navigate("/dashboard");
       }
     } catch (error) {
       setIsLoading(false);
