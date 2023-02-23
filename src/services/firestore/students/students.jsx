@@ -46,7 +46,6 @@ export const getStudentsCollectionRef = async (yearRange) => {
 };
 
 // create student doc with studentID as id
-
 export const createStudentDoc = async (
   yearRange,
   studentID,

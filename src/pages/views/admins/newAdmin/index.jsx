@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getAdminAuthID } from "../../../../utilities/auth/getAdminID";
 import { useNewAdminFormHooks } from "../../../../schemas/newAdmin";
+import { saveAdminToDB } from "../../../../services/firestore/admin";
 import Spinner from "../../../../components/spinner";
 
 const NewAdmin = () => {
@@ -33,8 +34,10 @@ const NewAdmin = () => {
   const onFormSubmit = async (data) => {
     setIsLoading(true);
     try {
+      // create admin and get back admin ID
       const adminAuthID = await getAdminAuthID(data);
       adminAuthID && alert("new admin created");
+
       setIsLoading(false);
     } catch (err) {
       console.log(err);
