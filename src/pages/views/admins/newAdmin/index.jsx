@@ -6,6 +6,8 @@ import Spinner from "../../../../components/spinner";
 
 const NewAdmin = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  
 
   const override = {
     display: "block",
@@ -24,23 +26,20 @@ const NewAdmin = () => {
     newAdminIsSubmitSuccessful,
   } = useNewAdminFormHooks();
 
-  useEffect(() => {
-    newAdminIsSubmitSuccessful &&
-      newAdminIsSubmitted &&
-      !isLoading &&
-      newAdminReset();
-  }, [newAdminIsSubmitSuccessful, newAdminIsSubmitted]);
+  const handleDeleteError = () => {
+    setErrorMessage("");
+  };
 
   const onFormSubmit = async (data) => {
     setIsLoading(true);
     try {
-      // create admin and get back admin ID
       const adminAuthID = await getAdminAuthID(data);
       adminAuthID && alert("new admin created");
 
+      // TODO: save all data to firestore
       setIsLoading(false);
     } catch (err) {
-      console.log(err);
+      setErrorMessage(err.message);
       setIsLoading(false);
     }
   };
@@ -48,9 +47,23 @@ const NewAdmin = () => {
   return (
     <div className="h-full  w-full mb-20">
       <header className="flex justify-between items-center mt-5 p-3">
-        <h3 className="p-3 text-sm  capitalize bg-black text-gray-200 rounded-md w-max select-none font-medium">
+        <h3 className="p-3  text-sm  capitalize bg-black text-gray-200 rounded-md w-max select-none font-medium">
           new admininstrator
         </h3>
+
+        {/* error container */}
+        {errorMessage.length > 0 && (
+          <div className="error bg-red-100 text-red-900 py-3 px-5 text-[13px] font-semibold flex flex-row items-center gap-5">
+            <span>{errorMessage}</span>
+            <span
+              onClick={handleDeleteError}
+              className="material-symbols-outlined font-bold text-[15px] cursor-pointer rounded-full border-2 border-transparent hover:border-red-300"
+            >
+              close
+            </span>
+          </div>
+        )}
+
         <p className="capitalize text-sm  text-green-800 font-semibold select-none p-3">
           valdymas college
         </p>

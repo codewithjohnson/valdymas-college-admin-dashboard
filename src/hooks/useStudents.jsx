@@ -1,17 +1,15 @@
-import { createContext, useContext, useState, useEffect, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { getDocs, onSnapshot } from "firebase/firestore";
-import { useYearContext } from "../setYears/setYears";
 import {
   createStudentInfoCollection,
   getStudentsCollectionRef,
-} from "../../services/firestore/students/students";
+} from "../services/firestore/students/students";
 
-export const StudentFromDBContext = createContext();
+import { useYearContext } from "../context/setYears/setYears";
 
-export const StudentFromDBContextProvider = ({ children }) => {
+export const useStudentsData = () => {
   const [students, setStudents] = useState([]);
-  console.log("students from db");
-
+  
   const { state: yearState } = useYearContext();
   const { setYearRange: currentYear } = yearState;
 
@@ -44,14 +42,5 @@ export const StudentFromDBContextProvider = ({ children }) => {
     getStudentsDataListener();
   }, []);
 
-  return (
-    <StudentFromDBContext.Provider value={{ students }}>
-      {children}
-    </StudentFromDBContext.Provider>
-  );
-};
-
-// custom hook to use student from db context
-export const useStudentFromDBContext = () => {
-  return useContext(StudentFromDBContext);
+  return { students };
 };

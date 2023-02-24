@@ -15,7 +15,13 @@ export const getAdminAuthID = async (data) => {
       newAdminAuth
     );
     return res.data;
-  } catch (err) {
-    return err.message;
+  } catch (error) {
+    if (error.response) {
+      throw new Error(error.response.data.message);
+    } else if (error.request) {
+      throw new Error(error.request);
+    } else {
+      throw new Error(error);
+    }
   }
 };

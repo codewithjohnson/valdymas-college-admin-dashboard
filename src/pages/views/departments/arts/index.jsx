@@ -1,10 +1,10 @@
 import { memo, useEffect } from "react";
-import { useStudentFromDBContext } from "../../../../context/getstudentDB/getstudent";
 import { useLocation, useOutletContext } from "react-router-dom";
+import { useStudentsData } from "../../../../hooks/useStudents";
 
 const Arts = () => {
   const [currentPath, setCurrentPath] = useOutletContext();
-  const { students } = useStudentFromDBContext();
+  const { students } = useStudentsData();
   const { pathname } = useLocation();
 
   useEffect(() => {

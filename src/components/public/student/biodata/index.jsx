@@ -1,4 +1,5 @@
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
+import Spinner from "../../../spinner";
 
 const Biodata = memo(({ student }) => {
   const firstName = student?.[0]?.firstname;
@@ -41,7 +42,7 @@ const Biodata = memo(({ student }) => {
       </h3>
 
       <ul className="p-5 grid grid-cols-1 gap-5  md:grid md:grid-cols-3">
-        {biodata.map((data, index) => (
+        {biodata?.map((data, index) => (
           <div key={index}>
             <label
               className="text-sm sm:text-base capitalize select-none  text-gray-400 font-medium"

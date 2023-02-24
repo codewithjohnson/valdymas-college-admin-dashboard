@@ -1,12 +1,12 @@
 import { memo, useEffect } from "react";
 import { useLocation, useOutletContext } from "react-router-dom";
 import DepartmentTable from "../../../../components/dataTable/departmentTable/departmentTable";
-import { useStudentFromDBContext } from "../../../../context/getstudentDB/getstudent";
+import { useStudentsData } from "../../../../hooks/useStudents";
 
 const Sciences = () => {
   const [currentPath, setCurrentPath] = useOutletContext();
-  const { students } = useStudentFromDBContext();
   const { pathname } = useLocation();
+  const { students } = useStudentsData();
 
   // get students whose department is sciences
   const scienceStudents = students.filter((student) => {

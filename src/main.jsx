@@ -16,7 +16,6 @@ import { ProSidebarProvider } from "react-pro-sidebar";
 //  context
 import { StudentContextProvider } from "./context/students";
 import { YearContextProvider } from "./context/setYears/setYears";
-import { StudentFromDBContextProvider } from "./context/getstudentDB/getstudent";
 
 const router = createBrowserRouter([authRoute, mainRoute, studentRoute]);
 
@@ -26,9 +25,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <StudentContextProvider>
         <YearContextProvider>
           <ProSidebarProvider>
-            <StudentFromDBContextProvider>
-              <RouterProvider router={router} />
-            </StudentFromDBContextProvider>
+            <RouterProvider router={router} />
           </ProSidebarProvider>
         </YearContextProvider>
       </StudentContextProvider>
