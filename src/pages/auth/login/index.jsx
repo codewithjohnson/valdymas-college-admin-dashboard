@@ -45,6 +45,7 @@ const Login = () => {
   // on form submit and attempt to login
   const onFormSubmit = async (data) => {
     const { level, email, password } = data;
+    // TODO: handle error for login
     login(level, email, password);
   };
 

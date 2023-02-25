@@ -7,7 +7,6 @@ import Spinner from "../../../../components/spinner";
 const NewAdmin = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  
 
   const override = {
     display: "block",
@@ -26,6 +25,13 @@ const NewAdmin = () => {
     newAdminIsSubmitSuccessful,
   } = useNewAdminFormHooks();
 
+  useEffect(() => {
+    newAdminIsSubmitSuccessful &&
+      newAdminIsSubmitted &&
+      !isLoading &&
+      newAdminReset();
+  }, [newAdminIsSubmitSuccessful, newAdminIsSubmitted]);
+
   const handleDeleteError = () => {
     setErrorMessage("");
   };
@@ -35,8 +41,8 @@ const NewAdmin = () => {
     try {
       const adminAuthID = await getAdminAuthID(data);
       adminAuthID && alert("new admin created");
-
-      // TODO: save all data to firestore
+      saveAdminToDB(adminAuthID, data);
+      alert("successfull saved data");
       setIsLoading(false);
     } catch (err) {
       setErrorMessage(err.message);
