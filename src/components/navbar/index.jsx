@@ -1,15 +1,28 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import { useProSidebar } from "react-pro-sidebar";
 import { getCurrentimeOfDay } from "../../utilities/currentDate";
 import { useYearContext } from "../../context/setYears/setYears";
 import { useAuth } from "../../services/auth/auth";
+import AdminSettings from "../adminSettings";
 
 const Navbar = memo(() => {
+  const [showSettings, setShowSettings] = useState(false);
   const { user } = useAuth();
   const [timeOfDay, setTimeOfDay] = useState("");
   const { collapseSidebar } = useProSidebar();
+  const settingsRef = useRef(null);
+
+  useEffect(() => {
+    const hideSettings = (e) => {
+      if (!settingsRef.current.contains(e.target)) {
+        setShowSettings(false);
+      }
+    };
+    window.addEventListener("click", hideSettings);
+    return () => window.removeEventListener("click", hideSettings);
+  }, [showSettings]);
 
   const { dispatch: yearDispatch, state: yearState } = useYearContext();
   const { setYearRange: currentYear } = yearState;
@@ -62,7 +75,7 @@ const Navbar = memo(() => {
           🖐🏼
         </p>
 
-        <div className="rl flex justify-between gap-5 items-center">
+        <div className=" flex justify-between gap-5 items-center relative">
           {/* Current Set */}
           <form className="font-poppins">
             <select
@@ -70,18 +83,37 @@ const Navbar = memo(() => {
               id="setYearRange"
               value={currentYear}
               onChange={HandleSetYearChange}
-              className="border-none focus:outline-none focus:ring focus:ring-green-100 hover:border-green-80 cursor-pointer  text-sm text-green-900 opacity-70  bg-green-100"
+              className="border-none focus:outline-none focus:ring focus:ring-green-100 hover:border-green-80 cursor-pointer  text-sm text-green-900 opacity-70  bg-green-100 hover:bg-green-300 py-3 rounded-t-lg"
             >
               <option value="2021-2022">2021-2022</option>
               <option value="2022-2023">2022-2023</option>
-              <option disabled value="2023-2024">2023-2024</option>
+              <option disabled value="2023-2024">
+                2023-2024
+              </option>
             </select>
           </form>
 
           {/* Current Admin Logged in */}
-          <p className="hidden md:block user--profile gap-2 text-red-800 bg-red-50 p-3 font-poppins rounded-lg text-sm select-none">
-            {user?.email}
-          </p>
+          <div
+            ref={settingsRef}
+            onClick={() => setShowSettings(!showSettings)}
+            className="flex w-fit flex-row justify-between gap-4 px-3 py-2 items-center cursor-pointer bg-sky-100 hover:bg-blue-400 rounded-full hover:text-gray-200 text-blue-400 transition-all ease-in-out duration-200"
+          >
+            <img
+              src="https://picsum.photos/200"
+              alt="avatar"
+              className="w-8 h-8 rounded-full flex justify-center items-center flex-row"
+            />
+            <span className="material-symbols-outlined ">settings</span>
+          </div>
+
+          <div
+            className={`absolute top-[75px] right-2 z-20 shadow-2xl ${
+              showSettings ? "block" : "hidden"
+            } `}
+          >
+            <AdminSettings />
+          </div>
         </div>
       </div>
     </nav>

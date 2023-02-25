@@ -12,7 +12,7 @@ const MainLayout = memo(({ children }) => {
 
   return isAdmin ? (
     <div className="relative h-[300px]">
-      <header className="h-[95px] fixed z-20 left-0 right-0 flex justify-center items-center">
+      <header className="h-[95px] fixed z-10 left-0 right-0 flex justify-center items-center">
         <Navbar />
       </header>
 
