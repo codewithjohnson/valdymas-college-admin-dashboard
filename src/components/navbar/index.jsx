@@ -70,14 +70,14 @@ const Navbar = memo(() => {
 
       <div className="right flex flex-row justify-between items-center  flex-1">
         {/* Time of Day */}
-        <p className="text-slate-700  font-poppins text-[15px] md:text-xl font-semibold capitalize ml-4 select-none sm:ml-8">
+        <p className="text-slate-700   font-poppins text-[15px] md:text-xl font-semibold capitalize ml-4 select-none sm:ml-8">
           good {timeOfDay}, <span className="text-red-900">{displayName}</span>{" "}
           🖐🏼
         </p>
 
         <div className=" flex justify-between gap-5 items-center relative">
           {/* Current Set */}
-          <form className="font-poppins">
+          <form className="font-poppins ">
             <select
               name="setYearRange"
               id="setYearRange"
@@ -97,7 +97,7 @@ const Navbar = memo(() => {
           <div
             ref={settingsRef}
             onClick={() => setShowSettings(!showSettings)}
-            className="flex w-fit flex-row justify-between gap-4 px-3 py-2 items-center cursor-pointer bg-sky-100 hover:bg-blue-400 rounded-full hover:text-gray-200 text-blue-400 transition-all ease-in-out duration-200"
+            className="flex w-full flex-row justify-between gap-4 px-3 py-2 items-center cursor-pointer bg-sky-100 hover:bg-blue-400 rounded-full hover:text-gray-200 text-blue-400 transition-all ease-in-out duration-200"
           >
             <img
               src="https://picsum.photos/200"

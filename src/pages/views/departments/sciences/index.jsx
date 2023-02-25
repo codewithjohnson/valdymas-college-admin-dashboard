@@ -25,7 +25,7 @@ const Sciences = () => {
   return (
     <div className="mt-10">
       {scienceStudents.length <= 0 ? (
-        <h1 className="text-center text-xl mt-10 font-poppins">
+        <h1 className="text-center text-xl text-gray-500 mt-10 font-poppins">
           No student found yet....
         </h1>
       ) : (
