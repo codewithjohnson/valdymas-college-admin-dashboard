@@ -27,7 +27,6 @@ const StudentsTable = Loadable(
 const AllStudents = memo(() => {
   const [students, setStudents] = useState([]);
   const navigate = useNavigate();
-  console.log("all students data");
 
   const { state: yearState } = useYearContext();
   const { setYearRange: currentYear } = yearState;
@@ -59,7 +58,6 @@ const AllStudents = memo(() => {
   };
 
   useEffect(() => {
-    console.log("get all students")
     getStudentsDataListener();
   }, []);
 

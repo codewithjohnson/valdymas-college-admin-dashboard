@@ -1,16 +1,30 @@
 import { memo, useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import { useIsAdmin } from "../../../../hooks/useAdmin";
-import { Navigate, useLocation } from "react-router-dom";
+import { useGetStudentById } from "../../../../hooks/usegetStudentById";
+import {
+  createStudentInfoCollection,
+  getValdymasCollectionRef,
+} from "../../../../services/firestore/students/students";
+import {
+  collection,
+  doc,
+  onSnapshot,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 
-const Biodata = memo(({ student, year }) => {
-  const [data, setData] = useState([]);
-  const [editText, setEditText] = useState("Edit");
+const Biodata = memo(() => {
+  const { ward } = useGetStudentById("biodata");
+  const [data, setData] = useState();
   const [isEdit, setIsEdit] = useState(false);
   const { isAdmin } = useIsAdmin();
-  const { pathname } = useLocation();
+  const { studentID } = useParams();
+  const yearRange = "2022-2023";
 
-  // extract the student id from the url which is the last part of the url
-  const studentId = pathname.split("/").pop();
+  useEffect(() => {
+    setData(refineWardObject(ward));
+  }, [ward]);
 
   const handleInputEdit = (e, index) => {
     const { value } = e.target;
@@ -19,50 +33,28 @@ const Biodata = memo(({ student, year }) => {
     setData(newData);
   };
 
-  const handleSaveToDb = () => {
-    setIsEdit(false);
-  };
-
-  useEffect(() => {
-    setData(returnBiodata());
-  }, [student]);
-
-  const firstName = student?.[0]?.firstname;
-  const lastName = student?.[0]?.lastname;
-  const middleName = student?.[0]?.middlename;
-  const fullName = `${firstName} ${lastName}`;
-  const email = student?.[0]?.email;
-  const phoneNumber = student?.[0]?.phoneNumber;
-  const gender = student?.[0]?.gender;
-  const dateOfBirth = student?.[0]?.dateOfBirth;
-  const contactAddress = student?.[0]?.contactAddress;
-  const religion = student?.[0]?.religion;
-  const nationality = student?.[0]?.nationality;
-  const maritalStatus = student?.[0]?.maritalStatus;
-  const stateOfOrigin = student?.[0]?.stateOfOrigin;
-  const lga = student?.[0]?.lga;
-
-  // convert the above to an array of objects with label and value
-  function returnBiodata() {
-    const biodata = [
-      { label: "first name", value: firstName },
-      { label: "last name", value: lastName },
-      { label: "middle name", value: middleName },
-      { label: "full name", value: fullName },
-      { label: "email", value: email },
-      { label: "phone number", value: phoneNumber },
-      { label: "gender", value: gender },
-      { label: "date of birth", value: dateOfBirth },
-      { label: "contact address", value: contactAddress },
-      { label: "religion", value: religion },
-      { label: "nationality", value: nationality },
-      { label: "marital status", value: maritalStatus },
-      { label: "state of origin", value: stateOfOrigin },
-      { label: "lga", value: lga },
-    ];
-
-    return biodata;
+  function refineWardObject(ward) {
+    const refinedWard = Object.keys(ward).map((key) => {
+      const label = key
+        .split(/(?=[A-Z])/)
+        .join(" ")
+        .toLowerCase();
+      const value = ward[key];
+      return { label, value };
+    });
+    return refinedWard;
   }
+
+  const updateStudentBiodata = async (biodata) => {
+    console.log("updateStudentBiodata");
+    const studentInfoCollectionRef = await createStudentInfoCollection(
+      yearRange,
+      studentID
+    );
+    const biodataDocRef = doc(studentInfoCollectionRef, "biodata");
+    console.log("biodataDocRef", data);
+    await setDoc(biodataDocRef, { ...biodata });
+  };
 
   return (
     <div className="biodata relative bg-gray-900 rounded-2xl">
@@ -90,7 +82,7 @@ const Biodata = memo(({ student, year }) => {
 
         {isEdit && isAdmin && (
           <button
-            onClick={() => handleSaveToDb()}
+            onClick={() => updateStudentBiodata()}
             className={`text-sm sm:text-base capitalize select-none rounded-xl hover:bg-gray-800 bg-gray-900 p-3 ${
               isEdit ? "bg-red-900" : ""
             }`}
