@@ -139,54 +139,29 @@ const Olevels = memo(() => {
     },
   ];
 
-  // carefully create an array for the first sitting subject and grade where by the name for inputs for subjectOne object
-  const firstSittingSubjectAndGradeArray = [
-    {
-      subjectClass: "subjectOne",
-      subject: sittingOne?.subjectOne.subject,
-      grade: sittingOne?.subjectOne.grade,
-    },
-    {
-      subjectClass: "subjectTwo",
-      subject: sittingOne?.subjectTwo.subject,
-      grade: sittingOne?.subjectTwo.grade,
-    },
-    {
-      subjectClass: "subjectThree",
-      subject: sittingOne?.subjectThree.subject,
-      grade: sittingOne?.subjectThree.grade,
-    },
-    {
-      subjectClass: "subjectFour",
-      subject: sittingOne?.subjectFour.subject,
-      grade: sittingOne?.subjectFour.grade,
-    },
-    {
-      subjectClass: "subjectFive",
-      subject: sittingOne?.subjectFive.subject,
-      grade: sittingOne?.subjectFive.grade,
-    },
-    {
-      subjectClass: "subjectSix",
-      subject: sittingOne?.subjectSix.subject,
-      grade: sittingOne?.subjectSix.grade,
-    },
-    {
-      subjectClass: "subjectSeven",
-      subject: sittingOne?.subjectSeven.subject,
-      grade: sittingOne?.subjectSeven.grade,
-    },
-    {
-      subjectClass: "subjectEight",
-      subject: sittingOne?.subjectEight.subject,
-      grade: sittingOne?.subjectEight.grade,
-    },
-    {
-      subjectClass: "subjectNine",
-      subject: sittingOne?.subjectNine.subject,
-      grade: sittingOne?.subjectNine.grade,
-    },
-  ];
+  // rewrite firstSittingSubjectAndGradeArray using a function
+  const firstSittingSubjectAndGradeArray = () => {
+    const numberWords = [
+      "One",
+      "Two",
+      "Three",
+      "Four",
+      "Five",
+      "Six",
+      "Seven",
+      "Eight",
+      "Nine",
+    ];
+    const firstSittingSubjectAndGradeArray = [];
+    for (let i = 0; i < numberWords.length; i++) {
+      firstSittingSubjectAndGradeArray.push({
+        subjectClass: `subject${numberWords[i]}`,
+        subject: sittingOne?.[`subject${numberWords[i]}`].subject,
+        grade: sittingOne?.[`subject${numberWords[i]}`].grade,
+      });
+    }
+    return firstSittingSubjectAndGradeArray;
+  };
 
   const secondSittingexamType = sittingTwo?.secondSittingexamType;
   const secondSittingexamYear = sittingTwo?.secondSittingexamYear;
@@ -216,55 +191,29 @@ const Olevels = memo(() => {
       value: secondSittingexam,
     },
   ];
-
-  // carefully create an array for the second sitting subject and grade where by the name for inputs for subjectOne object
-  const secondSittingSubjectAndGradeArray = [
-    {
-      subjectClass: "subjectOne",
-      subject: sittingTwo?.subjectOne.subject,
-      grade: sittingTwo?.subjectOne.grade,
-    },
-    {
-      subjectClass: "subjectTwo",
-      subject: sittingTwo?.subjectTwo.subject,
-      grade: sittingTwo?.subjectTwo.grade,
-    },
-    {
-      subjectClass: "subjectThree",
-      subject: sittingTwo?.subjectThree.subject,
-      grade: sittingTwo?.subjectThree.grade,
-    },
-    {
-      subjectClass: "subjectFour",
-      subject: sittingTwo?.subjectFour.subject,
-      grade: sittingTwo?.subjectFour.grade,
-    },
-    {
-      subjectClass: "subjectFive",
-      subject: sittingTwo?.subjectFive.subject,
-      grade: sittingTwo?.subjectFive.grade,
-    },
-    {
-      subjectClass: "subjectSix",
-      subject: sittingTwo?.subjectSix.subject,
-      grade: sittingTwo?.subjectSix.grade,
-    },
-    {
-      subjectClass: "subjectSeven",
-      subject: sittingTwo?.subjectSeven.subject,
-      grade: sittingTwo?.subjectSeven.grade,
-    },
-    {
-      subjectClass: "subjectEight",
-      subject: sittingTwo?.subjectEight.subject,
-      grade: sittingTwo?.subjectEight.grade,
-    },
-    {
-      subjectClass: "subjectNine",
-      subject: sittingTwo?.subjectNine.subject,
-      grade: sittingTwo?.subjectNine.grade,
-    },
-  ];
+  // rewrite secondSittingSubjectAndGradeArray using a function
+  const secondSittingSubjectAndGradeArray = () => {
+    const numberWords = [
+      "One",
+      "Two",
+      "Three",
+      "Four",
+      "Five",
+      "Six",
+      "Seven",
+      "Eight",
+      "Nine",
+    ];
+    const secondSittingSubjectAndGradeArray = [];
+    for (let i = 0; i < numberWords.length; i++) {
+      secondSittingSubjectAndGradeArray.push({
+        subjectClass: `subject${numberWords[i]}`,
+        subject: sittingTwo?.[`subject${numberWords[i]}`].subject,
+        grade: sittingTwo?.[`subject${numberWords[i]}`].grade,
+      });
+    }
+    return secondSittingSubjectAndGradeArray;
+  };
 
   return (
     <div className="olevels bg-gray-900 rounded-2xl">
@@ -324,7 +273,7 @@ const Olevels = memo(() => {
 
                   {/* first sitting subject and grade arrays */}
                   <ul className="result">
-                    {firstSittingSubjectAndGradeArray?.map((item, index) => {
+                    {firstSittingSubjectAndGradeArray()?.map((item, index) => {
                       return (
                         <div
                           key={index}
@@ -392,12 +341,13 @@ const Olevels = memo(() => {
 
                   {/* second sitting subject and grades array */}
                   <div className="result">
-                    {secondSittingSubjectAndGradeArray?.map((item, index) => {
+                    {secondSittingSubjectAndGradeArray()?.map((item, index) => {
                       return (
                         <div
                           key={index}
                           className="result flex flex-row justify-between capitalize text-gray-400"
                         >
+                          {/* subjects */}
                           <input
                             className="py-2 outline-none border-none bg-transparent w-[80%] text-left"
                             type="text"
@@ -407,6 +357,7 @@ const Olevels = memo(() => {
                               handleSecondSittingSubjectInputChanges(e)
                             }
                           />
+
                           {/* grade values */}
                           <input
                             className="py-2 outline-none border-none w-[20%] bg-transparent text-right"
