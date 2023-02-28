@@ -12,6 +12,8 @@ const Biodata = memo(() => {
   const [isEdit, setIsEdit] = useState(false);
   const { isAdmin } = useIsAdmin();
   const { studentID } = useParams();
+
+  // TODO: extract year range to a global variable
   const yearRange = "2022-2023";
 
   useEffect(() => {
@@ -24,6 +26,7 @@ const Biodata = memo(() => {
     borderColor: "white",
   };
 
+  // function to handle input edit
   const handleInputEdit = (e, index) => {
     const { value } = e.target;
     const newData = [...data];
@@ -31,6 +34,7 @@ const Biodata = memo(() => {
     setData(newData);
   };
 
+  // function to handle biodata update
   const handleBiodataUpdate = async () => {
     try {
       setIsLoading(true);
@@ -44,6 +48,7 @@ const Biodata = memo(() => {
     }
   };
 
+  // function to refine ward object
   function refineWardObject(biodata) {
     const refinedWard = Object.keys(biodata).map((key) => {
       const label = key
