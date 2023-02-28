@@ -78,7 +78,11 @@ const StudentDocs = () => {
                 "https://drive.google.com/file/d/1GPpXWpSO9vQlexuDQgEEdj7-k-KGOOP7/view?usp=share_link"
               }
               docName={"dowload oath form"}
-              icon={<span className="material-symbols-outlined">download</span>}
+              icon={
+                <span className="material-symbols-outlined hover:scale-110 transition-all duration-150 ease-in-out">
+                  download
+                </span>
+              }
               textClassName={"text-gray-400 capitalize"}
             />
           </div>
@@ -89,7 +93,11 @@ const StudentDocs = () => {
               "https://drive.google.com/file/d/1o-Al3YNskUTi94svG23PdL9jBONz0Rgj/view?usp=share_link"
             }
             docName={"dowload billing schedule"}
-            icon={<span className="material-symbols-outlined">download</span>}
+            icon={
+              <span className="material-symbols-outlined hover:scale-110 transition-all duration-150 ease-in-out">
+                download
+              </span>
+            }
             textClassName={"text-gray-400 capitalize"}
           />
 
@@ -101,7 +109,7 @@ const StudentDocs = () => {
             }
             docName={"download student handbook"}
             icon={
-              <span className="material-symbols-outlined text-orange-400">
+              <span className="material-symbols-outlined text-orange-400 hover:scale-110 transition-all duration-150 ease-in-out">
                 download
               </span>
             }
@@ -115,7 +123,7 @@ const StudentDocs = () => {
             }
             docName={"Valdymas newsletter volume 1"}
             icon={
-              <span className="material-symbols-outlined text-orange-400">
+              <span className="material-symbols-outlined text-orange-400 hover:scale-110 transition-all duration-150 ease-in-out">
                 download
               </span>
             }
@@ -129,7 +137,7 @@ const StudentDocs = () => {
             }
             docName={"Valdymas newsletter volume 2"}
             icon={
-              <span className="material-symbols-outlined text-orange-400">
+              <span className="material-symbols-outlined text-orange-400 hover:scale-110 transition-all duration-150 ease-in-out">
                 download
               </span>
             }
