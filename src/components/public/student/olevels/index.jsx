@@ -4,21 +4,111 @@ import { useIsAdmin } from "../../../../hooks/useAdmin";
 import { useGetStudentById } from "../../../../hooks/usegetStudentById";
 
 const Olevels = memo(() => {
-  const { ward: olevelsData } = useGetStudentById("olevels");
   const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState();
+  const { ward: olevelsData } = useGetStudentById("olevels");
+  const [data, setData] = useState({});
+  console.log(data?.sittingTwo);
   const [isEdit, setIsEdit] = useState(false);
   const { isAdmin } = useIsAdmin();
   const { studentID } = useParams();
+
+  // TODO: Extract yearRange to a global state
   const yearRange = "2022-2023";
 
   useEffect(() => {
     setData(olevelsData);
   }, [olevelsData]);
 
-  const GlobalsittingNumber = olevelsData?.[2]?.GlobalsittingNumber;
-  const sittingOne = olevelsData?.[2]?.sittingOne;
-  const sittingTwo = olevelsData?.[2]?.sittingTwo;
+  // handle input changes for global sitting number
+  const handleGlobalSittingNumberInputChanges = (e) => {
+    setData({
+      ...data,
+      GlobalsittingNumber: e.target.value,
+    });
+  };
+
+  // handle input changes for first sitting meta data
+  const handlefirstSittingMetaInputChanges = (e) => {
+    console.log(e.target.name);
+    setData({
+      ...data,
+      sittingOne: {
+        ...data.sittingOne,
+        [e.target.name]: e.target.value,
+      },
+    });
+  };
+
+  // handle input changes for first sitting subject
+  const handlefirstSittingSubjectInputChanges = (e) => {
+    setData({
+      ...data,
+      sittingOne: {
+        ...data.sittingOne,
+        [e.target.name]: {
+          ...data.sittingOne[e.target.name],
+          subject: e.target.value,
+        },
+      },
+    });
+  };
+
+  // handle input changes for first sitting grade
+  const handlefirstSittingGradeInputChanges = (e) => {
+    setData({
+      ...data,
+      sittingOne: {
+        ...data.sittingOne,
+        [e.target.name]: {
+          ...data.sittingOne[e.target.name],
+          grade: e.target.value,
+        },
+      },
+    });
+  };
+
+  // handle input changes for second sitting meta data
+  const handleSecondSittingMetaInputChanges = (e) => {
+    console.log(e.target.name);
+    setData({
+      ...data,
+      sittingTwo: {
+        ...data.sittingTwo,
+        [e.target.name]: e.target.value,
+      },
+    });
+  };
+
+  // handle input changes for second sitting subject
+  const handleSecondSittingSubjectInputChanges = (e) => {
+    setData({
+      ...data,
+      sittingTwo: {
+        ...data.sittingTwo,
+        [e.target.name]: {
+          ...data.sittingTwo[e.target.name],
+          subject: e.target.value,
+        },
+      },
+    });
+  };
+
+  // handle input changes for second sitting grade
+  const handleSecondSittingGradeInputChanges = (e) => {
+    setData({
+      ...data,
+      sittingTwo: {
+        ...data.sittingTwo,
+        [e.target.name]: {
+          ...data.sittingTwo[e.target.name],
+          grade: e.target.value,
+        },
+      },
+    });
+  };
+
+  const sittingOne = data?.sittingOne;
+  const sittingTwo = data?.sittingTwo;
 
   const firstSittingexamType = sittingOne?.firstSittingexamType;
   const firstSittingexamYear = sittingOne?.firstSittingexamYear;
@@ -27,33 +117,75 @@ const Olevels = memo(() => {
 
   // create an array from the four variable above with label and value
   const firstSittingHeaderArray = [
-    { label: "exam type", value: firstSittingexamType },
-    { label: "exam year", value: firstSittingexamYear },
-    { label: "exam number", value: firstSittingexamNumber },
-    { label: "exam", value: firstSittingexam },
+    {
+      metaClass: "firstSittingexamType",
+      label: "exam type",
+      value: firstSittingexamType,
+    },
+    {
+      metaClass: "firstSittingexamYear",
+      label: "exam year",
+      value: firstSittingexamYear,
+    },
+    {
+      metaClass: "firstSittingexamNumber",
+      label: "exam number",
+      value: firstSittingexamNumber,
+    },
+    {
+      metaClass: "firstSittingexam",
+      label: "exam",
+      value: firstSittingexam,
+    },
   ];
 
-  const subjectOne = sittingOne?.subjectOne;
-  const subjectTwo = sittingOne?.subjectTwo;
-  const subjectThree = sittingOne?.subjectThree;
-  const subjectFour = sittingOne?.subjectFour;
-  const subjectFive = sittingOne?.subjectFive;
-  const subjectSix = sittingOne?.subjectSix;
-  const subjectSeven = sittingOne?.subjectSeven;
-  const subjectEight = sittingOne?.subjectEight;
-  const subjectNine = sittingOne?.subjectNine;
-
-  // create an array from the nine variable above with subject and grade as label and value
-  const subjectArray = [
-    { subject: subjectOne?.subject, value: subjectOne?.grade },
-    { subject: subjectTwo?.subject, value: subjectTwo?.grade },
-    { subject: subjectThree?.subject, value: subjectThree?.grade },
-    { subject: subjectFour?.subject, value: subjectFour?.grade },
-    { subject: subjectFive?.subject, value: subjectFive?.grade },
-    { subject: subjectSix?.subject, value: subjectSix?.grade },
-    { subject: subjectSeven?.subject, value: subjectSeven?.grade },
-    { subject: subjectEight?.subject, value: subjectEight?.grade },
-    { subject: subjectNine?.subject, value: subjectNine?.grade },
+  // carefully create an array for the first sitting subject and grade where by the name for inputs for subjectOne object
+  const firstSittingSubjectAndGradeArray = [
+    {
+      subjectClass: "subjectOne",
+      subject: sittingOne?.subjectOne.subject,
+      grade: sittingOne?.subjectOne.grade,
+    },
+    {
+      subjectClass: "subjectTwo",
+      subject: sittingOne?.subjectTwo.subject,
+      grade: sittingOne?.subjectTwo.grade,
+    },
+    {
+      subjectClass: "subjectThree",
+      subject: sittingOne?.subjectThree.subject,
+      grade: sittingOne?.subjectThree.grade,
+    },
+    {
+      subjectClass: "subjectFour",
+      subject: sittingOne?.subjectFour.subject,
+      grade: sittingOne?.subjectFour.grade,
+    },
+    {
+      subjectClass: "subjectFive",
+      subject: sittingOne?.subjectFive.subject,
+      grade: sittingOne?.subjectFive.grade,
+    },
+    {
+      subjectClass: "subjectSix",
+      subject: sittingOne?.subjectSix.subject,
+      grade: sittingOne?.subjectSix.grade,
+    },
+    {
+      subjectClass: "subjectSeven",
+      subject: sittingOne?.subjectSeven.subject,
+      grade: sittingOne?.subjectSeven.grade,
+    },
+    {
+      subjectClass: "subjectEight",
+      subject: sittingOne?.subjectEight.subject,
+      grade: sittingOne?.subjectEight.grade,
+    },
+    {
+      subjectClass: "subjectNine",
+      subject: sittingOne?.subjectNine.subject,
+      grade: sittingOne?.subjectNine.grade,
+    },
   ];
 
   const secondSittingexamType = sittingTwo?.secondSittingexamType;
@@ -63,33 +195,75 @@ const Olevels = memo(() => {
 
   // create an array from the four variable above with label and value
   const secondSittingHeaderArray = [
-    { label: "exam type", value: secondSittingexamType },
-    { label: "exam year", value: secondSittingexamYear },
-    { label: "exam number", value: secondSittingexamNumber },
-    { label: "exam", value: secondSittingexam },
+    {
+      metaClass: "secondSittingexamType",
+      label: "exam type",
+      value: secondSittingexamType,
+    },
+    {
+      metaClass: "secondSittingexamYear",
+      label: "exam year",
+      value: secondSittingexamYear,
+    },
+    {
+      metaClass: "secondSittingexamNumber",
+      label: "exam number",
+      value: secondSittingexamNumber,
+    },
+    {
+      metaClass: "secondSittingexam",
+      label: "exam",
+      value: secondSittingexam,
+    },
   ];
 
-  const subjectOne2 = sittingTwo?.subjectOne;
-  const subjectTwo2 = sittingTwo?.subjectTwo;
-  const subjectThree2 = sittingTwo?.subjectThree;
-  const subjectFour2 = sittingTwo?.subjectFour;
-  const subjectFive2 = sittingTwo?.subjectFive;
-  const subjectSix2 = sittingTwo?.subjectSix;
-  const subjectSeven2 = sittingTwo?.subjectSeven;
-  const subjectEight2 = sittingTwo?.subjectEight;
-  const subjectNine2 = sittingTwo?.subjectNine;
-
-  // create an array from the nine variable above with subject and grade as label and value
-  const subjectArray2 = [
-    { subject: subjectOne2?.subject, value: subjectOne2?.grade },
-    { subject: subjectTwo2?.subject, value: subjectTwo2?.grade },
-    { subject: subjectThree2?.subject, value: subjectThree2?.grade },
-    { subject: subjectFour2?.subject, value: subjectFour2?.grade },
-    { subject: subjectFive2?.subject, value: subjectFive2?.grade },
-    { subject: subjectSix2?.subject, value: subjectSix2?.grade },
-    { subject: subjectSeven2?.subject, value: subjectSeven2?.grade },
-    { subject: subjectEight2?.subject, value: subjectEight2?.grade },
-    { subject: subjectNine2?.subject, value: subjectNine2?.grade },
+  // carefully create an array for the second sitting subject and grade where by the name for inputs for subjectOne object
+  const secondSittingSubjectAndGradeArray = [
+    {
+      subjectClass: "subjectOne",
+      subject: sittingTwo?.subjectOne.subject,
+      grade: sittingTwo?.subjectOne.grade,
+    },
+    {
+      subjectClass: "subjectTwo",
+      subject: sittingTwo?.subjectTwo.subject,
+      grade: sittingTwo?.subjectTwo.grade,
+    },
+    {
+      subjectClass: "subjectThree",
+      subject: sittingTwo?.subjectThree.subject,
+      grade: sittingTwo?.subjectThree.grade,
+    },
+    {
+      subjectClass: "subjectFour",
+      subject: sittingTwo?.subjectFour.subject,
+      grade: sittingTwo?.subjectFour.grade,
+    },
+    {
+      subjectClass: "subjectFive",
+      subject: sittingTwo?.subjectFive.subject,
+      grade: sittingTwo?.subjectFive.grade,
+    },
+    {
+      subjectClass: "subjectSix",
+      subject: sittingTwo?.subjectSix.subject,
+      grade: sittingTwo?.subjectSix.grade,
+    },
+    {
+      subjectClass: "subjectSeven",
+      subject: sittingTwo?.subjectSeven.subject,
+      grade: sittingTwo?.subjectSeven.grade,
+    },
+    {
+      subjectClass: "subjectEight",
+      subject: sittingTwo?.subjectEight.subject,
+      grade: sittingTwo?.subjectEight.grade,
+    },
+    {
+      subjectClass: "subjectNine",
+      subject: sittingTwo?.subjectNine.subject,
+      grade: sittingTwo?.subjectNine.grade,
+    },
   ];
 
   return (
@@ -98,6 +272,7 @@ const Olevels = memo(() => {
         O'level result details
       </h3>
       <main className="p-5">
+        {/* number of sitting */}
         <div className="sitting">
           <label
             className="text-sm sm:text-base capitalize select-none  text-gray-400 font-medium"
@@ -107,9 +282,10 @@ const Olevels = memo(() => {
           </label>
           <input
             type="text"
-            disabled
+            disabled={false}
             className="studentInputClass bg-slate-800 border-slate-800 text-gray-400"
-            value={GlobalsittingNumber}
+            value={data.GlobalsittingNumber}
+            onChange={(e) => handleGlobalSittingNumberInputChanges(e)}
           />
         </div>
         <section>
@@ -120,7 +296,7 @@ const Olevels = memo(() => {
                 <p className="text-gray-400 mt-2 mb-2 capitalize bg-black w-fit px-3 py-3 select-none">
                   sitting one
                 </p>
-                {[].map((item, index) => {
+                {firstSittingHeaderArray?.map((item, index) => {
                   return (
                     <div key={index} className="sittingOne">
                       <label
@@ -131,9 +307,10 @@ const Olevels = memo(() => {
                       </label>
                       <input
                         type="text"
-                        disabled
+                        name={item.metaClass}
                         className="studentInputClass bg-slate-800 border-slate-800 text-gray-400"
                         value={item.value}
+                        onChange={(e) => handlefirstSittingMetaInputChanges(e)}
                       />
                     </div>
                   );
@@ -141,19 +318,38 @@ const Olevels = memo(() => {
 
                 <div className="FIRST-SITTING w-full mt-4">
                   <div className="head flex flex-row justify-between capitalize border-b border-slate-700 py-1 text-gray-500">
-                    <p>subject</p>
+                    <p className="pl-2">subject</p>
                     <p>grade</p>
                   </div>
 
+                  {/* first sitting subject and grade arrays */}
                   <ul className="result">
-                    {[].map((item, index) => {
+                    {firstSittingSubjectAndGradeArray?.map((item, index) => {
                       return (
                         <div
                           key={index}
                           className="result flex flex-row justify-between capitalize text-gray-400"
                         >
-                          <p className="py-2">{item.subject}</p>
-                          <p className="py-2">{item.value}</p>
+                          {/* subjects */}
+                          <input
+                            className="py-2 outline-none border-none bg-transparent w-[80%] text-left"
+                            type="text"
+                            name={item.subjectClass}
+                            value={item.subject}
+                            onChange={(e) =>
+                              handlefirstSittingSubjectInputChanges(e)
+                            }
+                          />
+                          {/* grade values */}
+                          <input
+                            className="py-2 outline-none border-none w-[20%] bg-transparent text-right"
+                            type="text"
+                            name={item.subjectClass}
+                            value={item.grade}
+                            onChange={(e) =>
+                              handlefirstSittingGradeInputChanges(e)
+                            }
+                          />
                         </div>
                       );
                     })}
@@ -166,7 +362,9 @@ const Olevels = memo(() => {
                 <p className="text-gray-400 mt-2 mb-2 capitalize bg-black w-fit px-3 py-3 select-none">
                   sitting two
                 </p>
-                {[].map((item, index) => {
+
+                {/* second sitting header */}
+                {secondSittingHeaderArray?.map((item, index) => {
                   return (
                     <div key={index} className="sittingOne">
                       <label
@@ -176,10 +374,11 @@ const Olevels = memo(() => {
                         {item.label}
                       </label>
                       <input
-                        type="text"
-                        disabled
                         className="studentInputClass bg-slate-800 border-slate-800 text-gray-400"
+                        type="text"
+                        name={item.metaClass}
                         value={item.value}
+                        onChange={(e) => handleSecondSittingMetaInputChanges(e)}
                       />
                     </div>
                   );
@@ -187,19 +386,37 @@ const Olevels = memo(() => {
 
                 <div className="SECOND-SITTING w-full mt-4">
                   <div className="head flex flex-row justify-between capitalize border-b border-slate-700 py-1 text-gray-500">
-                    <p>subject</p>
+                    <p className="pl-2">subject</p>
                     <p>grade</p>
                   </div>
 
+                  {/* second sitting subject and grades array */}
                   <div className="result">
-                    {[].map((item, index) => {
+                    {secondSittingSubjectAndGradeArray?.map((item, index) => {
                       return (
                         <div
                           key={index}
                           className="result flex flex-row justify-between capitalize text-gray-400"
                         >
-                          <p className="py-2"> {item.subject}</p>
-                          <p className="py-2">{item.value}</p>
+                          <input
+                            className="py-2 outline-none border-none bg-transparent w-[80%] text-left"
+                            type="text"
+                            name={item.subjectClass}
+                            value={item.subject}
+                            onChange={(e) =>
+                              handleSecondSittingSubjectInputChanges(e)
+                            }
+                          />
+                          {/* grade values */}
+                          <input
+                            className="py-2 outline-none border-none w-[20%] bg-transparent text-right"
+                            type="text"
+                            name={item.subjectClass}
+                            value={item.grade}
+                            onChange={(e) =>
+                              handleSecondSittingGradeInputChanges(e)
+                            }
+                          />
                         </div>
                       );
                     })}

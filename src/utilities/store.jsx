@@ -49,7 +49,7 @@ export const initialState = {
       subjectTwo: { id: nanoid(), subject: "", grade: "" },
       subjectThree: { id: nanoid(), subject: "", grade: "" },
       subjectFour: { id: nanoid(), subject: "", grade: "" },
-      subjectFive: { id: nanoid(), subject: "", grade: "" },
+      subjectFive: { id: nanoid(), subject: "",  grade: "" },
       subjectSix: { id: nanoid(), subject: "", grade: "" },
       subjectSeven: { id: nanoid(), subject: "", grade: "" },
       subjectEight: { id: nanoid(), subject: "", grade: "" },

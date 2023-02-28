@@ -65,7 +65,7 @@ const StudentDocs = () => {
           </p>
         </section>
         <section className="sm:w-1/2  mt-10 text-justify h-full leading-7 ">
-          <p className="mb-4 sm:text-lg leading-7 sm:leading-9 text-justify bg-gradient-to-r from-orange-800 to-slate-800 text-white px-5">
+          <p className="mb-4 sm:text-lg leading-7 py-2 sm:leading-9 text-justify bg-gradient-to-r from-orange-800 to-slate-800 text-white px-5">
             {" "}
             Documents
           </p>

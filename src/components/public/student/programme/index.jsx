@@ -12,6 +12,8 @@ const Programme = memo(() => {
   const [isLoading, setIsLoading] = useState(false);
   const { isAdmin } = useIsAdmin();
   const { studentID } = useParams();
+
+  // TODO: Extract yearRange to a global state
   const yearRange = "2022-2023";
 
   useEffect(() => {
