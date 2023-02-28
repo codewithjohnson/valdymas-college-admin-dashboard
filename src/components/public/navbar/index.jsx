@@ -59,7 +59,7 @@ const Navbar = () => {
   return (
     <nav
       ref={menuRef}
-      className="relative w-full bg-gradient-to-r from-slate-900 to-slate-700"
+      className="relative w-full bg-gradient-to-r from-slate-900 to-slate-700 z-20"
     >
       <div className=" sm:py-6 sm:px-10 px-5 py-5 flex flex-row justify-between items-center">
         <div className="logo flex flex-row  items-center gap-3 select-none text-gray-100">
