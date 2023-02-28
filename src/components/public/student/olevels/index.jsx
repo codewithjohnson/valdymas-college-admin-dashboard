@@ -7,7 +7,6 @@ const Olevels = memo(() => {
   const [isLoading, setIsLoading] = useState(false);
   const { ward: olevelsData } = useGetStudentById("olevels");
   const [data, setData] = useState({});
-  console.log(data?.sittingTwo);
   const [isEdit, setIsEdit] = useState(false);
   const { isAdmin } = useIsAdmin();
   const { studentID } = useParams();
@@ -216,10 +215,68 @@ const Olevels = memo(() => {
   };
 
   return (
-    <div className="olevels bg-gray-900 rounded-2xl">
-      <h3 className="p-3 py-5 text-sm sm:text-base capitalize select-none font-medium bg-gradient-to-r from-slate-800 to-sky-900 rounded-t-2xl w-full">
-        O'level result details
-      </h3>
+    <div className="olevels relative bg-gray-900 rounded-2xl">
+      {isEdit && isAdmin && (
+        <div className="editstatus absolute bg-red-500 text-black -top-2 px-4 text-[12px] capitalize left-2 select-none  ">
+          {" "}
+          currently editing olevels
+        </div>
+      )}
+      <header className="bg-gradient-to-r from-slate-800 to-sky-900 p-3 py-5 flex flex-row justify-between items-center rounded-t-2xl w-full">
+        <h3 className="text-sm sm:text-base capitalize select-none font-medium  ">
+          O'level result details
+        </h3>
+
+        {isAdmin && !isEdit && (
+          <button
+            onClick={() => setIsEdit(!isEdit)}
+            className={`text-sm sm:text-base capitalize select-none rounded-xl hover:bg-gray-800 bg-gray-900 p-3 ${
+              isEdit ? "bg-red-900" : ""
+            }`}
+          >
+            edit o'levels
+          </button>
+        )}
+
+        {isEdit && isAdmin && (
+          <div className="btns flex flex-row gap-3">
+            <button
+              onClick={() => handleBiodataUpdate()}
+              className={`text-sm sm:text-base capitalize select-none rounded-xl hover:bg-gray-800 bg-gray-900 p-3 ${
+                isEdit ? "bg-red-900" : ""
+              }
+
+              ${isLoading ? "cursor-not-allowed opacity-50" : ""}
+            
+              `}
+            >
+              {!isLoading ? (
+                "save biodata"
+              ) : (
+                <span className="flex flex-row gap-4 items-center">
+                  <Spinner
+                    isLoading={isLoading}
+                    override={override}
+                    size={18}
+                  />{" "}
+                  <span className="normal-case"> saving...</span>
+                </span>
+              )}
+            </button>
+
+            {/* cancel button */}
+            {isEdit && (
+              <button
+                onClick={() => setIsEdit(false)}
+                className="p-3 bg-slate-800 rounded-xl text-white text-sm sm:text-base px-5 hover:bg-slate-900 "
+              >
+                cancel
+              </button>
+            )}
+          </div>
+        )}
+      </header>
+
       <main className="p-5">
         {/* number of sitting */}
         <div className="sitting">
@@ -231,7 +288,7 @@ const Olevels = memo(() => {
           </label>
           <input
             type="text"
-            disabled={false}
+            disabled={isEdit && isAdmin ? false : true}
             className="studentInputClass bg-slate-800 border-slate-800 text-gray-400"
             value={data.GlobalsittingNumber}
             onChange={(e) => handleGlobalSittingNumberInputChanges(e)}
@@ -256,6 +313,7 @@ const Olevels = memo(() => {
                       </label>
                       <input
                         type="text"
+                        disabled={isEdit && isAdmin ? false : true}
                         name={item.metaClass}
                         className="studentInputClass bg-slate-800 border-slate-800 text-gray-400"
                         value={item.value}
@@ -282,6 +340,7 @@ const Olevels = memo(() => {
                           {/* subjects */}
                           <input
                             className="py-2 outline-none border-none bg-transparent w-[80%] text-left"
+                            disabled={isEdit && isAdmin ? false : true}
                             type="text"
                             name={item.subjectClass}
                             value={item.subject}
@@ -292,6 +351,7 @@ const Olevels = memo(() => {
                           {/* grade values */}
                           <input
                             className="py-2 outline-none border-none w-[20%] bg-transparent text-right"
+                            disabled={isEdit && isAdmin ? false : true}
                             type="text"
                             name={item.subjectClass}
                             value={item.grade}
@@ -324,6 +384,7 @@ const Olevels = memo(() => {
                       </label>
                       <input
                         className="studentInputClass bg-slate-800 border-slate-800 text-gray-400"
+                        disabled={isEdit && isAdmin ? false : true}
                         type="text"
                         name={item.metaClass}
                         value={item.value}
@@ -350,6 +411,7 @@ const Olevels = memo(() => {
                           {/* subjects */}
                           <input
                             className="py-2 outline-none border-none bg-transparent w-[80%] text-left"
+                            disabled={isEdit && isAdmin ? false : true}
                             type="text"
                             name={item.subjectClass}
                             value={item.subject}
@@ -361,6 +423,7 @@ const Olevels = memo(() => {
                           {/* grade values */}
                           <input
                             className="py-2 outline-none border-none w-[20%] bg-transparent text-right"
+                            disabled={isEdit && isAdmin ? false : true}
                             type="text"
                             name={item.subjectClass}
                             value={item.grade}
