@@ -1,9 +1,24 @@
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useIsAdmin } from "../../../../hooks/useAdmin";
+import { useGetStudentById } from "../../../../hooks/usegetStudentById";
 
-const Olevels = memo(({ student }) => {
-  const GlobalsittingNumber = student?.[2]?.GlobalsittingNumber;
-  const sittingOne = student?.[2]?.sittingOne;
-  const sittingTwo = student?.[2]?.sittingTwo;
+const Olevels = memo(() => {
+  const { ward: olevelsData } = useGetStudentById("olevels");
+  const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState();
+  const [isEdit, setIsEdit] = useState(false);
+  const { isAdmin } = useIsAdmin();
+  const { studentID } = useParams();
+  const yearRange = "2022-2023";
+
+  useEffect(() => {
+    setData(olevelsData);
+  }, [olevelsData]);
+
+  const GlobalsittingNumber = olevelsData?.[2]?.GlobalsittingNumber;
+  const sittingOne = olevelsData?.[2]?.sittingOne;
+  const sittingTwo = olevelsData?.[2]?.sittingTwo;
 
   const firstSittingexamType = sittingOne?.firstSittingexamType;
   const firstSittingexamYear = sittingOne?.firstSittingexamYear;
@@ -105,7 +120,7 @@ const Olevels = memo(({ student }) => {
                 <p className="text-gray-400 mt-2 mb-2 capitalize bg-black w-fit px-3 py-3 select-none">
                   sitting one
                 </p>
-                {firstSittingHeaderArray.map((item, index) => {
+                {[].map((item, index) => {
                   return (
                     <div key={index} className="sittingOne">
                       <label
@@ -131,7 +146,7 @@ const Olevels = memo(({ student }) => {
                   </div>
 
                   <ul className="result">
-                    {subjectArray.map((item, index) => {
+                    {[].map((item, index) => {
                       return (
                         <div
                           key={index}
@@ -151,7 +166,7 @@ const Olevels = memo(({ student }) => {
                 <p className="text-gray-400 mt-2 mb-2 capitalize bg-black w-fit px-3 py-3 select-none">
                   sitting two
                 </p>
-                {secondSittingHeaderArray.map((item, index) => {
+                {[].map((item, index) => {
                   return (
                     <div key={index} className="sittingOne">
                       <label
@@ -177,7 +192,7 @@ const Olevels = memo(({ student }) => {
                   </div>
 
                   <div className="result">
-                    {subjectArray2.map((item, index) => {
+                    {[].map((item, index) => {
                       return (
                         <div
                           key={index}

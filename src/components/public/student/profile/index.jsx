@@ -1,8 +1,11 @@
 import { memo } from "react";
 import { useIsAdmin } from "../../../../hooks/useAdmin";
+import { useGetStudentById } from "../../../../hooks/usegetStudentById";
 
-const ProfilePic = memo(({ student }) => {
+const ProfilePic = memo(() => {
   const { isAdmin } = useIsAdmin();
+  const { ward: student } = useGetStudentById("");
+
   const studentSchoolID = student?.[4]?.studentID.replace(/-/g, "/");
   const firstName = student?.[0]?.firstname;
   const lastName = student?.[0]?.lastname;
@@ -27,17 +30,17 @@ const ProfilePic = memo(({ student }) => {
 
       <div className="info mt-3 flex flex-col justify-center items-center pb-4 select-none">
         <h1 className="text-sm sm:text-base text-gray-400 capitalize py-1 ">
-          department: <span className="normal-case"> {department}</span>{" "}
+          department: <span className="normal-case">{department} </span>{" "}
         </h1>
         <h1 className="text-sm sm:text-base text-gray-400 capitalize py-1">
-          ID: <span className="normal-case"> {studentSchoolID}</span>{" "}
+          ID: <span className="normal-case"> {studentSchoolID} </span>{" "}
         </h1>
         <h1 className="text-sm sm:text-base text-gray-400 capitalize py-1">
-          programme: <span className="normal-case"> {programme}</span>
+          programme: <span className="normal-case">{programme} </span>
         </h1>
         {isAdmin && (
           <h1 className="text-sm sm:text-base text-amber-600 capitalize py-1 ">
-            agent: <span className="capitalize"> {agent}</span>{" "}
+            agent: <span className="capitalize"> {agent} </span>{" "}
           </h1>
         )}
       </div>

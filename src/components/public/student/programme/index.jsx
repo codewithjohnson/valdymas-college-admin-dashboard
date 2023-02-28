@@ -1,31 +1,125 @@
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useGetStudentById } from "../../../../hooks/usegetStudentById";
+import { useIsAdmin } from "../../../../hooks/useAdmin";
+import Spinner from "../../../spinner";
+import { updateStudentProgramme } from "../../../../services/firestore/students/students";
 
-const Programme = memo(({ student }) => {
-  const programme = student?.[3];
-  const modeOfEntry = programme?.modeOfEntry;
-  const department = programme?.department;
-  const courseOfStudy = programme?.courseOfStudy;
-  const subject1 = programme?.subject1;
-  const subject2 = programme?.subject2;
-  const subject3 = programme?.subject3;
+const Programme = memo(() => {
+  const { ward: programmeData } = useGetStudentById("programme");
+  const [data, setData] = useState([]);
+  const [isEdit, setIsEdit] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { isAdmin } = useIsAdmin();
+  const { studentID } = useParams();
+  const yearRange = "2022-2023";
 
-  // create and array from above with labels and values
-  const programmeDetails = [
-    { label: "mode of entry", value: modeOfEntry },
-    { label: "department", value: department },
-    { label: "course of study", value: courseOfStudy },
-    { label: "subject 1", value: subject1 },
-    { label: "subject 2", value: subject2 },
-    { label: "subject 3", value: subject3 },
-  ];
+  useEffect(() => {
+    setData(refineProgrammeObject(programmeData));
+  }, [programmeData]);
+
+  const handleInputEdit = (e, index) => {
+    const { value } = e.target;
+    const newData = [...data];
+    newData[index].value = value;
+    setData(newData);
+  };
+
+  const override = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "white",
+  };
+
+  const handleBiodataUpdate = async () => {
+    try {
+      setIsLoading(true);
+      const UpdatedprogrammeData = convertDataToProgrammeFormat(data);
+      await updateStudentProgramme(yearRange, studentID, UpdatedprogrammeData);
+      setIsEdit(false);
+      setIsLoading(false);
+    } catch (err) {
+      alert(err.message);
+      setIsLoading(false);
+    }
+  };
+
+  // function to refine programme to array of object labels and values
+  function refineProgrammeObject(programmeData) {
+    const refinedProgramme = Object.keys(programmeData).map((key) => {
+      const label = key
+        .split(/(?=[A-Z])/)
+        .join(" ")
+        .toLowerCase();
+      const value = programmeData[key];
+      return { label, value };
+    });
+    return refinedProgramme;
+  }
+
+  // function to convert data to programme exact object format
+  function convertDataToProgrammeFormat(data) {
+    return data?.reduce((acc, curr) => {
+      const { label, value } = curr;
+      const key = label
+        .split(" ")
+        .map((word, index) => {
+          if (index === 0) return word;
+          return word[0].toUpperCase() + word.slice(1);
+        })
+        .join("");
+      return { ...acc, [key]: value };
+    }, {});
+  }
 
   return (
-    <div className="programme bg-gray-900 rounded-2xl">
-      <h3 className="p-3 py-5 text-sm sm:text-base capitalize select-none font-medium bg-gradient-to-r from-slate-800 to-sky-900 rounded-t-2xl w-full">
-        programme details
-      </h3>
+    <div className="programme bg-gray-900 rounded-2xl relative">
+      {isEdit && isAdmin && (
+        <div className="editstatus absolute bg-red-500 text-black -top-4 px-4 text-[12px] capitalize left-2 select-none  ">
+          {" "}
+          currently editing programme
+        </div>
+      )}
+      <header className="bg-gradient-to-r from-slate-800 to-sky-900 p-3 py-5 flex flex-row justify-between items-center rounded-t-2xl w-full">
+        <h3 className="text-sm sm:text-base capitalize select-none font-medium  ">
+          programme details
+        </h3>
+
+        {isAdmin && !isEdit && (
+          <button
+            onClick={() => setIsEdit(!isEdit)}
+            className={`text-sm sm:text-base capitalize select-none rounded-xl hover:bg-gray-800 bg-gray-900 p-3 ${
+              isEdit ? "bg-red-900" : ""
+            }`}
+          >
+            edit programme
+          </button>
+        )}
+
+        {isEdit && isAdmin && (
+          <button
+            onClick={() => handleBiodataUpdate()}
+            className={`text-sm sm:text-base capitalize select-none rounded-xl hover:bg-gray-800 bg-gray-900 p-3 ${
+              isEdit ? "bg-red-900" : ""
+            }
+
+              ${isLoading ? "cursor-not-allowed opacity-50" : ""}
+            
+              `}
+          >
+            {!isLoading ? (
+              "save programme"
+            ) : (
+              <span className="flex flex-row gap-4 items-center">
+                <Spinner isLoading={isLoading} override={override} size={18} />{" "}
+                <span className="normal-case"> saving...</span>
+              </span>
+            )}
+          </button>
+        )}
+      </header>
       <main className="p-5 grid grid-cols-1 gap-5 md:grid md:grid-cols-3">
-        {programmeDetails.map((item, index) => {
+        {data?.map((item, index) => {
           return (
             <div key={index} className="programmeDetails">
               <label
@@ -36,9 +130,10 @@ const Programme = memo(({ student }) => {
               </label>
               <input
                 type="text"
-                disabled
+                disabled={isEdit && isAdmin ? false : true}
                 className="studentInputClass bg-slate-800 border-slate-800 text-gray-400"
                 value={item.value}
+                onChange={(e) => handleInputEdit(e, index)}
               />
             </div>
           );

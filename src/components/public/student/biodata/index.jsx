@@ -1,21 +1,13 @@
 import { memo, useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useIsAdmin } from "../../../../hooks/useAdmin";
 import { useGetStudentById } from "../../../../hooks/usegetStudentById";
-import {
-  createStudentInfoCollection,
-  getValdymasCollectionRef,
-} from "../../../../services/firestore/students/students";
-import {
-  collection,
-  doc,
-  onSnapshot,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { updateStudentBiodata } from "../../../../services/firestore/students/students";
+import Spinner from "../../../spinner";
 
 const Biodata = memo(() => {
-  const { ward } = useGetStudentById("biodata");
+  const { ward: biodata } = useGetStudentById("biodata");
+  const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState();
   const [isEdit, setIsEdit] = useState(false);
   const { isAdmin } = useIsAdmin();
@@ -23,8 +15,14 @@ const Biodata = memo(() => {
   const yearRange = "2022-2023";
 
   useEffect(() => {
-    setData(refineWardObject(ward));
-  }, [ward]);
+    setData(refineWardObject(biodata));
+  }, [biodata]);
+
+  const override = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "white",
+  };
 
   const handleInputEdit = (e, index) => {
     const { value } = e.target;
@@ -33,28 +31,45 @@ const Biodata = memo(() => {
     setData(newData);
   };
 
-  function refineWardObject(ward) {
-    const refinedWard = Object.keys(ward).map((key) => {
+  const handleBiodataUpdate = async () => {
+    try {
+      setIsLoading(true);
+      const updatedBiodataData = convertDataToWardFormat(data);
+      await updateStudentBiodata(yearRange, studentID, updatedBiodataData);
+      setIsEdit(false);
+      setIsLoading(false);
+    } catch (err) {
+      alert(err.message);
+      setIsLoading(false);
+    }
+  };
+
+  function refineWardObject(biodata) {
+    const refinedWard = Object.keys(biodata).map((key) => {
       const label = key
         .split(/(?=[A-Z])/)
         .join(" ")
         .toLowerCase();
-      const value = ward[key];
+      const value = biodata[key];
       return { label, value };
     });
     return refinedWard;
   }
 
-  const updateStudentBiodata = async (biodata) => {
-    console.log("updateStudentBiodata");
-    const studentInfoCollectionRef = await createStudentInfoCollection(
-      yearRange,
-      studentID
-    );
-    const biodataDocRef = doc(studentInfoCollectionRef, "biodata");
-    console.log("biodataDocRef", data);
-    await setDoc(biodataDocRef, { ...biodata });
-  };
+  // function to convert data to ward object format
+  function convertDataToWardFormat(data) {
+    return data?.reduce((acc, curr) => {
+      const { label, value } = curr;
+      const key = label
+        .split(" ")
+        .map((word, index) => {
+          if (index === 0) return word;
+          return word[0].toUpperCase() + word.slice(1);
+        })
+        .join("");
+      return { ...acc, [key]: value };
+    }, {});
+  }
 
   return (
     <div className="biodata relative bg-gray-900 rounded-2xl">
@@ -82,12 +97,23 @@ const Biodata = memo(() => {
 
         {isEdit && isAdmin && (
           <button
-            onClick={() => updateStudentBiodata()}
+            onClick={() => handleBiodataUpdate()}
             className={`text-sm sm:text-base capitalize select-none rounded-xl hover:bg-gray-800 bg-gray-900 p-3 ${
               isEdit ? "bg-red-900" : ""
-            }`}
+            }
+
+              ${isLoading ? "cursor-not-allowed opacity-50" : ""}
+            
+              `}
           >
-            save biodata
+            {!isLoading ? (
+              "save biodata"
+            ) : (
+              <span className="flex flex-row gap-4 items-center">
+                <Spinner isLoading={isLoading} override={override} size={18} />{" "}
+                <span className="normal-case"> saving...</span>
+              </span>
+            )}
           </button>
         )}
       </header>

@@ -7,7 +7,6 @@ import Navbar from "../../../components/public/navbar";
 const Footer = Loadable(lazy(() => import("../../../components/public/footer")));
 
 const studentLayout = () => {
-  // check if user is authorized
   useIsAuthorized();
 
   return (

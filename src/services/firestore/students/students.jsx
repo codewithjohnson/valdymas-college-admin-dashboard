@@ -204,12 +204,16 @@ export const checkAdminRole = async (yearRange, adminID) => {
 
 // update biodata of student
 export const updateStudentBiodata = async (yearRange, studentID, biodata) => {
-  const studentInfoCollectionRef = await createStudentInfoCollection(
-    yearRange,
-    studentID
-  );
-  const biodataDocRef = doc(studentInfoCollectionRef, "biodata");
-  await updateDoc(biodataDocRef, biodata);
+  try {
+    const studentInfoCollectionRef = await createStudentInfoCollection(
+      yearRange,
+      studentID
+    );
+    const biodataDocRef = doc(studentInfoCollectionRef, "biodata");
+    await setDoc(biodataDocRef, biodata);
+  } catch (error) {
+    throw new Error(error);
+  }
 };
 
 // update data capture of student
@@ -223,7 +227,7 @@ export const updateStudentDataCapture = async (
     studentID
   );
   const dataCaptureDocRef = doc(studentInfoCollectionRef, "dataCapture");
-  await updateDoc(dataCaptureDocRef, dataCapture);
+  await setDoc(dataCaptureDocRef, dataCapture);
 };
 
 // update programme of student
@@ -237,7 +241,7 @@ export const updateStudentProgramme = async (
     studentID
   );
   const programmeDocRef = doc(studentInfoCollectionRef, "programme");
-  await updateDoc(programmeDocRef, programme);
+  await setDoc(programmeDocRef, programme);
 };
 
 // update olevels of student
@@ -247,5 +251,5 @@ export const updateStudentOlevels = async (yearRange, studentID, olevels) => {
     studentID
   );
   const olevelsDocRef = doc(studentInfoCollectionRef, "olevels");
-  await updateDoc(olevelsDocRef, olevels);
+  await setDoc(olevelsDocRef, olevels);
 };

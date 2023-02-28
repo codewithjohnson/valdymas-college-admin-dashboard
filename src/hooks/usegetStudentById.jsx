@@ -9,7 +9,6 @@ export const useGetStudentById = (docRef) => {
   const yearRange = "2022-2023";
 
   useEffect(() => {
-    console.log("useGetStudentById useEffect");
     const getStudentDocListener = async () => {
       const valdymasCollectionRef = getValdymasCollectionRef();
 
@@ -36,7 +35,6 @@ export const useGetStudentById = (docRef) => {
         case "biodata":
           const unsubscribe = onSnapshot(biodataDocRef, (doc) => {
             const biodata = doc.data();
-
             setWard(biodata);
           });
           return unsubscribe;
@@ -71,17 +69,6 @@ export const useGetStudentById = (docRef) => {
           );
           return unsubscribe5;
       }
-
-      // const unsubscribe = onSnapshot(
-      //   studentInfoCollectionRef,
-      //   (querySnapshot) => {
-      //     const studentInfo = querySnapshot.docs.map((doc) => {
-      //       return { ...doc.data() };
-      //     });
-      //     setStudent(studentInfo);
-      //   }
-      // );
-      // return unsubscribe;
     };
 
     getStudentDocListener();

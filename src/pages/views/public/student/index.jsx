@@ -13,10 +13,10 @@ const Student = () => {
   return (
     <div className=" text-gray-200 font-poppins px-5 sm:px-10 h-full w-full">
       <div className="studentPageGridMobile sm:studentPageGrid gap-x-5 gap-y-5">
-        {/* <ProfilePic  /> */}
+        <ProfilePic  />
         <Biodata />
-        {/* <Olevels  /> */}
-        {/* <Programme  /> */}
+        <Olevels  />
+        <Programme  />
       </div>
     </div>
   );
