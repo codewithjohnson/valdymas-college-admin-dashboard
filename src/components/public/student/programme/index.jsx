@@ -97,27 +97,45 @@ const Programme = memo(() => {
         )}
 
         {isEdit && isAdmin && (
-          <button
-            onClick={() => handleBiodataUpdate()}
-            className={`text-sm sm:text-base capitalize select-none rounded-xl hover:bg-gray-800 bg-gray-900 p-3 ${
-              isEdit ? "bg-red-900" : ""
-            }
+          <div className="btns btns flex flex-row gap-3">
+            <button
+              onClick={() => handleBiodataUpdate()}
+              className={`text-sm sm:text-base capitalize select-none rounded-xl hover:bg-gray-800 bg-gray-900 p-3 ${
+                isEdit ? "bg-red-900" : ""
+              }
 
               ${isLoading ? "cursor-not-allowed opacity-50" : ""}
             
               `}
-          >
-            {!isLoading ? (
-              "save programme"
-            ) : (
-              <span className="flex flex-row gap-4 items-center">
-                <Spinner isLoading={isLoading} override={override} size={18} />{" "}
-                <span className="normal-case"> saving...</span>
-              </span>
+            >
+              {!isLoading ? (
+                "save programme"
+              ) : (
+                <span className="flex flex-row gap-4 items-center">
+                  <Spinner
+                    isLoading={isLoading}
+                    override={override}
+                    size={18}
+                  />{" "}
+                  <span className="normal-case"> saving...</span>
+                </span>
+              )}
+            </button>
+
+            {/* cancel button */}
+            {isEdit && (
+              <button
+                onClick={() => setIsEdit(false)}
+                className="p-3 bg-slate-800 rounded-xl text-white text-sm sm:text-base px-5 hover:bg-slate-900 "
+              >
+                cancel
+              </button>
             )}
-          </button>
+          </div>
         )}
       </header>
+
+      {/* main */}
       <main className="p-5 grid grid-cols-1 gap-5 md:grid md:grid-cols-3">
         {data?.map((item, index) => {
           return (

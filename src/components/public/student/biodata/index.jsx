@@ -74,7 +74,7 @@ const Biodata = memo(() => {
   return (
     <div className="biodata relative bg-gray-900 rounded-2xl">
       {isEdit && isAdmin && (
-        <div className="editstatus absolute bg-red-500 text-black -top-4 px-4 text-[12px] capitalize left-2 select-none  ">
+        <div className="editstatus absolute bg-red-500 text-black -top-2 px-4 text-[12px] capitalize left-2 select-none  ">
           {" "}
           currently editing biodata
         </div>
@@ -96,25 +96,41 @@ const Biodata = memo(() => {
         )}
 
         {isEdit && isAdmin && (
-          <button
-            onClick={() => handleBiodataUpdate()}
-            className={`text-sm sm:text-base capitalize select-none rounded-xl hover:bg-gray-800 bg-gray-900 p-3 ${
-              isEdit ? "bg-red-900" : ""
-            }
+          <div className="btns flex flex-row gap-3">
+            <button
+              onClick={() => handleBiodataUpdate()}
+              className={`text-sm sm:text-base capitalize select-none rounded-xl hover:bg-gray-800 bg-gray-900 p-3 ${
+                isEdit ? "bg-red-900" : ""
+              }
 
               ${isLoading ? "cursor-not-allowed opacity-50" : ""}
             
               `}
-          >
-            {!isLoading ? (
-              "save biodata"
-            ) : (
-              <span className="flex flex-row gap-4 items-center">
-                <Spinner isLoading={isLoading} override={override} size={18} />{" "}
-                <span className="normal-case"> saving...</span>
-              </span>
+            >
+              {!isLoading ? (
+                "save biodata"
+              ) : (
+                <span className="flex flex-row gap-4 items-center">
+                  <Spinner
+                    isLoading={isLoading}
+                    override={override}
+                    size={18}
+                  />{" "}
+                  <span className="normal-case"> saving...</span>
+                </span>
+              )}
+            </button>
+
+            {/* cancel button */}
+            {isEdit && (
+              <button
+                onClick={() => setIsEdit(false)}
+                className="p-3 bg-slate-800 rounded-xl text-white text-sm sm:text-base px-5 hover:bg-slate-900 "
+              >
+                cancel
+              </button>
             )}
-          </button>
+          </div>
         )}
       </header>
 
