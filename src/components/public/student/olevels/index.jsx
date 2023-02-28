@@ -2,6 +2,8 @@ import { memo, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useIsAdmin } from "../../../../hooks/useAdmin";
 import { useGetStudentById } from "../../../../hooks/usegetStudentById";
+import { updateStudentOlevels } from "../../../../services/firestore/students/students";
+import Spinner from "../../../spinner";
 
 const Olevels = memo(() => {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,6 +20,26 @@ const Olevels = memo(() => {
     setData(olevelsData);
   }, [olevelsData]);
 
+  const override = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "white",
+  };
+
+  // update olevels data
+  const handleOlevelsUpdate = async () => {
+    try {
+      setIsLoading(true);
+      await updateStudentOlevels(yearRange, studentID, data);
+      alert("Olevels data updated successfully");
+      setIsEdit(false);
+      setIsLoading(false);
+    } catch (err) {
+      alert(err.message);
+      setIsLoading(false);
+    }
+  };
+
   // handle input changes for global sitting number
   const handleGlobalSittingNumberInputChanges = (e) => {
     setData({
@@ -28,7 +50,6 @@ const Olevels = memo(() => {
 
   // handle input changes for first sitting meta data
   const handlefirstSittingMetaInputChanges = (e) => {
-    console.log(e.target.name);
     setData({
       ...data,
       sittingOne: {
@@ -222,11 +243,14 @@ const Olevels = memo(() => {
           currently editing olevels
         </div>
       )}
+
+      {/* header */}
       <header className="bg-gradient-to-r from-slate-800 to-sky-900 p-3 py-5 flex flex-row justify-between items-center rounded-t-2xl w-full">
         <h3 className="text-sm sm:text-base capitalize select-none font-medium  ">
           O'level result details
         </h3>
 
+        {/* edit button */}
         {isAdmin && !isEdit && (
           <button
             onClick={() => setIsEdit(!isEdit)}
@@ -238,10 +262,12 @@ const Olevels = memo(() => {
           </button>
         )}
 
+        {/* save and cancel button */}
         {isEdit && isAdmin && (
           <div className="btns flex flex-row gap-3">
+            {/* save btn */}
             <button
-              onClick={() => handleBiodataUpdate()}
+              onClick={() => handleOlevelsUpdate()}
               className={`text-sm sm:text-base capitalize select-none rounded-xl hover:bg-gray-800 bg-gray-900 p-3 ${
                 isEdit ? "bg-red-900" : ""
               }
