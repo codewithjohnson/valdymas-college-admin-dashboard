@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import logo from "../../../assets/images/logo.png";
+import logo from "../../../assets/images/logo.webp";
 import Spinner from "../../../components/spinner";
 
 // form hooks

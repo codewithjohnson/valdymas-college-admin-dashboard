@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import logo from "../../assets/images/logo.png";
+import logo from "../../assets/images/logo.webp";
 import { useProSidebar } from "react-pro-sidebar";
 import { getCurrentimeOfDay } from "../../utilities/currentDate";
 import { useYearContext } from "../../context/setYears/setYears";

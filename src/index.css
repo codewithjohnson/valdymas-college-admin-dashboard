@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @layer components {
   .submenuTitle {
     @apply text-gray-900  hover:text-purple-700;
