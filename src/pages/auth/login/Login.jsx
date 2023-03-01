@@ -29,7 +29,6 @@ const Login = () => {
     loginReset,
     loginHandleSubmit,
     loginErrors,
-    loginIsValid,
     loginIsSubmitting,
     loginIsSubmitted,
     loginIsSubmitSuccessful,
