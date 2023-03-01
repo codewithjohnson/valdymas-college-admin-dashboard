@@ -1,5 +1,5 @@
 import { useContext, createContext, useReducer, useEffect } from "react";
-import { yearReducer } from "../../reducers/yearReducer";
+import { yearReducer } from "../../reducers/yearReducer/yearReducer";
 
 const initialState = {
   setYearRange: "2022-2023",

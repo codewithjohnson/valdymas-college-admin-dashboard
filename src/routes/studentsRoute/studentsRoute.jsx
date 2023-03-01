@@ -2,8 +2,8 @@ import Loadable from "../../components/loadable";
 import { lazy } from "react";
 
 // import from students
-const Students = Loadable(lazy(() => import("../../pages/views/students")));
-const AllStudents = Loadable(lazy(() => import("../../pages/views/allStudents")));
+const Students = Loadable(lazy(() => import("../../pages/views/students/Students")));
+const AllStudents = Loadable(lazy(() => import("../../pages/views/allStudents/AllStudents")));
 
 // import departments
 const Departments = Loadable(lazy(() => import("../../layout/departments/departmentLayout")));
@@ -20,7 +20,7 @@ const Programme = Loadable(lazy(() => import("../../pages/views/newStudent/progr
 const Olevels = Loadable(lazy(() => import("../../pages/views/newStudent/Olevels/Olevels")));
 const UploadPage = Loadable(lazy(() => import("../../pages/views/newStudent/upload/Upload")));
 
-export const studentRoute = {
+export const studentsRoute = {
   path: "students",
   element: <Students />,
   outlet: true,

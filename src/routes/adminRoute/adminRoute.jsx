@@ -2,15 +2,15 @@ import { lazy } from "react";
 import Loadable from "../../components/Loadable";
 
 // admin pages
-const AdminLayout = Loadable(lazy(() => import("../../layout/adminLayout")));
+const AdminLayout = Loadable(lazy(() => import("../../layout/adminLayout/adminLayout")));
 const NewAdmin = Loadable(
-  lazy(() => import("../../pages/views/admins/newAdmin"))
+  lazy(() => import("../../pages/views/admins/newAdmin/NewAdmin"))
 );
 const AllAdmins = Loadable(
-  lazy(() => import("../../pages/views/admins/allAdmins"))
+  lazy(() => import("../../pages/views/admins/allAdmins/AllAdmins"))
 );
 const ChangePassword = Loadable(
-  lazy(() => import("../../pages/views/admins/changePwd"))
+  lazy(() => import("../../pages/views/admins/changePwd/ChangePwd"))
 );
 
 export const adminRoute = {

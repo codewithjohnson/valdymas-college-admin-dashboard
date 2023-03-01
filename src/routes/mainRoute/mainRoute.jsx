@@ -1,10 +1,10 @@
 import { lazy } from "react";
-import Loadable from "../../components/loadable/";
-import { studentRoute } from "../studentRoute";
+import Loadable from "../../components/loadable";
+import { studentsRoute } from "../studentsRoute/studentsRoute";
 import { adminRoute } from "../adminRoute/adminRoute";
 
-import App from "../../layout/appLayout";
-const Dashboard = Loadable(lazy(() => import("../../pages/views/dashboard")));
+import App from "../../App";
+const Dashboard = Loadable(lazy(() => import("../../pages/views/dashboard/Dashboard")));
 const ErrorPage = Loadable(
   lazy(() => import("../../pages/errorPage/Errorpage"))
 );
@@ -21,7 +21,7 @@ export const mainRoute = {
       path: "dashboard",
       element: <Dashboard />,
     },
-    studentRoute,
+    studentsRoute,
     adminRoute,
   ],
 };

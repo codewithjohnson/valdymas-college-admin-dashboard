@@ -3,8 +3,9 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 
 //  routes
-import { authRoute, mainRoute } from "./routes";
-import { studentRoute } from "./routes/public/student";
+import { authRoute } from "./routes/authRoute/authRoute";
+import { mainRoute } from "./routes/mainRoute/mainRoute";
+import { studentRoute } from "./routes/public/student/studentRoute"; 
 
 //  services
 import { createBrowserRouter, RouterProvider } from "react-router-dom";

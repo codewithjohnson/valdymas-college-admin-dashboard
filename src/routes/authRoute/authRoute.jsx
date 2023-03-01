@@ -1,8 +1,8 @@
 import { lazy } from "react";
-import Loadable from "../../components/loadable/";
+import Loadable from "../../components/loadable";
 
-const AuthLayout = Loadable(lazy(() => import("../../layout/authLayout")));
-const Login = Loadable(lazy(() => import("../../pages/auth/login")));
+const AuthLayout = Loadable(lazy(() => import("../../layout/authLayout/authLayout")));
+const Login = Loadable(lazy(() => import("../../pages/auth/login/Login")));
 
 export const authRoute = {
   path: "/auth",
