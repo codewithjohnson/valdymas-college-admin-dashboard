@@ -141,7 +141,12 @@ const Programme = memo(() => {
       <main className="p-5 grid grid-cols-1 gap-5 md:grid md:grid-cols-3">
         {data?.map((item, index) => {
           return (
-            <div key={index} className="programmeDetails">
+            <div
+              key={index}
+              className={`programmeDetails ${
+                !isAdmin && item.label === "agent" ? "hidden" : "block"
+              }`}
+            >
               <label
                 className="text-sm sm:text-base capitalize select-none  text-gray-400 font-medium"
                 htmlFor="sitting"
@@ -151,7 +156,7 @@ const Programme = memo(() => {
               <input
                 type="text"
                 disabled={isEdit && isAdmin ? false : true}
-                className="studentInputClass bg-slate-800 border-slate-800 text-gray-400"
+                className={`studentInputClass  bg-slate-800 border-slate-800 text-gray-400`}
                 value={item.value}
                 onChange={(e) => handleInputEdit(e, index)}
               />
