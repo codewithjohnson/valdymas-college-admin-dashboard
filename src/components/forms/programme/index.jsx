@@ -29,7 +29,7 @@ import {
   entryModeWithId,
 } from "../../../utilities/programme";
 
-const Programme = memo(() => {
+const Programme = () => {
   const [currentPath, setCurrentPath] = useOutletContext();
   const { state, dispatch } = useStudentContext();
   const [isSaved, setIsSaved] = useState(false);
@@ -282,5 +282,5 @@ const Programme = memo(() => {
       </div>
     </form>
   );
-});
+};
 export default Programme;

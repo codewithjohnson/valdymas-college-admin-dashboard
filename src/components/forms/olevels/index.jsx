@@ -22,7 +22,7 @@ import {
   examsWithId,
 } from "../../../utilities/olevels";
 
-const Olevel = () => {
+const OlevelForm = () => {
   const [currentPath, setCurrentPath] = useOutletContext();
   const { state, dispatch } = useStudentContext();
   const [sittingNumber, setSittingNumber] = useState("1");
@@ -491,5 +491,4 @@ const Olevel = () => {
   );
 };
 
-const OlevelForm = memo(Olevel);
 export default OlevelForm;
