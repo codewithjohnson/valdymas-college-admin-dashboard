@@ -9,10 +9,20 @@ import { useIsAdmin } from "./hooks/useAdmin";
 
 // layout
 import MainLayout from "./layout/mainLayout/mainLayout";
+import { useEffect } from "react";
 
 const App = () => {
   const isAdmin = useIsAdmin();
   const online = useOnlineStatus();
+
+  // clear local storage before onload
+  useEffect(() => {
+    const clearLocalStorage = () =>
+      localStorage.removeItem("storedStudentData");
+
+    window.addEventListener("beforeunload", clearLocalStorage);
+    return () => window.removeEventListener("beforeunload", clearLocalStorage);
+  }, []);
 
   // redirect admin and student
   useRedirectAdminStudent();
