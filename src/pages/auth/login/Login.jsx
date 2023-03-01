@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import logo from "../../../assets/images/logo.webp";
-import Spinner from "../../../components/spinner";
+import Spinner from "../../../components/spinner/Spinner";
 
 // form hooks
 import { useLoginFormHooks } from "../../../schemas/login";
