@@ -100,7 +100,7 @@ const Navbar = memo(() => {
             className="flex w-full flex-row justify-between gap-4 px-3 py-2 items-center cursor-pointer bg-sky-100 hover:bg-blue-400 rounded-full hover:text-gray-200 text-blue-400 transition-all ease-in-out duration-200"
           >
             <img
-              src={user.photoURL}
+              src={user?.photoURL || "https://i.pravatar.cc/150?img=32"}
               alt="avatar"
               className="w-8 h-8 rounded-full flex justify-center items-center flex-row"
             />
