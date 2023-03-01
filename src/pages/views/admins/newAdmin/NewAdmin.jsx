@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getAdminAuthID } from "../../../../utilities/auth/getAdminID";
 import { useNewAdminFormHooks } from "../../../../schemas/newAdmin";
-import { saveAdminToDB } from "../../../../services/firestore/admin";
+import { saveAdminToDB } from "../../../../services/firestore/admin/admin";
 import Spinner from "../../../../components/spinner/Spinner";
 
 const NewAdmin = () => {

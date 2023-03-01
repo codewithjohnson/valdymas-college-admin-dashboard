@@ -1,5 +1,5 @@
 import { lazy } from "react";
-import Loadable from "../../components/loadable";
+import Loadable from "../../components/loadable/Loadable";
 import { studentsRoute } from "../studentsRoute/studentsRoute";
 import { adminRoute } from "../adminRoute/adminRoute";
 

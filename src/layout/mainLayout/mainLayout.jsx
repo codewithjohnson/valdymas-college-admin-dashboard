@@ -1,7 +1,7 @@
 import { memo, lazy } from "react";
 
-import Loadable from "../../components/Loadable";
-import LoaderFull from "../../components/loaderFull";
+import Loadable from "../../components/Loadable/Loadable";
+import LoaderFull from "../../components/loaderFull/LoaderFull";
 import { useIsAdmin } from "../../hooks/useAdmin";
 
 const Navbar = Loadable(lazy(() => import("../../components/navbar/Navbar")));

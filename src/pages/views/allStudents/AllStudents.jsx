@@ -17,7 +17,7 @@ import {
 import Tooltip from "@mui/material/Tooltip";
 
 // components
-import Loadable from "../../../components/Loadable";
+import Loadable from "../../../components/Loadable/Loadable";
 
 // data table
 const StudentsTable = Loadable(

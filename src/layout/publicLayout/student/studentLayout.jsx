@@ -1,6 +1,6 @@
 import { lazy } from "react";
 import { Outlet } from "react-router-dom";
-import Loadable from "../../../components/loadable";
+import Loadable from "../../../components/loadable/Loadable";
 import { useIsAuthorized } from "../../../hooks/useAuth";
 
 import Navbar from "../../../components/public/navbar/Navbar";

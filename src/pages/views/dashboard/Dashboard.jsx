@@ -1,4 +1,4 @@
-import LoaderFull from "../../../components/loaderFull";
+import LoaderFull from "../../../components/loaderFull/LoaderFull";
 
 import { useIsAdmin } from "../../../hooks/useAdmin";
 

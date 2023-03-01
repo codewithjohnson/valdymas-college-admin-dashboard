@@ -1,4 +1,4 @@
-import Loadable from "../../components/loadable";
+import Loadable from "../../components/loadable/Loadable";
 import { lazy } from "react";
 
 // import from students
