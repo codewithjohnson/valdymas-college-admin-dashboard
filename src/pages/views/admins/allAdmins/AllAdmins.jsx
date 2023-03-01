@@ -1,5 +1,5 @@
 import React from "react";
-import AdminCard from "../../../../components/admin";
+import AdminCard from "../../../../components/admin/AdminCard";
 
 // fake data
 const adminData = [

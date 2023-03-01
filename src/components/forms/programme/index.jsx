@@ -7,7 +7,7 @@ import { useYearContext } from "../../../context/setYears/setYears";
 
 // components
 import SelectInput from "../../../components/selectInput";
-import Spinner from "../../../components/spinner";
+import Spinner from "../../../components/spinner/Spinner";
 
 // firestore
 import {

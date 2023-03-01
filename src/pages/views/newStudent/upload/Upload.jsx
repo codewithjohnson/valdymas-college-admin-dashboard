@@ -1,5 +1,5 @@
 import { memo } from "react";
-import UploadForm from "../../../../components/forms/upload";
+import UploadForm from "../../../../components/forms/upload/Upload";
 
 const UploadPage = memo(() => {
   return <UploadForm />;

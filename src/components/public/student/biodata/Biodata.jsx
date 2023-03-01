@@ -1,31 +1,24 @@
 import { memo, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useGetStudentById } from "../../../../hooks/usegetStudentById";
 import { useIsAdmin } from "../../../../hooks/useAdmin";
-import Spinner from "../../../spinner";
-import { updateStudentProgramme } from "../../../../services/firestore/students/students";
+import { useGetStudentById } from "../../../../hooks/usegetStudentById";
+import { updateStudentBiodata } from "../../../../services/firestore/students/students";
+import Spinner from "../../../spinner/Spinner";
 
-const Programme = memo(() => {
-  const { ward: programmeData } = useGetStudentById("programme");
-  const [data, setData] = useState([]);
-  const [isEdit, setIsEdit] = useState(false);
+const Biodata = memo(() => {
+  const { ward: biodata } = useGetStudentById("biodata");
   const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState();
+  const [isEdit, setIsEdit] = useState(false);
   const { isAdmin } = useIsAdmin();
   const { studentID } = useParams();
 
-  // TODO: Extract yearRange to a global state
+  // TODO: extract year range to a global variable
   const yearRange = "2022-2023";
 
   useEffect(() => {
-    setData(refineProgrammeObject(programmeData));
-  }, [programmeData]);
-
-  const handleInputEdit = (e, index) => {
-    const { value } = e.target;
-    const newData = [...data];
-    newData[index].value = value;
-    setData(newData);
-  };
+    setData(refineWardObject(biodata));
+  }, [biodata]);
 
   const override = {
     display: "block",
@@ -33,11 +26,20 @@ const Programme = memo(() => {
     borderColor: "white",
   };
 
+  // function to handle input edit
+  const handleInputEdit = (e, index) => {
+    const { value } = e.target;
+    const newData = [...data];
+    newData[index].value = value;
+    setData(newData);
+  };
+
+  // function to handle biodata update
   const handleBiodataUpdate = async () => {
     try {
       setIsLoading(true);
-      const UpdatedprogrammeData = convertDataToProgrammeFormat(data);
-      await updateStudentProgramme(yearRange, studentID, UpdatedprogrammeData);
+      const updatedBiodataData = convertDataToWardFormat(data);
+      await updateStudentBiodata(yearRange, studentID, updatedBiodataData);
       setIsEdit(false);
       setIsLoading(false);
     } catch (err) {
@@ -46,21 +48,21 @@ const Programme = memo(() => {
     }
   };
 
-  // function to refine programme to array of object labels and values
-  function refineProgrammeObject(programmeData) {
-    const refinedProgramme = Object.keys(programmeData).map((key) => {
+  // function to refine ward object
+  function refineWardObject(biodata) {
+    const refinedWard = Object.keys(biodata).map((key) => {
       const label = key
         .split(/(?=[A-Z])/)
         .join(" ")
         .toLowerCase();
-      const value = programmeData[key];
+      const value = biodata[key];
       return { label, value };
     });
-    return refinedProgramme;
+    return refinedWard;
   }
 
-  // function to convert data to programme exact object format
-  function convertDataToProgrammeFormat(data) {
+  // function to convert data to ward object format
+  function convertDataToWardFormat(data) {
     return data?.reduce((acc, curr) => {
       const { label, value } = curr;
       const key = label
@@ -75,16 +77,16 @@ const Programme = memo(() => {
   }
 
   return (
-    <div className="programme bg-gray-900 rounded-2xl relative">
+    <div className="biodata relative bg-gray-900 rounded-2xl">
       {isEdit && isAdmin && (
-        <div className="editstatus absolute bg-red-500 text-black -top-4 px-4 text-[12px] capitalize left-2 select-none  ">
+        <div className="editstatus absolute bg-red-500 text-black -top-2 px-4 text-[12px] capitalize left-2 select-none  ">
           {" "}
-          currently editing programme
+          currently editing biodata
         </div>
       )}
       <header className="bg-gradient-to-r from-slate-800 to-sky-900 p-3 py-5 flex flex-row justify-between items-center rounded-t-2xl w-full">
         <h3 className="text-sm sm:text-base capitalize select-none font-medium  ">
-          programme details
+          Biodata (personal information)
         </h3>
 
         {isAdmin && !isEdit && (
@@ -94,12 +96,12 @@ const Programme = memo(() => {
               isEdit ? "bg-red-900" : ""
             }`}
           >
-            edit programme
+            edit biodata
           </button>
         )}
 
         {isEdit && isAdmin && (
-          <div className="btns btns flex flex-row gap-3">
+          <div className="btns flex flex-row gap-3">
             <button
               onClick={() => handleBiodataUpdate()}
               className={`text-sm sm:text-base capitalize select-none rounded-xl hover:bg-gray-800 bg-gray-900 p-3 ${
@@ -111,7 +113,7 @@ const Programme = memo(() => {
               `}
             >
               {!isLoading ? (
-                "save programme"
+                "save biodata"
               ) : (
                 <span className="flex flex-row gap-4 items-center">
                   <Spinner
@@ -137,30 +139,29 @@ const Programme = memo(() => {
         )}
       </header>
 
-      {/* main */}
-      <main className="p-5 grid grid-cols-1 gap-5 md:grid md:grid-cols-3">
-        {data?.map((item, index) => {
-          return (
-            <div key={index} className="programmeDetails">
-              <label
-                className="text-sm sm:text-base capitalize select-none  text-gray-400 font-medium"
-                htmlFor="sitting"
-              >
-                {item.label}
-              </label>
-              <input
-                type="text"
-                disabled={isEdit && isAdmin ? false : true}
-                className="studentInputClass bg-slate-800 border-slate-800 text-gray-400"
-                value={item.value}
-                onChange={(e) => handleInputEdit(e, index)}
-              />
-            </div>
-          );
-        })}
-      </main>
+      <ul className="p-5 grid grid-cols-1 gap-5  md:grid md:grid-cols-3">
+        {data?.map((data, index) => (
+          <div key={index}>
+            <label
+              className="text-sm sm:text-base capitalize select-none  text-gray-400 font-medium"
+              htmlFor={data.value}
+            >
+              {data.label}
+            </label>
+            <input
+              type="text"
+              disabled={isEdit && isAdmin ? false : true}
+              name={data.value}
+              id={data.value}
+              value={data.value}
+              onChange={(e) => handleInputEdit(e, index)}
+              className="studentInputClass bg-slate-800 border-slate-800 text-gray-400"
+            />
+          </div>
+        ))}
+      </ul>
     </div>
   );
 });
 
-export default Programme;
+export default Biodata;

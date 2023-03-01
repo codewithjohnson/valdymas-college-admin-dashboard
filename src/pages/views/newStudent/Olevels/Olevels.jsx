@@ -1,6 +1,6 @@
 // Components
 import { memo } from "react";
-import OlevelForm from "../../../../components/forms/olevels";
+import OlevelForm from "../../../../components/forms/olevels/Olevels";
 
 const OlevelsPage = () => {
   return (

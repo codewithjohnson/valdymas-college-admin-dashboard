@@ -1,32 +1,25 @@
 import { memo, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useIsAdmin } from "../../../../hooks/useAdmin";
 import { useGetStudentById } from "../../../../hooks/usegetStudentById";
-import { updateStudentBiodata } from "../../../../services/firestore/students/students";
-import Spinner from "../../../spinner";
+import { useIsAdmin } from "../../../../hooks/useAdmin";
+import Spinner from "../../../spinner/Spinner";
+import { updateStudentProgramme } from "../../../../services/firestore/students/students";
 
-const Biodata = memo(() => {
-  const { ward: biodata } = useGetStudentById("biodata");
-  const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState();
+const Programme = memo(() => {
+  const { ward: programmeData } = useGetStudentById("programme");
+  const [data, setData] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { isAdmin } = useIsAdmin();
   const { studentID } = useParams();
 
-  // TODO: extract year range to a global variable
+  // TODO: Extract yearRange to a global state
   const yearRange = "2022-2023";
 
   useEffect(() => {
-    setData(refineWardObject(biodata));
-  }, [biodata]);
+    setData(refineProgrammeObject(programmeData));
+  }, [programmeData]);
 
-  const override = {
-    display: "block",
-    margin: "0 auto",
-    borderColor: "white",
-  };
-
-  // function to handle input edit
   const handleInputEdit = (e, index) => {
     const { value } = e.target;
     const newData = [...data];
@@ -34,12 +27,17 @@ const Biodata = memo(() => {
     setData(newData);
   };
 
-  // function to handle biodata update
+  const override = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "white",
+  };
+
   const handleBiodataUpdate = async () => {
     try {
       setIsLoading(true);
-      const updatedBiodataData = convertDataToWardFormat(data);
-      await updateStudentBiodata(yearRange, studentID, updatedBiodataData);
+      const UpdatedprogrammeData = convertDataToProgrammeFormat(data);
+      await updateStudentProgramme(yearRange, studentID, UpdatedprogrammeData);
       setIsEdit(false);
       setIsLoading(false);
     } catch (err) {
@@ -48,21 +46,21 @@ const Biodata = memo(() => {
     }
   };
 
-  // function to refine ward object
-  function refineWardObject(biodata) {
-    const refinedWard = Object.keys(biodata).map((key) => {
+  // function to refine programme to array of object labels and values
+  function refineProgrammeObject(programmeData) {
+    const refinedProgramme = Object.keys(programmeData).map((key) => {
       const label = key
         .split(/(?=[A-Z])/)
         .join(" ")
         .toLowerCase();
-      const value = biodata[key];
+      const value = programmeData[key];
       return { label, value };
     });
-    return refinedWard;
+    return refinedProgramme;
   }
 
-  // function to convert data to ward object format
-  function convertDataToWardFormat(data) {
+  // function to convert data to programme exact object format
+  function convertDataToProgrammeFormat(data) {
     return data?.reduce((acc, curr) => {
       const { label, value } = curr;
       const key = label
@@ -77,16 +75,16 @@ const Biodata = memo(() => {
   }
 
   return (
-    <div className="biodata relative bg-gray-900 rounded-2xl">
+    <div className="programme bg-gray-900 rounded-2xl relative">
       {isEdit && isAdmin && (
-        <div className="editstatus absolute bg-red-500 text-black -top-2 px-4 text-[12px] capitalize left-2 select-none  ">
+        <div className="editstatus absolute bg-red-500 text-black -top-4 px-4 text-[12px] capitalize left-2 select-none  ">
           {" "}
-          currently editing biodata
+          currently editing programme
         </div>
       )}
       <header className="bg-gradient-to-r from-slate-800 to-sky-900 p-3 py-5 flex flex-row justify-between items-center rounded-t-2xl w-full">
         <h3 className="text-sm sm:text-base capitalize select-none font-medium  ">
-          Biodata (personal information)
+          programme details
         </h3>
 
         {isAdmin && !isEdit && (
@@ -96,12 +94,12 @@ const Biodata = memo(() => {
               isEdit ? "bg-red-900" : ""
             }`}
           >
-            edit biodata
+            edit programme
           </button>
         )}
 
         {isEdit && isAdmin && (
-          <div className="btns flex flex-row gap-3">
+          <div className="btns btns flex flex-row gap-3">
             <button
               onClick={() => handleBiodataUpdate()}
               className={`text-sm sm:text-base capitalize select-none rounded-xl hover:bg-gray-800 bg-gray-900 p-3 ${
@@ -113,7 +111,7 @@ const Biodata = memo(() => {
               `}
             >
               {!isLoading ? (
-                "save biodata"
+                "save programme"
               ) : (
                 <span className="flex flex-row gap-4 items-center">
                   <Spinner
@@ -139,29 +137,30 @@ const Biodata = memo(() => {
         )}
       </header>
 
-      <ul className="p-5 grid grid-cols-1 gap-5  md:grid md:grid-cols-3">
-        {data?.map((data, index) => (
-          <div key={index}>
-            <label
-              className="text-sm sm:text-base capitalize select-none  text-gray-400 font-medium"
-              htmlFor={data.value}
-            >
-              {data.label}
-            </label>
-            <input
-              type="text"
-              disabled={isEdit && isAdmin ? false : true}
-              name={data.value}
-              id={data.value}
-              value={data.value}
-              onChange={(e) => handleInputEdit(e, index)}
-              className="studentInputClass bg-slate-800 border-slate-800 text-gray-400"
-            />
-          </div>
-        ))}
-      </ul>
+      {/* main */}
+      <main className="p-5 grid grid-cols-1 gap-5 md:grid md:grid-cols-3">
+        {data?.map((item, index) => {
+          return (
+            <div key={index} className="programmeDetails">
+              <label
+                className="text-sm sm:text-base capitalize select-none  text-gray-400 font-medium"
+                htmlFor="sitting"
+              >
+                {item.label}
+              </label>
+              <input
+                type="text"
+                disabled={isEdit && isAdmin ? false : true}
+                className="studentInputClass bg-slate-800 border-slate-800 text-gray-400"
+                value={item.value}
+                onChange={(e) => handleInputEdit(e, index)}
+              />
+            </div>
+          );
+        })}
+      </main>
     </div>
   );
 });
 
-export default Biodata;
+export default Programme;

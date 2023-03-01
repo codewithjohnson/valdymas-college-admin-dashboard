@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import LoaderFull from "./components/loaderFull";
 import useOnlineStatus from "./hooks/useOnlineStatus";
-import OnlineViewer from "./components/onlineNotify";
+import OnlineViewer from "./components/onlineNotify/OnlineNotifyer";
 
 // hooks
 import { useRedirectAdminStudent } from "./hooks/redirectAdmin";

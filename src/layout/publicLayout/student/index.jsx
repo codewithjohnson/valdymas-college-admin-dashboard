@@ -3,8 +3,8 @@ import { Outlet } from "react-router-dom";
 import Loadable from "../../../components/loadable";
 import { useIsAuthorized } from "../../../hooks/useAuth";
 
-import Navbar from "../../../components/public/navbar";
-const Footer = Loadable(lazy(() => import("../../../components/public/footer")));
+import Navbar from "../../../components/public/navbar/Navbar";
+const Footer = Loadable(lazy(() => import("../../../components/public/footer/Footer")));
 
 const studentLayout = () => {
   useIsAuthorized();

@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useIsAdmin } from "../../../../hooks/useAdmin";
 import { useGetStudentById } from "../../../../hooks/usegetStudentById";
 import { updateStudentOlevels } from "../../../../services/firestore/students/students";
-import Spinner from "../../../spinner";
+import Spinner from "../../../spinner/Spinner";
 
 const Olevels = memo(() => {
   const [isLoading, setIsLoading] = useState(false);

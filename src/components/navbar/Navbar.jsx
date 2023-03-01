@@ -5,7 +5,7 @@ import { useProSidebar } from "react-pro-sidebar";
 import { getCurrentimeOfDay } from "../../utilities/currentDate";
 import { useYearContext } from "../../context/setYears/setYears";
 import { useAuth } from "../../services/auth/auth";
-import AdminSettings from "../adminSettings";
+import AdminSettings from "../adminSettings/AdminSettings";
 
 const Navbar = memo(() => {
   const [showSettings, setShowSettings] = useState(false);

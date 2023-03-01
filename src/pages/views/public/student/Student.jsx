@@ -1,10 +1,10 @@
 import { useIsAuthorized } from "../../../../hooks/useAuth";
 
 // components
-import ProfilePic from "../../../../components/public/student/profile";
-import Biodata from "../../../../components/public/student/biodata";
-import Olevels from "../../../../components/public/student/olevels";
-import Programme from "../../../../components/public/student/programme";
+import ProfilePic from "../../../../components/public/student/profile/Profile";
+import Biodata from "../../../../components/public/student/biodata/Biodata";
+import Olevels from "../../../../components/public/student/olevels/Olevels";
+import Programme from "../../../../components/public/student/programme/Programme";
 
 const Student = () => {
   // check if user is authorized

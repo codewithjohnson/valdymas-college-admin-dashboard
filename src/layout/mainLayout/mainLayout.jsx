@@ -4,8 +4,8 @@ import Loadable from "../../components/Loadable";
 import LoaderFull from "../../components/loaderFull";
 import { useIsAdmin } from "../../hooks/useAdmin";
 
-const Navbar = Loadable(lazy(() => import("../../components/navbar")));
-const Aside = Loadable(lazy(() => import("../../components/sidebar")));
+const Navbar = Loadable(lazy(() => import("../../components/navbar/Navbar")));
+const Aside = Loadable(lazy(() => import("../../components/sidebar/Sidebar")));
 
 const MainLayout = memo(({ children }) => {
   const { isAdmin } = useIsAdmin();
