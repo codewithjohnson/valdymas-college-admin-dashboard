@@ -21,11 +21,21 @@ export const saveAdmin = async (adminID, adminData) => {
   setDoc(adminDocRef, adminData);
 };
 
+// transform the photoURL to a public URL
+const transformPhotoUrl = (photoURL) => {
+  const fileID = photoURL.match(/[-\w]{25,}/); // extract the file ID from the URL
+  if (!fileID) {
+    throw new Error("Invalid photo URL");
+  }
+  const publicURL = `https://drive.google.com/uc?id=${fileID}`;
+  return publicURL;
+};
+
 export const saveAdminToDB = async (adminID, data) => {
   const adminData = {
     name: data.name,
     email: data.email,
-    photoURL: data.PhotoUrl,
+    photoURL: transformPhotoUrl(data.PhotoUrl),
     phoneNumber: data.phoneNumber,
     department: data.department,
     institutionalRole: data.institutionalRole,

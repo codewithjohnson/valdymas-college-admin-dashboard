@@ -1,7 +1,13 @@
-import React from 'react'
+import React from "react";
 
 const AdminProfile = () => {
-  return <div>AdminProfile</div>;
-}
+  return (
+    <div>
+      admin profile
+      {/* profile details */}
+      {/* change password */}
+    </div>
+  );
+};
 
 export default AdminProfile;
