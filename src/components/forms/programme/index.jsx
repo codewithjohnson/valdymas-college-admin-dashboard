@@ -121,7 +121,7 @@ const Programme = () => {
         reset();
 
         // remove stored data
-        localStorage.removeItem("storedStudentData");
+        // localStorage.removeItem("storedStudentData");
 
         // navigate to next page
         const NEXTROUTE = "/students";

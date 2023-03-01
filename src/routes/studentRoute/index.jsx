@@ -6,19 +6,19 @@ const Students = Loadable(lazy(() => import("../../pages/views/students")));
 const AllStudents = Loadable(lazy(() => import("../../pages/views/allStudents")));
 
 // import departments
-const Departments = Loadable(lazy(() => import("../../layout/departments")));
-const Sciences = Loadable(lazy(() => import("../../pages/views/departments/sciences")));
-const Arts = Loadable(lazy(() => import("../../pages/views/departments/arts")));
+const Departments = Loadable(lazy(() => import("../../layout/departments/departmentLayout")));
+const Sciences = Loadable(lazy(() => import("../../pages/views/departments/sciences/Sciences")));
+const Arts = Loadable(lazy(() => import("../../pages/views/departments/arts/Arts")));
 const SocialSciences = Loadable(
-  lazy(() => import("../../pages/views/departments/social-sciences"))
+  lazy(() => import("../../pages/views/departments/social-sciences/SocialSciences"))
 );
 
 // import from new student folder
-const NewStudent = Loadable(lazy(() => import("../../pages/views/newStudent")));
-const Biodata = Loadable(lazy(() => import("../../pages/views/newStudent/biodata")));
-const Programme = Loadable(lazy(() => import("../../pages/views/newStudent/programme")));
-const Olevels = Loadable(lazy(() => import("../../pages/views/newStudent/Olevels")));
-const UploadPage = Loadable(lazy(() => import("../../pages/views/newStudent/upload")));
+const NewStudent = Loadable(lazy(() => import("../../pages/views/newStudent/NewStudent")));
+const Biodata = Loadable(lazy(() => import("../../pages/views/newStudent/biodata/Biodata")));
+const Programme = Loadable(lazy(() => import("../../pages/views/newStudent/programme/Programme")));
+const Olevels = Loadable(lazy(() => import("../../pages/views/newStudent/Olevels/Olevels")));
+const UploadPage = Loadable(lazy(() => import("../../pages/views/newStudent/upload/Upload")));
 
 export const studentRoute = {
   path: "students",

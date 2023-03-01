@@ -8,7 +8,7 @@ import { useRedirectAdminStudent } from "./hooks/redirectAdmin";
 import { useIsAdmin } from "./hooks/useAdmin";
 
 // layout
-import MainLayout from "./layout/mainLayout";
+import MainLayout from "./layout/mainLayout/mainLayout";
 
 const App = () => {
   const isAdmin = useIsAdmin();

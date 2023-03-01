@@ -1,9 +1,9 @@
 import { lazy } from "react";
 import Loadable from "../../components/loadable/";
 import { studentRoute } from "../studentRoute";
-import { adminRoute } from "../adminRoute";
+import { adminRoute } from "../adminRoute/adminRoute";
 
-const App = Loadable(lazy(() => import("../../App")));
+import App from "../../layout/appLayout";
 const Dashboard = Loadable(lazy(() => import("../../pages/views/dashboard")));
 const ErrorPage = Loadable(
   lazy(() => import("../../pages/errorPage/Errorpage"))

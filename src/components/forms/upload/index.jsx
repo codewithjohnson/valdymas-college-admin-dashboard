@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useOutletContext, useNavigate, useLocation } from "react-router-dom";
 import { useStudentContext } from "../../../context/students";
-import DataCapture from "../../../components/dataTable/data-capture";
+import DataCapture from "../../dataTable/data-capture/DataCapture";
 import { useUploadFormHooks } from "../../../schemas/upload";
 
 const UploadForm = () => {

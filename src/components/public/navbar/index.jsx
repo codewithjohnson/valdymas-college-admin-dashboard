@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../../services/auth/auth";
 
 // assets
-import logo from "../../../assets/images/logo.png";
+import logo from "../../../assets/images/logo.webp";
 
 // utilities
 import { publicMenuItems } from "../../../utilities/public/menu";
