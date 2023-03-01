@@ -1,10 +1,22 @@
 import axios from "axios";
 
 export const getAdminAuthID = async (data) => {
+  // transform the photoURL to a public URL
+  const transformPhotoUrl = (photoURL) => {
+    const fileID = photoURL.match(/[-\w]{25,}/); // extract the file ID from the URL
+    if (!fileID) {
+      throw new Error("Invalid photo URL");
+    }
+    const publicURL = `https://drive.google.com/uc?id=${fileID}`;
+    console.log(publicURL);
+    return publicURL;
+  };
+
+  // create a new admin object
   const newAdminAuth = {
     displayName: data.name,
     email: data.email,
-    photoURL: data.PhotoUrl,
+    photoURL: transformPhotoUrl(data.PhotoUrl),
     phoneNumber: data.phoneNumber,
     password: "Valdymas2016",
   };

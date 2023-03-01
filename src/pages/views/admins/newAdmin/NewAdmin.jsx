@@ -137,10 +137,10 @@ const NewAdmin = () => {
           </label>
 
           <input
-            name="text"
+            type="text"
+            name="PhotoUrl"
             id="PhotoUrl"
             placeholder="link to photo"
-            type="PhotoUrl"
             {...newAdminRegister("PhotoUrl")}
             className="studentInputClass"
           />
