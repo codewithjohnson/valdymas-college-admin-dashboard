@@ -7,7 +7,6 @@ const AdminSettings = () => {
   const navigate = useNavigate();
 
   const handleUserLogout = () => {
-    console.log("logout");
     HandleSignOut();
     navigate("/auth/login");
   };
