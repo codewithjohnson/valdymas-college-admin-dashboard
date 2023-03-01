@@ -2,7 +2,9 @@ import { lazy } from "react";
 import Loadable from "../../components/Loadable/Loadable";
 
 // admin pages
-const AdminLayout = Loadable(lazy(() => import("../../layout/adminLayout/adminLayout")));
+const AdminLayout = Loadable(
+  lazy(() => import("../../layout/adminLayout/adminLayout"))
+);
 const NewAdmin = Loadable(
   lazy(() => import("../../pages/views/admins/newAdmin/NewAdmin"))
 );
@@ -11,6 +13,9 @@ const AllAdmins = Loadable(
 );
 const ChangePassword = Loadable(
   lazy(() => import("../../pages/views/admins/changePwd/ChangePwd"))
+);
+const AdminProfile = Loadable(
+  lazy(() => import("../../pages/views/admins/updateProfile/AdminProfile"))
 );
 
 export const adminRoute = {
@@ -22,6 +27,6 @@ export const adminRoute = {
       element: <AllAdmins />,
     },
     { path: "new", element: <NewAdmin /> },
-    { path: "newPassword", element: <ChangePassword /> },
+    { path: "admin/profile", element: <AdminProfile /> },
   ],
 };

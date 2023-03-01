@@ -6,8 +6,8 @@ import { useStudentContext } from "../../../context/students";
 import { useYearContext } from "../../../context/setYears/setYears";
 
 // components
-import SelectInput from "../../../components/selectInput";
-import Spinner from "../../../components/spinner/Spinner";
+import SelectInput from "../../selectInput";
+import Spinner from "../../spinner/Spinner";
 
 // firestore
 import {

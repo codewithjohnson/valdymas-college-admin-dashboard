@@ -1,5 +1,5 @@
 import React from "react";
-import ProgrammeForm from "../../../../components/forms/programme";
+import ProgrammeForm from "../../../../components/forms/programme/Programme";
 
 const Programme = () => {
   return (

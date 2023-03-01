@@ -8,7 +8,6 @@ export const getAdminAuthID = async (data) => {
       throw new Error("Invalid photo URL");
     }
     const publicURL = `https://drive.google.com/uc?id=${fileID}`;
-    console.log(publicURL);
     return publicURL;
   };
 
