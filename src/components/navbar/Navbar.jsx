@@ -50,7 +50,11 @@ const Navbar = memo(() => {
             to="/"
             className="hidden sm:flex gap-2 justify-between items-center select-none"
           >
-            <img src={logo} alt="" style={{ width: "30px", height: "30px" }} />
+            <img
+              src={logo}
+              alt="logo"
+              className="w-[25px] h-[25px] sm:h-[30px] sm:w-[30px]"
+            />
             <p className="text-xl font-semibold font-firaSans text-gray-700">
               VCAPS
             </p>

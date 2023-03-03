@@ -88,7 +88,11 @@ const Login = () => {
 
         <div className="form__container px-7">
           <div className="image  flex flex-row justify-center items-center mb-6">
-            <img src={logo} alt="" className="w-[80px] h-[80px]" />
+            <img
+              src={logo}
+              alt=""
+              className="h-[60px] w-[60px]  sm:w-[80px] sm:h-[80px]"
+            />
           </div>
 
           <div className="select">
