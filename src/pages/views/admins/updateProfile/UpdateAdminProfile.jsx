@@ -33,7 +33,7 @@ const UpdateAdminProfile = () => {
             }
             className="p-3 flex flex-row gap-2"
           >
-            <span class="material-symbols-outlined">lock</span>
+            <span className="material-symbols-outlined">lock</span>
             <span> change password</span>
           </NavLink>
         </ul>

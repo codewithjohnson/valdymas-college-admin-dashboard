@@ -1,6 +1,21 @@
 import React from "react";
+import { changePasswordFormHooks } from "../../../schemas/changePassword";
 
 const Password = () => {
+  const {
+    register,
+    reset,
+    handleSubmit,
+    errors,
+    isValid,
+    isSubmitted,
+    isSubmitSuccessful,
+  } = changePasswordFormHooks();
+
+  const onFormSubmit = (data) => {
+    console.log(data);
+  };
+
   return (
     <div className="font-poppins">
       <header className="flex items-center justify-start gap-5  border border-dashed border-red-400 p-3">
@@ -21,7 +36,7 @@ const Password = () => {
           <p className="capitalize text-gray-900 text-sm">change password</p>
         </header>
 
-        <form className="p-4 ">
+        <form onSubmit={handleSubmit(onFormSubmit)} className="p-4 ">
           <div className="flex flex-col gap-5 sm:flex sm:flex-row">
             {/* current password */}
             <div className="password">
@@ -30,6 +45,7 @@ const Password = () => {
                 id="currentPassword"
                 placeholder="current password"
                 type="text"
+                {...register("currentPassword")}
                 className="studentInputClass"
               />
             </div>
@@ -41,6 +57,7 @@ const Password = () => {
                 id="newPassword"
                 placeholder="new password"
                 type="text"
+                {...register("newPassword")}
                 className="studentInputClass"
               />
             </div>
@@ -52,13 +69,17 @@ const Password = () => {
                 id="confirmNewPassword"
                 placeholder="confirm password"
                 type="text"
+                {...register("confirmNewPassword")}
                 className="studentInputClass"
               />
             </div>
           </div>
 
           <div className="w-full mt-8 flex justify-end items-center">
-            <button className="bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out">
+            <button
+              type="submit"
+              className="bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out"
+            >
               change password
             </button>
           </div>
