@@ -4,8 +4,16 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { nigeriaStates } from "../utilities/nigeria";
 
 export const biodataSchema = object({
-  firstname: string().typeError().trim().min(3).required("First name is required"),
-  lastname: string().typeError().trim().min(3).required("Last name is required"),
+  firstname: string()
+    .typeError()
+    .trim()
+    .min(3)
+    .required("First name is required"),
+  lastname: string()
+    .typeError()
+    .trim()
+    .min(3)
+    .required("Last name is required"),
   middlename: string().typeError().trim().min(3),
   email: string().email().required("Email is required"),
   phoneNumber: string()

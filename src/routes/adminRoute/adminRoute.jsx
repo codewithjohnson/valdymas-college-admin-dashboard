@@ -14,8 +14,10 @@ const AllAdmins = Loadable(
 const ChangePassword = Loadable(
   lazy(() => import("../../pages/views/admins/changePwd/ChangePwd"))
 );
-const AdminProfile = Loadable(
-  lazy(() => import("../../pages/views/admins/updateProfile/AdminProfile"))
+const UpdateAdminProfile = Loadable(
+  lazy(() =>
+    import("../../pages/views/admins/updateProfile/UpdateAdminProfile")
+  )
 );
 
 export const adminRoute = {
@@ -27,6 +29,6 @@ export const adminRoute = {
       element: <AllAdmins />,
     },
     { path: "new", element: <NewAdmin /> },
-    { path: "admin/profile", element: <AdminProfile /> },
+    { path: "admin/profile", element: <UpdateAdminProfile /> },
   ],
 };

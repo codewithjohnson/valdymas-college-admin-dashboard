@@ -14,7 +14,7 @@ const AdminLayout = () => {
           </span>
         </Link>
         <PathArrow />
-        <Link to="/admins">admins</Link>
+        <Link to="/admins" className="text-sm sm:text-base">admins</Link>
         <PathArrow />
         <span className="text-red-900 font-medium">{currentPath}</span>
       </div>
@@ -22,7 +22,7 @@ const AdminLayout = () => {
   };
 
   return (
-    <div className={`w-full h-full bg-white new rounded-2xl font-poppins`}>
+    <div className={`w-full h-full bg-white rounded-2xl font-poppins`}>
       <header
         className={`flex items-center justify-between p-5 border-b border-b-slate-200 bg-black text-gray-100 rounded-t-2xl `}
       >
@@ -34,7 +34,9 @@ const AdminLayout = () => {
           <RelativePath />
         </div>
       </header>
-      <Outlet context={[currentPath, setCurrentPath]} />
+      <main>
+        <Outlet context={[currentPath, setCurrentPath]} />
+      </main>
     </div>
   );
 };
