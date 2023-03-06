@@ -1,6 +1,7 @@
 import { object, string, number, boolean, date } from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
 
 export const changePasswordSchema = object({
   currentPassword: string()
@@ -9,11 +10,7 @@ export const changePasswordSchema = object({
     .required("First name is required"),
 
   newPassword: string().typeError().trim().required("Last name is required"),
-
-  confirmNewPassword: string()
-    .typeError()
-    .trim()
-    .required("Last name is required"),
+  confirmNewPassword: string().typeError().trim().required("Email is required"),
 });
 
 // change password form hooks

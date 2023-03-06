@@ -28,13 +28,14 @@ export const generateStudentId = async (setYearRange, department) => {
 
 export const getStudentIdFromAdmin = async (setYearRange, studentData) => {
   const { biodata, programme } = studentData;
-  const { firstname, lastname, email } = biodata;
+  const { firstname, lastname, email, phoneNumber } = biodata;
   const { department } = programme;
 
   const studentID = await generateStudentId(setYearRange, department);
   const newStudent = {
     displayName: `${firstname} ${lastname}`,
     email: email,
+    phoneNumber: phoneNumber,
     studentID: studentID,
     password: `${lastname}123`,
   };

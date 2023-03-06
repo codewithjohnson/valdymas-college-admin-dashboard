@@ -4,6 +4,7 @@ import { getColumns, getRows } from "../../../utilities/studentsTable";
 import { useNavigate } from "react-router-dom";
 import { deleteStudentDoc } from "../../../services/firestore/students/students";
 import { useYearContext } from "../../../context/setYears/setYears";
+import axios from "axios";
 
 const StudentsTable = memo(({ studentsData }) => {
   const navigate = useNavigate();
@@ -11,12 +12,31 @@ const StudentsTable = memo(({ studentsData }) => {
   const { state: yearState } = useYearContext();
   const { setYearRange: currentYear } = yearState;
 
+  // edit student profile
   const HandleEditStudentProfile = (studentID) => {
     const studentProfilePath = `/student/${studentID}`;
     navigate(studentProfilePath);
   };
+
+  // delete student profile
   const HandleDeleteStudentProfile = async (studentID) => {
     await deleteStudentDoc(currentYear, studentID);
+    try {
+      const student = { uid: studentID };
+      const res = await axios.post(
+        "http://localhost:3000/api/students/delete",
+        student
+      );
+      res.status === 200 && alert("student deleted");
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data.message);
+      } else if (error.request) {
+        alert(error.request);
+      } else {
+        alert(error);
+      }
+    }
   };
 
   return (
