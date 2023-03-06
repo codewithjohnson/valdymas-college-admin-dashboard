@@ -14,7 +14,7 @@ export const initializeServices = () => {
   const firestore = getFirestore(firebaseApp);
 
   // Note: getAuth() drastically increases the bundle size,
-  const auth = getAuth(firebaseApp);
+  const auth = initializeAuth(firebaseApp);
 
   const storage = getStorage(firebaseApp);
   return { firestore, auth, storage, isConfigured };
@@ -28,12 +28,12 @@ export const connectToEmulators = ({ auth, firestore, storage }) => {
 export const getServices = () => {
   const services = initializeServices();
 
-  // if (!services.isConfigured) {
-  //   connectToEmulators(services);
-  // }
-  // if (process.env.NODE_ENV === "development") {
-  //   console.log("Firebase services initialized in development mode");
-  // }
+  if (!services.isConfigured) {
+    connectToEmulators(services);
+  }
+  if (process.env.NODE_ENV === "development") {
+    console.log("Firebase services initialized in development mode");
+  }
 
   const { firestore, auth, storage } = services;
   return { firestore, auth, storage };

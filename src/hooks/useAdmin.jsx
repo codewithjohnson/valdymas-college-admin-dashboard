@@ -20,5 +20,5 @@ export const useIsAdmin = () => {
     checkAdmin();
   }, [user]);
 
-  return { isAdmin: true };
+  return { isAdmin };
 };

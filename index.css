@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components {
+  .submenuTitle {
+    @apply text-gray-900  hover:text-purple-700;
+  }
+  .submenuText {
+    @apply px-10 text-gray-500 text-start;
+  }
+  .submenuIcon {
+    @apply text-[18px] text-gray-500;
+  }
+  .studentInputClass {
+    @apply block w-full p-3 mt-2 text-sm border rounded-lg shadow-sm bg-[#FAFAFA] placeholder-slate-300 border-purple-300 focus:outline-none focus:ring focus:ring-indigo-100 hover:border-indigo-800;
+  }
+  .errorMessage {
+    @apply text-[11px] text-red-900 mt-2;
+  }
+  .myDataGridRow {
+    @apply font-poppins  text-slate-600;
+  }
+  .myDataGridCell {
+    @apply text-center;
+  }
+  .cellID {
+    @apply text-black;
+  }
+  .cellGenderMale {
+    @apply capitalize text-blue-500;
+  }
+  .cellGenderFemale {
+    @apply capitalize text-red-500;
+  }
+  .cellName {
+    @apply capitalize;
+  }
+
+  .publicHeader {
+    grid-area: header;
+  }
+  .publicMain {
+    grid-area: main;
+  }
+  .publicFooter {
+    grid-area: footer;
+  }
+
+  .publicLayout {
+    display: grid;
+    grid-template-areas:
+      "header header header"
+      "main main main"
+      "footer footer footer";
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 120px 1fr 100px;
+  }
+
+  .profile__picture {
+    grid-area: profilePicture;
+  }
+  .biodata {
+    grid-area: biodata;
+  }
+  .olevels {
+    grid-area: olevel;
+  }
+  .programme {
+    grid-area: programme;
+  }
+
+  .studentPageGrid {
+    display: grid;
+    grid-template-areas:
+      "profilePicture biodata biodata"
+      ". olevel olevel"
+      ". programme programme";
+    grid-template-columns: 350px 1fr;
+  }
+
+  .studentPageGridMobile {
+    display: grid;
+    grid-template-areas:
+      "profilePicture"
+      "biodata"
+      "olevel"
+      "programme";
+    grid-template-columns: 1fr;
+  }
+}
