@@ -1,5 +1,5 @@
 import { memo, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLoaderData } from "react-router-dom";
 import { useIsAdmin } from "../../../../hooks/useAdmin";
 import { useGetStudentById } from "../../../../hooks/usegetStudentById";
 import { updateStudentBiodata } from "../../../../services/firestore/students/students";

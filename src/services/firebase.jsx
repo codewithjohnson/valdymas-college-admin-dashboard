@@ -1,6 +1,10 @@
 import { initializeApp, getApps } from "firebase/app";
-import { getFirestore, connectFirestoreEmulator, initializeFirestore } from "firebase/firestore";
-import { connectAuthEmulator, initializeAuth } from "firebase/auth";
+import {
+  getFirestore,
+  connectFirestoreEmulator,
+  initializeFirestore,
+} from "firebase/firestore";
+import { connectAuthEmulator, initializeAuth, getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 import { firebaseConfig } from "./firebase.config";
 
@@ -10,7 +14,7 @@ export const initializeServices = () => {
   const firestore = getFirestore(firebaseApp);
 
   // Note: getAuth() drastically increases the bundle size,
-  const auth = initializeAuth(firebaseApp);
+  const auth = getAuth(firebaseApp);
 
   const storage = getStorage(firebaseApp);
   return { firestore, auth, storage, isConfigured };
