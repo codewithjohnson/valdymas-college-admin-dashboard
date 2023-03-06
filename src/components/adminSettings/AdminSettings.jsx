@@ -15,7 +15,7 @@ const AdminSettings = () => {
     <div className="bg-white rounded-lg text-gray-600  h-full font-poppins py-4 border-b-2 border-b-green-300 px-3">
       <main className="w-full h-full">
         <Link
-          to="admins/admin/profile"
+          to="admins/admin"
           className="flex py-3 flex-row items-center gap-5 px-3  mb-4 bg-green-50 hover:text-green-700 hover:bg-green-100"
         >
           {/* password change */}

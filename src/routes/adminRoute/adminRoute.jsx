@@ -20,6 +20,10 @@ const UpdateAdminProfile = Loadable(
   )
 );
 
+const AdminProfile = Loadable(
+  lazy(() => import("../../pages/views/admins/adminProfile/AdminProfile"))
+);
+
 export const adminRoute = {
   path: "/admins",
   element: <AdminLayout />,
@@ -29,6 +33,19 @@ export const adminRoute = {
       element: <AllAdmins />,
     },
     { path: "new", element: <NewAdmin /> },
-    { path: "admin/profile", element: <UpdateAdminProfile /> },
+    {
+      path: "admin",
+      element: <UpdateAdminProfile />,
+      children: [
+        {
+          path: "profile",
+          element: <AdminProfile />,
+        },
+        {
+          path: "password",
+          element: <ChangePassword />,
+        },
+      ],
+    },
   ],
 };

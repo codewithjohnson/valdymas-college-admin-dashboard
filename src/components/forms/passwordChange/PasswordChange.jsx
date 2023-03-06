@@ -21,38 +21,46 @@ const Password = () => {
           <p className="capitalize text-gray-900 text-sm">change password</p>
         </header>
 
-        <form className="p-4  flex flex-col gap-5 sm:flex sm:flex-row">
-          {/* current password */}
-          <div className="password">
-            <input
-              name="currentPassword"
-              id="currentPassword"
-              placeholder="current password"
-              type="text"
-              className="studentInputClass"
-            />
+        <form className="p-4 ">
+          <div className="flex flex-col gap-5 sm:flex sm:flex-row">
+            {/* current password */}
+            <div className="password">
+              <input
+                name="currentPassword"
+                id="currentPassword"
+                placeholder="current password"
+                type="text"
+                className="studentInputClass"
+              />
+            </div>
+
+            {/* new password */}
+            <div className="password">
+              <input
+                name="newPassword"
+                id="newPassword"
+                placeholder="new password"
+                type="text"
+                className="studentInputClass"
+              />
+            </div>
+
+            {/* new password */}
+            <div className="password">
+              <input
+                name="confirmNewPassword"
+                id="confirmNewPassword"
+                placeholder="confirm password"
+                type="text"
+                className="studentInputClass"
+              />
+            </div>
           </div>
 
-          {/* new password */}
-          <div className="password">
-            <input
-              name="newPassword"
-              id="newPassword"
-              placeholder="new password"
-              type="text"
-              className="studentInputClass"
-            />
-          </div>
-
-          {/* new password */}
-          <div className="password">
-            <input
-              name="confirmNewPassword"
-              id="confirmNewPassword"
-              placeholder="confirm password"
-              type="text"
-              className="studentInputClass"
-            />
+          <div className="w-full mt-8 flex justify-end items-center">
+            <button className="bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out">
+              change password
+            </button>
           </div>
         </form>
       </div>

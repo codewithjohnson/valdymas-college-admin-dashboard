@@ -1,59 +1,48 @@
-import React, { useState, lazy } from "react";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Box from "@mui/material/Box";
-import TabPanel from "../../../../components/tabs/TabPanel";
-import Loadable from "../../../../components/loadable/Loadable";
-const ChangePassword = Loadable(lazy(() => import("../changePwd/ChangePwd")));
-const AdminProfile = Loadable(
-  lazy(() => import("../../admins/adminProfile/AdminProfile"))
-);
+import { useEffect } from "react";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 
 const UpdateAdminProfile = () => {
-  const [value, setValue] = useState(0);
+  const navigate = useNavigate();
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  useEffect(() => {
+    navigate("/admins/admin/profile");
+  }, []);
 
   return (
-    <Box sx={{ width: "100%", height: "100%", backgroundColor: "white" }}>
-      <Box sx={{ borderBottom: 1, borderColor: "divider", paddingTop: "20px" }}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-          scrollButtons="auto"
-        >
-          <Tab
-            label="profile"
-            iconPosition="start"
-            {...a11yProps(0)}
-            sx={{ textTransform: "capitalize", fontWeight: "bold" }}
-          />
-          <Tab
-            label="change password"
-            iconPosition="start"
-            {...a11yProps(1)}
-            sx={{ textTransform: "capitalize", fontWeight: "bold" }}
-          />
-        </Tabs>
-      </Box>
-      <TabPanel value={value} index={0}>
-        <AdminProfile />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <ChangePassword />
-      </TabPanel>
-    </Box>
+    <div>
+      <nav className="tabs border-b border-b-slate-200">
+        <ul className="flex flex-row gap-4 mt-5 capitalize px-4">
+          <NavLink
+            to="/admins/admin/profile"
+            style={({ isActive }) =>
+              isActive ? { color: "#4B9CD3" } : { color: "black" }
+            }
+            className="p-3 flex flex-row gap-2"
+          >
+            <span className="material-symbols-outlined">person</span>
+            <span>Profile</span>
+          </NavLink>
+          <NavLink
+            to="/admins/admin/password"
+            style={({ isActive }) =>
+              isActive
+                ? {
+                    color: "#fd5c63",
+                  }
+                : { color: "black" }
+            }
+            className="p-3 flex flex-row gap-2"
+          >
+            <span class="material-symbols-outlined">lock</span>
+            <span> change password</span>
+          </NavLink>
+        </ul>
+      </nav>
+      <main className="mt-4 p-4">
+        <Outlet />
+      </main>
+    </div>
   );
 };
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
 
 export default UpdateAdminProfile;
