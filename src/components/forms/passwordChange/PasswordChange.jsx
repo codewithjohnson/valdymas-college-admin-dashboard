@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { changePasswordFormHooks } from "../../../schemas/changePassword";
+import Spinner from "../../spinner/Spinner";
 
 const Password = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const override = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "black",
+  };
+
   const {
     register,
     reset,
@@ -12,8 +21,18 @@ const Password = () => {
     isSubmitSuccessful,
   } = changePasswordFormHooks();
 
-  const onFormSubmit = (data) => {
-    console.log(data);
+  useEffect(() => {
+    isSubmitSuccessful && isSubmitted && !isLoading && reset();
+  }, [isLoading, isSubmitSuccessful, isSubmitted]);
+
+  const onFormSubmit = async (data) => {
+    try {
+      setIsLoading(true);
+      setIsLoading(false);
+    } catch (err) {
+      setIsLoading(false);
+      console.log(err);
+    }
   };
 
   return (
@@ -48,6 +67,11 @@ const Password = () => {
                 {...register("currentPassword")}
                 className="studentInputClass"
               />
+              {errors?.currentPassword && (
+                <p role="alert" className="errorMessage">
+                  {errors?.currentPassword.message}
+                </p>
+              )}
             </div>
 
             {/* new password */}
@@ -60,6 +84,11 @@ const Password = () => {
                 {...register("newPassword")}
                 className="studentInputClass"
               />
+              {errors?.newPassword && (
+                <p role="alert" className="errorMessage">
+                  {errors?.newPassword.message}
+                </p>
+              )}
             </div>
 
             {/* new password */}
@@ -72,15 +101,22 @@ const Password = () => {
                 {...register("confirmNewPassword")}
                 className="studentInputClass"
               />
+              {errors?.confirmNewPassword && (
+                <p role="alert" className="errorMessage">
+                  {errors?.confirmNewPassword.message}
+                </p>
+              )}
             </div>
           </div>
 
           <div className="w-full mt-8 flex justify-end items-center">
             <button
+              disabled={isLoading}
               type="submit"
               className="bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out"
             >
-              change password
+              <Spinner isLoading={isLoading} override={override} size={20} />
+              <span>change password</span>
             </button>
           </div>
         </form>

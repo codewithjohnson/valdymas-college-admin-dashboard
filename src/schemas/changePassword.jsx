@@ -1,16 +1,23 @@
-import { object, string, number, boolean, date } from "yup";
+// import { object, string, number, boolean, date } from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
-export const changePasswordSchema = object({
-  currentPassword: string()
+export const changePasswordSchema = Yup.object().shape({
+  currentPassword: Yup.string()
     .typeError()
     .trim()
     .required("First name is required"),
-
-  newPassword: string().typeError().trim().required("Last name is required"),
-  confirmNewPassword: string().typeError().trim().required("Email is required"),
+  newPassword: Yup.string()
+    .typeError()
+    .trim()
+    .required("Last name is required"),
+  confirmNewPassword: Yup.string()
+    .typeError()
+    .trim()
+    .test("passwords-match", "Passwords must match", function (value) {
+      return this.parent.newPassword === value;
+    }),
 });
 
 // change password form hooks
