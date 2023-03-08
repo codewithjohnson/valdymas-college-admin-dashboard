@@ -5,9 +5,6 @@ import { useAuth } from "../../../services/auth/auth";
 // assets
 import logo from "../../../assets/images/logo.webp";
 
-// utilities
-import { publicMenuItems } from "../../../utilities/public/menu";
-
 // hooks
 import { useIsAuthorized } from "../../../hooks/useAuth";
 import { useIsAdmin } from "../../../hooks/useAdmin";
@@ -15,7 +12,6 @@ import { useIsAdmin } from "../../../hooks/useAdmin";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
-  const menuLinks = publicMenuItems;
 
   // get auth params
   const { HandleSignOut } = useAuth();
@@ -48,13 +44,6 @@ const Navbar = () => {
       }
     });
   }, [isOpen]);
-
-  // handle menu items
-  const HandleOnclick = (link) => {
-    if (link.name === "logout") {
-      HandleSignOut();
-    }
-  };
 
   return (
     <nav
@@ -132,10 +121,18 @@ const Navbar = () => {
 
           {/* profile */}
           <Link
-            to="/profile"
+            to="/student/:studentID/profile"
             className={`hover:text-orange-400 px-5 py-5 cursor-pointer hover:bg-slate-800 $`}
           >
-            profile
+            updates
+          </Link>
+
+          {/* Logout */}
+          <Link
+            onClick={() => HandleSignOut()}
+            className={`hover:text-orange-400 px-5 py-5 cursor-pointer hover:bg-slate-800 $`}
+          >
+            logout
           </Link>
         </ul>
       </div>

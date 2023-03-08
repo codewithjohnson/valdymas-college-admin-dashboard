@@ -10,6 +10,10 @@ const StudentDocs = Loadable(
   lazy(() => import("../../../pages/views/public/documents/Documents"))
 );
 
+const Profile = Loadable(
+  lazy(() => import("../../../pages/views/public/student/Profile"))
+);
+
 export const studentRoute = {
   path: "/student/:studentID",
   element: <StudentLayout />,
@@ -21,6 +25,10 @@ export const studentRoute = {
     {
       path: "documents",
       element: <StudentDocs />,
+    },
+    {
+      path: "profile",
+      element: <Profile />,
     },
   ],
 };

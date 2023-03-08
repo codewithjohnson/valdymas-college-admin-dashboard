@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { changePasswordFormHooks } from "../../../schemas/changePassword";
 import Spinner from "../../spinner/Spinner";
+import { useAuth } from "../../../services/auth/auth";
+import { updatePassword } from "firebase/auth";
 
 const Password = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const { user, HandleSignOut } = useAuth();
 
   const override = {
     display: "block",
     margin: "0 auto",
-    borderColor: "black",
+    borderColor: "white",
   };
 
   const {
@@ -28,10 +31,13 @@ const Password = () => {
   const onFormSubmit = async (data) => {
     try {
       setIsLoading(true);
+      await updatePassword(user, data.newPassword);
+      alert("Password Changed Successfully");
+      HandleSignOut();
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
-      console.log(err);
+      alert(err.message);
     }
   };
 
@@ -113,7 +119,7 @@ const Password = () => {
             <button
               disabled={isLoading}
               type="submit"
-              className="bg-green-900 px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out"
+              className="bg-green-900 flex flex-row gap-2 items-center px-5 py-4 capitalize rounded-md text-white  cursor-pointer hover:scale-105 transform transition duration-200 ease-in-out"
             >
               <Spinner isLoading={isLoading} override={override} size={20} />
               <span>change password</span>
