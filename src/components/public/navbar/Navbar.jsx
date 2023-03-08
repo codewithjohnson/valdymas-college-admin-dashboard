@@ -70,46 +70,73 @@ const Navbar = () => {
         </div>
 
         {/* right */}
-
-        <span
-          onClick={() => setIsOpen(!isOpen)}
-          className="material-symbols-outlined text-gray-200 sm:hidden cursor-pointer select-none"
-        >
-          menu
+        <span className={`sm:hidden ${isOpen ? "" : ""}`}>
+          <span
+            onClick={() => setIsOpen(!isOpen)}
+            className={`material-symbols-outlined ${
+              isOpen ? "hidden" : "block"
+            } text-gray-200  cursor-pointer select-none`}
+          >
+            menu
+          </span>
+          <span
+            onClick={() => setIsOpen(!isOpen)}
+            className={`material-symbols-outlined text-white border   border-slate-600 p-1 cursor-pointer select-none ${
+              isOpen ? "block" : "hidden"
+            } hover:text-slate-300 rounded`}
+          >
+            close
+          </span>
         </span>
 
         {/* menu items */}
         <ul
-          className={`text-white transition-all ease-in-out duration-150 gap-x-5 absolute top-[76px] left-0 right-0 sm:flex sm:flex-row sm:static capitalize bg-slate-900 font-poppins select-none ${
+          className={`text-white transition-all ease-in-out duration-150 gap-x-5 flex flex-col absolute top-[76px] left-0 right-0 sm:flex sm:flex-row sm:static capitalize bg-slate-900 font-poppins select-none ${
             isOpen ? "block" : "hidden"
           }`}
         >
-          {menuLinks.map((link, index) => {
-            return (
-              <li
-                key={index}
-                className={`hover:text-orange-400 px-5 py-5 cursor-pointer hover:bg-slate-800 ${
-                  link.permission === "admin" && !isAdmin ? "hidden" : "block"
-                }`}
-                onClick={() => HandleOnclick(link)}
-              >
-                {link.side === "server" ? (
-                  <a target="_blank" href={link.link}>
-                    {link.name}
-                  </a>
-                ) : (
-                  <Link
-                    className={`${
-                      link.permission === "admin" && isAdmin ? "" : ""
-                    }`}
-                    to={link.link}
-                  >
-                    {link.name}
-                  </Link>
-                )}
-              </li>
-            );
-          })}
+          <Link
+            to=""
+            className={`hover:text-orange-400 px-5 py-5 cursor-pointer hover:bg-slate-800 ${
+              !isAdmin ? "hidden" : "block"
+            }`}
+          >
+            Home
+          </Link>
+
+          {/* Dashboard Link */}
+          <Link
+            to="/dashboard"
+            className={`hover:text-orange-400 px-5 py-5 cursor-pointer hover:bg-slate-800 ${
+              !isAdmin ? "hidden" : "block"
+            }`}
+          >
+            dashboard
+          </Link>
+
+          {/* document Link */}
+          <Link
+            to="documents"
+            className={`hover:text-orange-400 px-5 py-5 cursor-pointer hover:bg-slate-800 $`}
+          >
+            documents
+          </Link>
+
+          {/* valdymas intelligence materials */}
+          <a
+            href="https://valdymasintelligence.org/valdymas-institute/"
+            className={`hover:text-orange-400 px-5 py-5 cursor-pointer hover:bg-slate-800 $`}
+          >
+            materials
+          </a>
+
+          {/* profile */}
+          <Link
+            to="/profile"
+            className={`hover:text-orange-400 px-5 py-5 cursor-pointer hover:bg-slate-800 $`}
+          >
+            profile
+          </Link>
         </ul>
       </div>
     </nav>
