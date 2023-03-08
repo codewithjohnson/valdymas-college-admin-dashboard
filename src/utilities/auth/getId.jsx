@@ -40,10 +40,19 @@ export const getStudentIdFromAdmin = async (setYearRange, studentData) => {
     password: `${lastname}123`,
   };
 
-  // send new student data to the backend
-  const res = await axios.post(
-    "http://localhost:3000/api/students/new",
-    newStudent
-  );
-  return res.data;
+  try {
+    const res = await axios.post(
+      "http://localhost:3000/api/students/new",
+      newStudent
+    );
+    return res.data;
+  } catch (error) {
+    if (error.response) {
+      throw new Error(error.response.data.message);
+    } else if (error.request) {
+      throw new Error(error.request);
+    } else {
+      throw new Error(error);
+    }
+  }
 };

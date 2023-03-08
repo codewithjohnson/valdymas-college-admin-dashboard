@@ -18,7 +18,6 @@ const NewAdmin = () => {
     newAdminRegister,
     newAdminReset,
     newAdminHandleSubmit,
-    newAdminSetValue,
     errors,
     newAdminIsValid,
     newAdminIsSubmitted,
