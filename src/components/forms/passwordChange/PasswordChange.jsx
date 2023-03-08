@@ -19,7 +19,6 @@ const Password = () => {
     reset,
     handleSubmit,
     errors,
-    isValid,
     isSubmitted,
     isSubmitSuccessful,
   } = changePasswordFormHooks();
