@@ -32,7 +32,7 @@ const StudentDocs = () => {
     <div className="font-poppins px-5 sm:px-20 text-gray-400  sm:mt-10 w-full">
       <header className="">
         <p className="text-xl sm:text-2xl font-semibold capitalize">
-          Hi {fullName} <span className="text-red-600">!</span>{" "}
+          Hi {fullName || ""} <span className="text-red-600">!</span>{" "}
         </p>
       </header>
 
