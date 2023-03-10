@@ -24,7 +24,7 @@ const StudentsTable = memo(({ studentsData }) => {
     try {
       const student = { uid: studentID };
       const res = await axios.post(
-        "https://us-central1-valdymas-admin-dashboard-8ef0d.cloudfunctions.net/app/api/students/delete",
+        "https://us-central1-api-test-9948d.cloudfunctions.net/app/api/students/delete",
         student
       );
       res.status === 200 && alert("student deleted");

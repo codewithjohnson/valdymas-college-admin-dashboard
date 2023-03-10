@@ -3,7 +3,7 @@ import axios from "axios";
 export const getAdminAuthID = async (data) => {
   // transform the photoURL to a public URL
   const transformPhotoUrl = (photoURL) => {
-    const fileID = photoURL.match(/[-\w]{25,}/); 
+    const fileID = photoURL.match(/[-\w]{25,}/);
     if (!fileID) {
       throw new Error("Invalid photo URL");
     }
@@ -22,7 +22,7 @@ export const getAdminAuthID = async (data) => {
 
   try {
     const res = await axios.post(
-      "https://us-central1-valdymas-admin-dashboard-8ef0d.cloudfunctions.net/app/api/admins/new",
+      "https://us-central1-api-test-9948d.cloudfunctions.net/app/api/admins/new",
       newAdminAuth
     );
     return res.data;
