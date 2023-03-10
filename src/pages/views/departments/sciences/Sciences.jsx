@@ -26,7 +26,7 @@ const Sciences = () => {
     <div className="mt-10">
       {scienceStudents.length <= 0 ? (
         <h1 className="text-center text-xl text-gray-500 mt-10 font-poppins">
-          No student found yet....
+        Loading sciences students...
         </h1>
       ) : (
         <DepartmentTable studentsData={scienceStudents} />

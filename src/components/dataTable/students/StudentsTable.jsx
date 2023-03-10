@@ -24,7 +24,7 @@ const StudentsTable = memo(({ studentsData }) => {
     try {
       const student = { uid: studentID };
       const res = await axios.post(
-        "http://localhost:3000/api/students/delete",
+        "http://127.0.0.1:5001/valdymas-admin-dashboard-8ef0d/us-central1/app/api/students/delete",
         student
       );
       res.status === 200 && alert("student deleted");
@@ -40,7 +40,7 @@ const StudentsTable = memo(({ studentsData }) => {
   };
 
   return (
-    <div className="studentsDataTable h-[500px] w-full">
+    <div className="flex flex-col h-[100%] w-full">
       <DataGrid
         rowHeight={100}
         autoHeight

@@ -42,7 +42,7 @@ export const getStudentIdFromAdmin = async (setYearRange, studentData) => {
 
   try {
     const res = await axios.post(
-      "http://localhost:3000/api/students/new",
+      "http://127.0.0.1:5001/valdymas-admin-dashboard-8ef0d/us-central1/app/api/students/new",
       newStudent
     );
     return res.data;
