@@ -13,7 +13,7 @@ const DepartmentTable = memo(({ studentsData }) => {
   };
 
   return (
-    <div className="studentsDataTable h-[500px] w-full">
+    <div className="studentsDataTable flex flex-col h-[100%] w-full">
       <DataGrid
         rowHeight={100}
         autoHeight
