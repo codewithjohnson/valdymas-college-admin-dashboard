@@ -5,7 +5,6 @@ import { useIsAdmin } from "../../../hooks/useAdmin";
 const Dashboard = () => {
   const { isAdmin } = useIsAdmin();
 
-
   return isAdmin ? (
     <div className="w-full h-full text-sm">
       Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem
