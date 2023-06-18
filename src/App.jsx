@@ -11,6 +11,14 @@ import { useIsAdmin } from "./hooks/useAdmin";
 import MainLayout from "./layout/mainLayout/mainLayout";
 import { useEffect } from "react";
 
+const todos = [
+  {
+    id: 1,
+    title: "todo 1",
+    completed: false,
+  },
+];
+
 const App = () => {
   const isAdmin = useIsAdmin();
   const online = useOnlineStatus();
@@ -25,7 +33,7 @@ const App = () => {
   }, []);
 
   // redirect admin and student
-  useRedirectAdminStudent();
+  // useRedirectAdminStudent();
 
   return isAdmin ? (
     <MainLayout>

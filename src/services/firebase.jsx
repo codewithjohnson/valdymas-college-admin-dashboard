@@ -1,9 +1,6 @@
 import { initializeApp, getApps } from "firebase/app";
-import {
-  getFirestore,
-  connectFirestoreEmulator,
-} from "firebase/firestore";
-import { connectAuthEmulator,  getAuth } from "firebase/auth";
+import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
+import { connectAuthEmulator, getAuth } from "firebase/auth";
 // import { getStorage } from "firebase/storage";
 import { firebaseConfig } from "./firebase.config";
 
