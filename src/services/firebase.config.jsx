@@ -1,10 +1,15 @@
 // Firebase configuration
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyBY9mJcCIIK3e8haJgstVrX_XjZ0QyrsC8",
-  authDomain: "valdymas-admin-dashboard-8ef0d.firebaseapp.com",
-  projectId: "valdymas-admin-dashboard-8ef0d",
-  storageBucket: "valdymas-admin-dashboard-8ef0d.appspot.com",
-  messagingSenderId: "253665808813",
-  appId: "1:253665808813:web:1d3d3270444273e5ac1124",
+  apiKey: "AIzaSyBYR-O4srJh0p87qPxMDLUA33C2Lmp9QN4",
+
+  authDomain: "valdymas-admin-dashboard-b0f2b.firebaseapp.com",
+
+  projectId: "valdymas-admin-dashboard-b0f2b",
+
+  storageBucket: "valdymas-admin-dashboard-b0f2b.appspot.com",
+
+  messagingSenderId: "130319256159",
+
+  appId: "1:130319256159:web:a6b1a51fb4ea853a2269ea",
 };
