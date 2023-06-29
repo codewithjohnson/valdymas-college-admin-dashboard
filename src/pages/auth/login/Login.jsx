@@ -49,7 +49,7 @@ const Login = () => {
   };
 
   return (
-    <div className="font-poppins min-h-screen flex flex-col sm:flex sm:flex-row my-0 mx-auto h-full w-full bg-gray-100 justify-center items-center relative overflow-hidden">
+    <div className="font-poppins min-h-screen flex flex-col sm:flex sm:flex-row my-0 mx-auto h-full w-full bg-gray-400 justify-center items-center relative overflow-hidden">
       {/* left */}
 
       <div className="instruction--container bg-teal-700 text-white pt-8 px-8 my-6 rounded-md border-none sm: w-[90%] sm:w-[500px] h-[538px] select-none z-10 ">
@@ -100,7 +100,7 @@ const Login = () => {
               name="level"
               id="level"
               {...loginRegister("level")}
-              className={`block w-full p-3 py-4 mt-2 border rounded-lg shadow-sm text-green-900 border-green-200 focus:outline-none focus:ring focus:ring-green-100 hover:border-green-800 cursor-pointer ${
+              className={`block w-full p-3 py-4 mt-2 border rounded-lg shadow-sm text-green-900 border-green-500 focus:outline-none focus:ring focus:ring-green-100 hover:border-green-800 cursor-pointer ${
                 loginErrors?.level ? " border-red-500" : ""
               }   `}
             >
@@ -120,7 +120,7 @@ const Login = () => {
               id="email"
               {...loginRegister("email")}
               placeholder="example@gmail.com"
-              className={`block w-full p-3  mt-2 text-sm border rounded-lg shadow-sm  placeholder-slate-300 border-green-200 focus:outline-none focus:ring focus:ring-green-100 hover:border-green-800 ${
+              className={`block w-full p-3  mt-2 text-sm border rounded-lg shadow-sm  placeholder-slate-300 border-green-500 focus:outline-none focus:ring focus:ring-green-100 hover:border-green-800 ${
                 loginErrors?.email ? " border-red-500" : ""
               }  `}
             />
@@ -135,7 +135,7 @@ const Login = () => {
               name="password"
               id="password"
               {...loginRegister("password")}
-              className={`block relative w-full p-3  mt-2 text-sm border rounded-lg shadow-sm  placeholder-slate-300 border-green-200 focus:outline-none focus:ring focus:ring-green-100 hover:border-green-800 ${
+              className={`block relative w-full p-3  mt-2 text-sm border rounded-lg shadow-sm  placeholder-slate-300 border-green-500 focus:outline-none focus:ring focus:ring-green-100 hover:border-green-800 ${
                 loginErrors?.password ? " border-red-500" : ""
               }  `}
             />
