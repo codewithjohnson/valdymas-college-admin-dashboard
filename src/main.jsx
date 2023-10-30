@@ -5,7 +5,7 @@ import "./index.css";
 //  routes
 import { authRoute } from "./routes/authRoute/authRoute";
 import { mainRoute } from "./routes/mainRoute/mainRoute";
-import { studentRoute } from "./routes/public/student/studentRoute"; 
+import { studentRoute } from "./routes/public/student/studentRoute";
 
 //  services
 import { createBrowserRouter, RouterProvider } from "react-router-dom";

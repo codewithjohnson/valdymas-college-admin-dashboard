@@ -1,13 +1,12 @@
 import { lazy } from "react";
-import Loadable from "../../components/loadable/Loadable";
+import Loadable from "../../components/Loadable/Loadable";
+
 import { studentsRoute } from "../studentsRoute/studentsRoute";
 import { adminRoute } from "../adminRoute/adminRoute";
 
 import App from "../../App";
 const Dashboard = Loadable(lazy(() => import("../../pages/views/dashboard/Dashboard")));
-const ErrorPage = Loadable(
-  lazy(() => import("../../pages/errorPage/Errorpage"))
-);
+const ErrorPage = Loadable(lazy(() => import("../../pages/errorPage/Errorpage")));
 export const mainRoute = {
   path: "/",
   element: <App />,

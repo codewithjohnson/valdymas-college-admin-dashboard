@@ -25,7 +25,7 @@ const App = () => {
   }, []);
 
   // redirect admin and student
-  useRedirectAdminStudent();
+  // useRedirectAdminStudent();
 
   return isAdmin ? (
     <MainLayout>
